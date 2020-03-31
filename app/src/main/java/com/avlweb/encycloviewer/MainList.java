@@ -1,5 +1,6 @@
 package com.avlweb.encycloviewer;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,7 +31,10 @@ public class MainList extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
-        setTitle("");
+        ActionBar actionbar = getActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayShowTitleEnabled(false);
+        }
         loadDatabaseInList();
     }
 

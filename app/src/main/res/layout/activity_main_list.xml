@@ -15,7 +15,7 @@
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="left" />
+        android:verticalScrollbarPosition="right" />
 
 </LinearLayout>
 

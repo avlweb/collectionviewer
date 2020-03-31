@@ -25,6 +25,8 @@ public class SearchInDatabase extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        setTitle(getString(R.string.search_in_database));
+
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
@@ -80,7 +82,7 @@ public class SearchInDatabase extends Activity {
         int i, j, nbStringsOk;
         EditText editText;
         int nbElementsFound = 0;
-        Element element = null;
+        Element element;
 
         stringsToSearch1 = null;
         stringsToSearch2 = null;
@@ -130,12 +132,12 @@ public class SearchInDatabase extends Activity {
 
         if (MainList.itemsList != null) {
             for (i = 0; i < MainList.itemsList.size(); i++) {
-                element = (Element) MainList.itemsList.get(i);
+                element = MainList.itemsList.get(i);
                 element.setNotSelected();
             }
 
             for (i = 0; i < MainList.itemsList.size(); i++) {
-                element = (Element) MainList.itemsList.get(i);
+                element = MainList.itemsList.get(i);
                 String element1 = element.getField1().toLowerCase();
                 String element2 = element.getField2().toLowerCase();
                 String element3 = element.getField3().toLowerCase();
@@ -278,9 +280,9 @@ public class SearchInDatabase extends Activity {
 
             if (nbElementsFound == 0) {
                 AlertDialog alertDialog = new AlertDialog.Builder(SearchInDatabase.this).create();
-                alertDialog.setTitle("Search");
-                alertDialog.setMessage("No element was found with those criteria.");
-                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                alertDialog.setTitle(R.string.search);
+                alertDialog.setMessage(getString(R.string.no_element_found));
+                alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
@@ -288,12 +290,11 @@ public class SearchInDatabase extends Activity {
                 alertDialog.show();
 
                 for (i = 0; i < MainList.itemsList.size(); i++) {
-                    element = (Element) MainList.itemsList.get(i);
+                    element = MainList.itemsList.get(i);
                     element.setSelected();
                 }
             } else
-                Toast.makeText(getApplicationContext(),
-                        "Found " + nbElementsFound + " elements.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
 
             MainList.selectedItemPosition = 0;
         }
@@ -303,7 +304,7 @@ public class SearchInDatabase extends Activity {
         Element element;
 
         for (int i = 0; i < MainList.itemsList.size(); i++) {
-            element = (Element) MainList.itemsList.get(i);
+            element = MainList.itemsList.get(i);
             element.setSelected();
         }
 

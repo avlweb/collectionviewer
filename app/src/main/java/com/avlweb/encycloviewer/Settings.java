@@ -31,6 +31,7 @@ public class Settings extends Activity {
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
+            actionbar.setDisplayShowTitleEnabled(false);
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setDisplayShowHomeEnabled(false);
         }

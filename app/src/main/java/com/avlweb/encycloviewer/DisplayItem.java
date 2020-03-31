@@ -37,10 +37,9 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_display_item);
 
-        setTitle("");
-
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
+            actionbar.setDisplayShowTitleEnabled(false);
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setDisplayShowHomeEnabled(false);
         }
@@ -158,16 +157,16 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         MainList.selectedItemPosition = this.position;
 
-        TextView editText1 = findViewById(R.id.editText1);
+        TextView editText1 = findViewById(R.id.textView1);
         editText1.setText(currentElement.toString());
 
-        TextView editText2 = findViewById(R.id.editText2);
+        TextView editText2 = findViewById(R.id.textView3);
         editText2.setText(currentElement.getField2());
 
         if (MainList.imgIdx > currentElement.getLastImageIndex())
             MainList.imgIdx = 1;
 
-        TextView editText3 = findViewById(R.id.editText3);
+        TextView editText3 = findViewById(R.id.textView2);
         editText3.setText(MainList.imgIdx + "/" + currentElement.getLastImageIndex());
 
         displayImage();
@@ -217,7 +216,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         else
             MainList.imgIdx = 1;
 
-        TextView editText3 = findViewById(R.id.editText3);
+        TextView editText3 = findViewById(R.id.textView2);
         editText3.setText(MainList.imgIdx + "/" + currentElement.getLastImageIndex());
 
         displayImage();

@@ -25,7 +25,7 @@
     <string name="version">Version</string>
     <string name="settings">Réglages</string>
     <string name="language">Langue :\u0020</string>
-    <string name="scrollbar_position">Position de la barre de défilement :\u0020</string>
+    <string name="scrollbar_position">Position de la barre de défilement</string>
     <string name="save">Sauvegarder</string>
     <string name="ok">OK</string>
     <string name="image_not_found">Image non trouvée !</string>
@@ -47,10 +47,18 @@
     <string name="close">Close</string>
     <string name="settings_saved">Réglages sauvegardés !</string>
     <string name="clear_done">Recherche effacée !</string>
-    <string name="databases_root_location">Chemin par défaut des bases de données :</string>
+    <string name="databases_root_location">Chemin par défaut des bases de données</string>
     <string name="hide_sample_database">Cacher la base d\'exemple</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="words_to_search">Mots à chercher séparés par une virgule</string>
+    <string name="path_personal_root">Path to personal databases</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="no_element_found">Aucun élément n\'a été trouvé avec ces critères de recherche.</string>
     <string-array name="scrollbar_position_array">
         <item>Droite</item>
         <item>Gauche</item>
     </string-array>
+    <string name="found_elements">%1$d éléments trouvés</string>
+    <string name="search_in_database">Recherche dans la base</string>
 </resources>

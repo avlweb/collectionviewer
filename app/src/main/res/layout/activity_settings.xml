@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -20,12 +19,22 @@
         android:id="@+id/EditTextRootLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:autofillHints="@string/path_personal_root"
+        android:hint="@string/path_personal_root"
         android:inputType="text"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:textSize="14sp" />
 
-        <requestFocus />
-    </EditText>
+    <Switch
+        android:id="@+id/switch_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/hide_sample_database"
+        android:textOff="@string/no"
+        android:textOn="@string/yes"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/TextScrollbar"
@@ -40,16 +49,8 @@
         android:id="@+id/spinnerScrollbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" />
-
-    <Switch
-        android:id="@+id/switch_hide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="@string/hide_sample_database"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/save"
