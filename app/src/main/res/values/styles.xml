@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+<!--        <item name="android:textSize">16sp</item>-->
+        <item name="android:homeAsUpIndicator">@drawable/menu_back</item>
+    </style>
+</resources>

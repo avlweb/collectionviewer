@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'avlweb'
+            storeFile file('../avlweb.jks')
+            storePassword 'avlweb'
+        }
+        buildTypes {
+            debug {
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
+            }
+            release {
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
+            }
+        }
+    }
+    compileSdkVersion 28
+
+    viewBinding {
+        enabled = true
+    }
+
+    aaptOptions {
+        noCompress "xml"
+    }
+
+    defaultConfig {
+        applicationId "com.avlweb.encycloviewer"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 10000
+        versionName "1.0.0"
+        setProperty("archivesBaseName", "EncycloViewer-$versionName")
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:28.0.0'
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EncycloViewer</string>
+    <string name="menu_settings">Réglages</string>
+    <string name="title_activity_main">EncycloViewer</string>
+    <string name="hello_world">Bonjour le monde !</string>
+    <string name="title_activity_display_item">Vue</string>
+    <string name="image_content">Contenu Image</string>
+    <string name="menu_previous_element">Précédent</string>
+    <string name="menu_next_element">Suivant</string>
+    <string name="menu_details_element">Détails</string>
+    <string name="menu_open_database">Ouvrir</string>
+    <string name="title_activity_open_database">Ouvrie une base de données</string>
+    <string name="title_activity_search">Rechercher</string>
+    <string name="title_activity_settings">Réglages</string>
+    <string name="field1_">Field1 :</string>
+    <string name="field2_">Field2 :</string>
+    <string name="field3_">Field3 :</string>
+    <string name="field4_">Field4 :</string>
+    <string name="field5_">Field5 :</string>
+    <string name="search">Rechercher</string>
+    <string name="clear_search">Effacer la recherche</string>
+    <string name="_1_1">1/1</string>
+    <string name="about_database">Au sujet de la base</string>
+    <string name="version">Version</string>
+    <string name="settings">Réglages</string>
+    <string name="language">Langue :\u0020</string>
+    <string name="scrollbar_position">Position de la barre de défilement :\u0020</string>
+    <string name="save">Sauvegarder</string>
+    <string name="ok">OK</string>
+    <string name="image_not_found">Image non trouvée !</string>
+    <string name="path">Chemin = </string>
+    <string name="details">Détails</string>
+    <string name="list_position">Position dans la liste = </string>
+    <string name="element_not_found">Elément non trouvé !</string>
+    <string name="view">Vue</string>
+    <string name="warning_points">Attention :\u0020</string>
+    <string name="warning_permission">Les permissions sont obligatoires donc l\'application va se fermer !</string>
+    <string name="name_points">Nom :\u0020</string>
+    <string name="not_available">Pas disponible</string>
+    <string name="version_points">Version :\u0020</string>
+    <string name="description_points">Description :\u0020</string>
+    <string name="number_of_items">Nombre d\'éléments :\u0020</string>
+    <string name="build_date_points">Date de compilation :\u0020</string>
+    <string name="package_points">Paquet :\u0020</string>
+    <string name="available_databases">Base de données disponibles :</string>
+    <string name="close">Close</string>
+    <string name="settings_saved">Réglages sauvegardés !</string>
+    <string name="clear_done">Recherche effacée !</string>
+    <string name="databases_root_location">Chemin par défaut des bases de données :</string>
+    <string name="hide_sample_database">Cacher la base d\'exemple</string>
+    <string-array name="scrollbar_position_array">
+        <item>Droite</item>
+        <item>Gauche</item>
+    </string-array>
+</resources>
