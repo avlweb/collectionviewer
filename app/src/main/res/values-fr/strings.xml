@@ -61,4 +61,5 @@
     </string-array>
     <string name="found_elements">%1$d éléments trouvés</string>
     <string name="search_in_database">Recherche dans la base</string>
+    <string name="choose_font_size">Choose font size</string>
 </resources>

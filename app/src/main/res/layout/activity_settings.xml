@@ -63,11 +63,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:background="@android:color/holo_blue_dark"
         android:gravity="center"
         android:onClick="SaveSettings"
         android:padding="10dp"
-        android:text="@string/save"
-        android:textColor="@android:color/white" />
+        android:text="@string/save" />
+
+    <TextView
+        android:id="@+id/TextFontSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/choose_font_size"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:max="3"
+        android:paddingHorizontal="10dp"
+        android:tickMark="@android:drawable/btn_star_big_off"
+        android:progress="0" />
+
+    <TextView
+        android:id="@+id/TextSeekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="10dp"
+        android:text="@string/lorem_ipsum"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
 </LinearLayout>

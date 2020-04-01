@@ -4,11 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -57,6 +59,25 @@ public class Settings extends Activity {
         adapter.setDropDownViewResource(R.layout.mainlist);
         spinner.setAdapter(adapter);
         spinner.setSelection(scrollbar);
+
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+                Log.d("Seetings", "seekbar : value = " + progress);
+//                switch (p)
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.d("Seetings", "Start bar progress is :" + progressChangedValue);
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d("Seetings", "Seek bar progress is :" + progressChangedValue);
+            }
+        });
     }
 
     @Override
