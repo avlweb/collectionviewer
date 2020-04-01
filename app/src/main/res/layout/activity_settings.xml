@@ -1,102 +1,113 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
+    android:fadeScrollbars="false"
+    android:fastScrollAlwaysVisible="true"
+    android:fastScrollEnabled="false"
+    android:scrollbarStyle="outsideInset"
+    android:verticalScrollbarPosition="right"
     tools:context=".Settings">
 
-    <TextView
-        android:id="@+id/TextRootLocation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/databases_root_location"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/EditTextRootLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="@string/path_personal_root"
-        android:hint="@string/path_personal_root"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/TextRootLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/databases_root_location"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <Switch
-        android:id="@+id/switch_hide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/hide_sample_database"
-        android:textColor="@android:color/black"
-        android:textOff="@string/no"
-        android:textOn="@string/yes"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/EditTextRootLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/path_personal_root"
+            android:hint="@string/path_personal_root"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/TextScrollbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/scrollbar_position"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <Switch
+            android:id="@+id/switch_hide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/hide_sample_database"
+            android:textColor="@android:color/black"
+            android:textOff="@string/no"
+            android:textOn="@string/yes"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/spinnerScrollbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp" />
+        <TextView
+            android:id="@+id/TextScrollbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/scrollbar_position"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:gravity="center"
-        android:onClick="SaveSettings"
-        android:padding="10dp"
-        android:text="@string/save" />
+        <Spinner
+            android:id="@+id/spinnerScrollbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" />
 
-    <TextView
-        android:id="@+id/TextFontSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/choose_font_size"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/TextFontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/choose_font_size"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:max="3"
-        android:paddingHorizontal="10dp"
-        android:tickMark="@android:drawable/btn_star_big_off"
-        android:progress="0" />
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:max="3"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:progress="0"
+            android:tickMark="@drawable/seeker_circle" />
 
-    <TextView
-        android:id="@+id/TextSeekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingHorizontal="10dp"
-        android:text="@string/lorem_ipsum"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/TextSeekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="10dp"
+            android:text="@string/lorem_ipsum"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:onClick="SaveSettings"
+            android:padding="10dp"
+            android:text="@string/save" />
+
+    </LinearLayout>
+
+</ScrollView>

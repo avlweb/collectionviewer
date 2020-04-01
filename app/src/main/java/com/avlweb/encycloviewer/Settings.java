@@ -24,8 +24,10 @@ public class Settings extends Activity {
     public static final String KEY_DATABASES_ROOT_LOCATION = "key_language";
     public static final String KEY_HIDE_SAMPLE_DATABASE = "key_hide_sample";
     public static final String KEY_SCROLLBAR = "key_scrollbar";
+    public static final String KEY_FONT_SIZE = "key_font_size";
 
-    String[] scrollbarPositions;
+    private String[] scrollbarPositions;
+    private int fontSize;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,15 +61,23 @@ public class Settings extends Activity {
         adapter.setDropDownViewResource(R.layout.mainlist);
         spinner.setAdapter(adapter);
         spinner.setSelection(scrollbar);
-
+        // Font size
+        fontSize = pref.getInt(KEY_FONT_SIZE, 0);
+        TextView textSeekbar = findViewById(R.id.TextSeekbar);
+        textSeekbar.setTextSize(getFontSizeFromPref(fontSize));
         SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setProgress(fontSize);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
                 Log.d("Seetings", "seekbar : value = " + progress);
-//                switch (p)
+                if (progress != fontSize) {
+                    TextView textView = findViewById(R.id.TextSeekbar);
+                    textView.setTextSize(getFontSizeFromPref(progress));
+                    fontSize = progress;
+                }
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -86,6 +96,25 @@ public class Settings extends Activity {
         return true;
     }
 
+    private int getFontSizeFromPref(int val) {
+        int res = 14;
+        switch (val) {
+            case 0:
+                res = 14;
+                break;
+            case 1:
+                res = 16;
+                break;
+            case 2:
+                res = 18;
+                break;
+            case 3:
+                res = 20;
+                break;
+        }
+        return res;
+    }
+
     public void SaveSettings(View view) {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -95,6 +124,8 @@ public class Settings extends Activity {
         // Scrollbar position
         Spinner spinner = findViewById(R.id.spinnerScrollbar);
         editor.putInt(KEY_SCROLLBAR, spinner.getSelectedItemPosition());
+        // Font size
+        editor.putInt(KEY_FONT_SIZE, fontSize);
         // Hide sample database
         Switch hide = findViewById(R.id.switch_hide);
         editor.putBoolean(KEY_HIDE_SAMPLE_DATABASE, hide.isChecked());
@@ -105,10 +136,9 @@ public class Settings extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
