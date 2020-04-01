@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.NavUtils;
 
 public class SearchInDatabase extends Activity {
     private static String fSearch1 = null;
@@ -82,7 +83,7 @@ public class SearchInDatabase extends Activity {
         int i, j, nbStringsOk;
         EditText editText;
         int nbElementsFound = 0;
-        Element element;
+        DbItem dbItem;
 
         stringsToSearch1 = null;
         stringsToSearch2 = null;
@@ -115,8 +116,12 @@ public class SearchInDatabase extends Activity {
         if (fSearch5.length() > 0)
             stringsToSearch5 = fSearch5.split(",");
 
+        // Si tous les champs sont vides alors on ne fait rien !
+        if ((fSearch1.length() == 0) && (fSearch2.length() == 0) && (fSearch3.length() == 0) && (fSearch4.length() == 0) && (fSearch5.length() == 0))
+            return;
+
 		/*
-		AlertDialog alertDialog = new AlertDialog.Builder( SearchInDatabase.this).create();
+		AlertDialog alertDialog = new AlertDialog.Builder( this).create();
 		alertDialog.setTitle( "Search");
 		alertDialog.setMessage( "Criterias : (" + Arrays.toString(stringsToSearch1)
 				+ "), (" + Arrays.toString(stringsToSearch2)
@@ -132,17 +137,17 @@ public class SearchInDatabase extends Activity {
 
         if (MainList.itemsList != null) {
             for (i = 0; i < MainList.itemsList.size(); i++) {
-                element = MainList.itemsList.get(i);
-                element.setNotSelected();
+                dbItem = MainList.itemsList.get(i);
+                dbItem.setNotSelected();
             }
 
             for (i = 0; i < MainList.itemsList.size(); i++) {
-                element = MainList.itemsList.get(i);
-                String element1 = element.getField1().toLowerCase();
-                String element2 = element.getField2().toLowerCase();
-                String element3 = element.getField3().toLowerCase();
-                String element4 = element.getField4().toLowerCase();
-                String element5 = element.getField5().toLowerCase();
+                dbItem = MainList.itemsList.get(i);
+                String element1 = dbItem.getField1().toLowerCase();
+                String element2 = dbItem.getField2().toLowerCase();
+                String element3 = dbItem.getField3().toLowerCase();
+                String element4 = dbItem.getField4().toLowerCase();
+                String element5 = dbItem.getField5().toLowerCase();
 /*
                 if (stringsToSearch1 != null) {
                     if (element.getField1() == null)
@@ -274,12 +279,12 @@ public class SearchInDatabase extends Activity {
                         continue;
                 }
 
-                element.setSelected();
+                dbItem.setSelected();
                 nbElementsFound++;
             }
 
             if (nbElementsFound == 0) {
-                AlertDialog alertDialog = new AlertDialog.Builder(SearchInDatabase.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle(R.string.search);
                 alertDialog.setMessage(getString(R.string.no_element_found));
                 alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -290,8 +295,8 @@ public class SearchInDatabase extends Activity {
                 alertDialog.show();
 
                 for (i = 0; i < MainList.itemsList.size(); i++) {
-                    element = MainList.itemsList.get(i);
-                    element.setSelected();
+                    dbItem = MainList.itemsList.get(i);
+                    dbItem.setSelected();
                 }
             } else
                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
@@ -301,7 +306,7 @@ public class SearchInDatabase extends Activity {
     }
 
     public void clearSearch(View view) {
-        Element element;
+        DbItem element;
 
         for (int i = 0; i < MainList.itemsList.size(); i++) {
             element = MainList.itemsList.get(i);

@@ -17,7 +17,7 @@ android {
             }
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     viewBinding {
         enabled = true
@@ -29,8 +29,8 @@ android {
 
     defaultConfig {
         applicationId "com.avlweb.encycloviewer"
-        minSdkVersion 23
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 10000
         versionName "1.0.0"
         setProperty("archivesBaseName", "EncycloViewer-$versionName")
@@ -45,6 +45,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainList extends Activity {
-    public static ArrayList<Element> itemsList = null;
+    public static ArrayList<DbItem> itemsList = null;
     public static String dbpath = null;
     public static int selectedItemPosition = -1;
     public static int maxPosition = 0;
@@ -34,6 +34,8 @@ public class MainList extends Activity {
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
             actionbar.setDisplayShowTitleEnabled(false);
+            actionbar.setDisplayHomeAsUpEnabled(false);
+            actionbar.setDisplayShowHomeEnabled(true);
         }
         loadDatabaseInList();
     }
@@ -51,21 +53,18 @@ public class MainList extends Activity {
 
         switch (item.getItemId()) {
             case R.id.close_btn:
-                intent = new Intent(MainList.this, Home.class);
-//                intent.putExtra("root", Environment.getExternalStorageDirectory() + File.separator + "Documents");
-                //intent.putExtra( "root", "/extSdCard/Documents");
-                //intent.putExtra( "root", "/mnt/sdcard/Documents");
+                intent = new Intent(this, Home.class);
                 startActivity(intent);
                 return true;
 
             case R.id.search_btn:
-                intent = new Intent(MainList.this, SearchInDatabase.class);
+                intent = new Intent(this, SearchInDatabase.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menu_about:
                 if (dbInfos != null) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainList.this);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle(getString(R.string.about_database));
                     builder.setMessage(getString(R.string.name_points) + dbInfos.getName()
                             + "\n" +
@@ -91,7 +90,7 @@ public class MainList extends Activity {
     public void loadDatabaseInList() {
         if (dbpath != null) {
             if (itemsList != null) {
-                Element element;
+                DbItem element;
                 ListView lv = findViewById(R.id.listView1);
 
                 // Get preferences
@@ -128,8 +127,6 @@ public class MainList extends Activity {
 
                     List<String> items = Arrays.asList(lv_arr);
                     lv.setAdapter(new MainListAdapter(getApplicationContext(), items));
-//                    lv.setAdapter(new ArrayAdapter<String>(this, R.layout.mainlist, lv_arr));
-
                     lv.setOnItemClickListener(new OnItemClickListener() {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             selectedItemPosition = position;

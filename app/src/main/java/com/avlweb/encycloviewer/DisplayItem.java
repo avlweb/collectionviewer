@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +19,8 @@ import android.widget.TextView;
 
 import java.io.File;
 
+import androidx.core.app.NavUtils;
+
 public class DisplayItem extends Activity implements View.OnClickListener {
 
     private static final int SWIPE_MIN_DISTANCE = 120;
@@ -29,7 +30,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     private View.OnTouchListener gestureListener;
 
     private int position;
-    private Element currentElement = null;
+    private DbItem currentElement = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         }
 
         if (currentElement == null) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(DisplayItem.this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.element_not_found));
             builder.setMessage(getString(R.string.list_position) + this.position);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -173,7 +174,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     private void displayElementDetails() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(DisplayItem.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.details));
         builder.setMessage(MainList.dbInfos.getFieldName(3) + " : " + currentElement.getField3()
                 + "\n" + MainList.dbInfos.getFieldName(4) + " : " + currentElement.getField4()
@@ -198,7 +199,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             imageView.setImageBitmap(myBitmap);
             imageView.setOnTouchListener(gestureListener);
         } else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(DisplayItem.this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.image_not_found));
             builder.setMessage(getString(R.string.path) + newPath);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {

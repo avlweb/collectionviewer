@@ -10,8 +10,10 @@
         android:id="@+id/TextRootLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
         android:text="@string/databases_root_location"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -22,7 +24,9 @@
         android:autofillHints="@string/path_personal_root"
         android:hint="@string/path_personal_root"
         android:inputType="text"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/black"
         android:textSize="14sp" />
 
     <Switch
@@ -31,6 +35,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/hide_sample_database"
+        android:textColor="@android:color/black"
         android:textOff="@string/no"
         android:textOn="@string/yes"
         android:textSize="16sp"
@@ -40,8 +45,10 @@
         android:id="@+id/TextScrollbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="10dp"
         android:text="@string/scrollbar_position"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -49,8 +56,7 @@
         android:id="@+id/spinnerScrollbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="14sp" />
+        android:padding="5dp" />
 
     <Button
         android:id="@+id/save"

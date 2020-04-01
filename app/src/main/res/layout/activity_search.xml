@@ -18,8 +18,10 @@
             android:id="@+id/TextView01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
             android:text="@string/field1_"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -30,14 +32,19 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/TextView02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
             android:text="@string/field2_"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -48,14 +55,19 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/black"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/TextView03"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
             android:text="@string/field3_"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -66,14 +78,19 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/black"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/TextView04"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
             android:text="@string/field4_"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -84,14 +101,18 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/TextView05"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
             android:text="@string/field5_"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -102,6 +123,8 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             android:textSize="14sp" />
 
         <LinearLayout

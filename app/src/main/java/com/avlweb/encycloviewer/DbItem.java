@@ -2,7 +2,7 @@ package com.avlweb.encycloviewer;
 
 import java.util.ArrayList;
 
-public class Element {
+public class DbItem {
     private String field1;
     private String field2;
     private String field3;
@@ -12,7 +12,7 @@ public class Element {
     private boolean selected;
     private int listPosition;
 
-    public Element() {
+    public DbItem() {
         this.selected = true;
         this.field1 = null;
         this.field2 = null;
@@ -77,7 +77,7 @@ public class Element {
 
     public void addImagePath(String path) {
         if (this.imagePaths == null)
-            this.imagePaths = new ArrayList<String>();
+            this.imagePaths = new ArrayList<>();
 
         this.imagePaths.add(path);
     }
@@ -85,9 +85,9 @@ public class Element {
     public String getImagePath(int num) {
         if (this.imagePaths != null) {
             if ((num > 0) && (num <= this.imagePaths.size()))
-                return (String) this.imagePaths.get(num - 1);
+                return this.imagePaths.get(num - 1);
             else
-                return (String) this.imagePaths.get(0);
+                return this.imagePaths.get(0);
         }
 
         return null;

@@ -7,10 +7,13 @@
     tools:context=".Home">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:background="@android:color/darker_gray"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="@string/app_name"
+        android:textColor="@android:color/white"
         android:textSize="26sp" />
 
     <TextView
@@ -18,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/available_databases"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <ListView
         android:id="@+id/listView"

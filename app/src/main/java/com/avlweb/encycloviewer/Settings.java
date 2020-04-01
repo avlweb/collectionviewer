@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.NavUtils;
 
 public class Settings extends Activity {
 
@@ -29,9 +30,10 @@ public class Settings extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        setTitle(R.string.settings);
+
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
-            actionbar.setDisplayShowTitleEnabled(false);
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setDisplayShowHomeEnabled(false);
         }
@@ -51,8 +53,8 @@ public class Settings extends Activity {
         scrollbarPositions = getResources().getStringArray(R.array.scrollbar_position_array);
         Spinner spinner = findViewById(R.id.spinnerScrollbar);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.scrollbar_position_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.scrollbar_position_array, R.layout.mainlist);
+        adapter.setDropDownViewResource(R.layout.mainlist);
         spinner.setAdapter(adapter);
         spinner.setSelection(scrollbar);
     }

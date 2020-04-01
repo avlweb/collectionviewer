@@ -1,6 +1,7 @@
 package com.avlweb.encycloviewer;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,9 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
@@ -39,6 +37,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
+
 public class Home extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -48,7 +50,12 @@ public class Home extends Activity {
 
         setContentView(R.layout.activity_home);
 
-        setTitle("");
+        ActionBar actionbar = getActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayShowTitleEnabled(false);
+            actionbar.setDisplayHomeAsUpEnabled(false);
+            actionbar.setDisplayShowHomeEnabled(true);
+        }
 
         // Check permissions because external access is mandatory
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -251,8 +258,8 @@ public class Home extends Activity {
         }
     }
 
-    public ArrayList<Element> readListFromXml(String path) {
-        ArrayList<Element> itemsList = new ArrayList<>();
+    public ArrayList<DbItem> readListFromXml(String path) {
+        ArrayList<DbItem> itemsList = new ArrayList<>();
         FileInputStream fin = null;
         InputStreamReader isr = null;
 
@@ -265,7 +272,7 @@ public class Home extends Activity {
 
             int eventType = xmlFile.getEventType();
 
-            Element element = null;
+            DbItem element = null;
             boolean enterElement = false;
             boolean enterContent = false;
             boolean enterField = false;
@@ -278,7 +285,7 @@ public class Home extends Activity {
                     String strNode = xmlFile.getName();
                     if (strNode.equals("element")) {
                         enterElement = true;
-                        element = new Element();
+                        element = new DbItem();
                     } else if (enterElement && (strNode.equals("field1")))
                         type = 1;
                     else if (enterElement && (strNode.equals("field2")))
@@ -331,11 +338,13 @@ public class Home extends Activity {
                     type = 0;
                 } else if (eventType == XmlPullParser.TEXT) {
                     if (enterElement) {
+/*
                         int nbAttribute = xmlFile.getAttributeCount();
                         Log.d("HOME", "Number of attributes = " + nbAttribute);
                         for (int i = 0; i < nbAttribute; i++) {
                             Log.d("HOME", "Attribute : name = " + xmlFile.getAttributeName(i) + ", value = " + xmlFile.getAttributeValue(i));
                         }
+*/
                         switch (type) {
                             case 1:
                                 element.setField1(xmlFile.getText());

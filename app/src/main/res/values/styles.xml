@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-<!--        <item name="android:textSize">16sp</item>-->
-        <item name="android:homeAsUpIndicator">@drawable/menu_back</item>
+
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <!--    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+
+        <item name="android:colorControlActivated">@android:color/holo_blue_dark</item>
+
+        <!--        <item name="android:fastScrollTextColor">@android:color/white</item>-->
+        <!--        <item name="android:fastScrollPreviewBackgroundLeft">@android:color/holo_blue_dark</item>-->
+        <!--        <item name="android:fastScrollPreviewBackgroundRight">@android:color/holo_blue_dark</item>-->
+        <!--        <item name="android:fastScrollThumbDrawable">@android:color/holo_blue_dark</item>-->
+        <!--        <item name="android:fastScrollTrackDrawable">@android:color/holo_blue_dark</item>-->
+        <!--        <item name="android:fastScrollStyle"></item>-->
     </style>
+
 </resources>
