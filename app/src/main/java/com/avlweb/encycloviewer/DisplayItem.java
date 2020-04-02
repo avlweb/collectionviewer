@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -47,6 +48,12 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
+
+        // Get preferences
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
+        int fontSize = pref.getInt(Settings.KEY_FONT_SIZE, 0);
+        TextView textDescription = findViewById(R.id.textView3);
+        textDescription.setTextSize(Settings.getFontSizeFromPref(fontSize));
 
         // Gesture detection
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
@@ -147,6 +154,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         if (currentElement == null) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.element_not_found));
+            builder.setIcon(R.drawable.ic_launcher);
             builder.setMessage(getString(R.string.list_position) + this.position);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -176,6 +184,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     private void displayElementDetails() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.details));
+        builder.setIcon(R.drawable.ic_launcher);
         builder.setMessage(MainList.dbInfos.getFieldName(3) + " : " + currentElement.getField3()
                 + "\n" + MainList.dbInfos.getFieldName(4) + " : " + currentElement.getField4()
                 + "\n" + MainList.dbInfos.getFieldName(5) + " : " + currentElement.getField5());
@@ -200,6 +209,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             imageView.setOnTouchListener(gestureListener);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(R.drawable.ic_launcher);
             builder.setTitle(getString(R.string.image_not_found));
             builder.setMessage(getString(R.string.path) + newPath);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {

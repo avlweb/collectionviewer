@@ -19,9 +19,7 @@ android {
     }
     compileSdkVersion 29
 
-    viewBinding {
-        enabled = true
-    }
+    viewBinding.enabled = true
 
     aaptOptions {
         noCompress "xml"
@@ -35,6 +33,7 @@ android {
         versionName "1.0.0"
         setProperty("archivesBaseName", "EncycloViewer-$versionName")
     }
+
     buildTypes {
         release {
             minifyEnabled true

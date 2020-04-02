@@ -31,14 +31,16 @@
         </activity>
         <activity
             android:name=".SearchInDatabase"
-            android:label="@string/title_activity_search">
+            android:label="@string/title_activity_search"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.avlweb.encycloviewer.MainList" />
         </activity>
         <activity
             android:name=".Settings"
-            android:label="@string/title_activity_settings">
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.avlweb.encycloviewer.Home" />

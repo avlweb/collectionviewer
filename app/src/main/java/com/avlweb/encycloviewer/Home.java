@@ -101,8 +101,6 @@ public class Home extends Activity {
         boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_DATABASE, false);
         // Get Databases Root location
         String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, this.getExternalFilesDir(null).toString());
-        // Get Scrollbar position
-        int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
 
         // Add databases found in databases root location
         getFilesRec(allFiles, databasesRootLocation, true);
@@ -114,10 +112,6 @@ public class Home extends Activity {
         ListView lv = findViewById(R.id.listView);
         String[] lv_arr = allFiles.toArray(new String[0]);
         lv.setAdapter(new ArrayAdapter<>(this, R.layout.mainlist, lv_arr));
-        if (scrollbarPosition == 1)
-            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
-        else
-            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String path = (String) ((TextView) view).getText();
@@ -167,6 +161,7 @@ public class Home extends Activity {
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.version));
+                builder.setIcon(R.drawable.ic_launcher);
                 builder.setMessage(getString(R.string.name_points) + context.getString(R.string.app_name)
                         + "\n" +
                         getString(R.string.package_points) + packageName
@@ -193,6 +188,7 @@ public class Home extends Activity {
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning_points);
+                alertDialogBuilder.setIcon(R.drawable.ic_launcher);
                 alertDialogBuilder.setMessage(R.string.warning_permission);
                 alertDialogBuilder.setPositiveButton(getString(R.string.ok),
                         new DialogInterface.OnClickListener() {

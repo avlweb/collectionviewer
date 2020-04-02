@@ -2,12 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fadeScrollbars="false"
-    android:scrollbarSize="10dp"
-    android:fastScrollAlwaysVisible="true"
-    android:fastScrollEnabled="false"
-    android:scrollbarStyle="outsideInset"
-    android:verticalScrollbarPosition="right"
     tools:context=".Settings">
 
     <LinearLayout
@@ -135,6 +129,18 @@
             android:onClick="SaveSettings"
             android:padding="10dp"
             android:text="@string/save"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="30dp"
+            android:background="@android:color/holo_blue_dark"
+            android:onClick="SearchFolder"
+            android:padding="10dp"
+            android:text="Search"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

@@ -123,6 +123,7 @@ public class SearchInDatabase extends Activity {
 		/*
 		AlertDialog alertDialog = new AlertDialog.Builder( this).create();
 		alertDialog.setTitle( "Search");
+		alertDialog.setIcon(R.drawable.ic_launcher);
 		alertDialog.setMessage( "Criterias : (" + Arrays.toString(stringsToSearch1)
 				+ "), (" + Arrays.toString(stringsToSearch2)
 				+ "), (" + Arrays.toString(stringsToSearch3)
@@ -286,6 +287,7 @@ public class SearchInDatabase extends Activity {
             if (nbElementsFound == 0) {
                 AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle(R.string.search);
+                alertDialog.setIcon(R.drawable.ic_launcher);
                 alertDialog.setMessage(getString(R.string.no_element_found));
                 alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

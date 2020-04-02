@@ -65,6 +65,7 @@ public class MainList extends Activity {
             case R.id.menu_about:
                 if (dbInfos != null) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setIcon(R.drawable.ic_launcher);
                     builder.setTitle(getString(R.string.about_database));
                     builder.setMessage(getString(R.string.name_points) + dbInfos.getName()
                             + "\n" +

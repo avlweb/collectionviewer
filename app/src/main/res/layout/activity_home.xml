@@ -30,10 +30,6 @@
         android:layout_weight="1"
         android:divider="@android:color/holo_blue_light"
         android:dividerHeight="1dp"
-        android:fadeScrollbars="false"
-        android:fastScrollAlwaysVisible="true"
-        android:fastScrollEnabled="true"
-        android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="right" />
+        android:paddingHorizontal="5dp" />
 
 </LinearLayout>
