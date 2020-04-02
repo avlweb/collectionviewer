@@ -4,13 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SeekBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -63,37 +63,55 @@ public class Settings extends Activity {
         spinner.setSelection(scrollbar);
         // Font size
         fontSize = pref.getInt(KEY_FONT_SIZE, 0);
-        TextView textSeekbar = findViewById(R.id.TextSeekbar);
+        TextView textSeekbar = findViewById(R.id.TextLorum);
         textSeekbar.setTextSize(getFontSizeFromPref(fontSize));
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        seekBar.setProgress(fontSize);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = 0;
-
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-                Log.d("Seetings", "seekbar : value = " + progress);
-                if (progress != fontSize) {
-                    TextView textView = findViewById(R.id.TextSeekbar);
-                    textView.setTextSize(getFontSizeFromPref(progress));
-                    fontSize = progress;
-                }
-            }
-
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                Log.d("Seetings", "Start bar progress is :" + progressChangedValue);
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.d("Seetings", "Seek bar progress is :" + progressChangedValue);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                doOnFontSizeChanged(group, checkedId);
             }
         });
+        RadioButton button = findViewById(R.id.radioButtonSmall);
+        switch (fontSize) {
+            case 1:
+                button = findViewById(R.id.radioButtonNormal);
+                break;
+            case 2:
+                button = findViewById(R.id.radioButtonBig);
+                break;
+            case 3:
+                button = findViewById(R.id.radioButtonVerybig);
+                break;
+        }
+        button.setChecked(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_search, menu);
         return true;
+    }
+
+    private void doOnFontSizeChanged(RadioGroup group, int checkedId) {
+        int checkedRadioId = group.getCheckedRadioButtonId();
+        if (checkedRadioId == R.id.radioButtonSmall) {
+            TextView textSeekbar = findViewById(R.id.TextLorum);
+            textSeekbar.setTextSize(getFontSizeFromPref(0));
+            fontSize = 0;
+        } else if (checkedRadioId == R.id.radioButtonNormal) {
+            TextView textSeekbar = findViewById(R.id.TextLorum);
+            textSeekbar.setTextSize(getFontSizeFromPref(1));
+            fontSize = 1;
+        } else if (checkedRadioId == R.id.radioButtonBig) {
+            TextView textSeekbar = findViewById(R.id.TextLorum);
+            textSeekbar.setTextSize(getFontSizeFromPref(2));
+            fontSize = 2;
+        } else if (checkedRadioId == R.id.radioButtonVerybig) {
+            TextView textSeekbar = findViewById(R.id.TextLorum);
+            textSeekbar.setTextSize(getFontSizeFromPref(3));
+            fontSize = 3;
+        }
     }
 
     private int getFontSizeFromPref(int val) {

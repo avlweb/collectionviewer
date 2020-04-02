@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadeScrollbars="false"
+    android:scrollbarSize="10dp"
     android:fastScrollAlwaysVisible="true"
     android:fastScrollEnabled="false"
     android:scrollbarStyle="outsideInset"
@@ -13,6 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/switch_hide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/hide_sample_database"
+            android:textColor="@android:color/black"
+            android:textOff="@string/no"
+            android:textOn="@string/yes"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/TextRootLocation"
@@ -37,18 +50,6 @@
             android:textColor="@android:color/black"
             android:textSize="14sp" />
 
-        <Switch
-            android:id="@+id/switch_hide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/hide_sample_database"
-            android:textColor="@android:color/black"
-            android:textOff="@string/no"
-            android:textOn="@string/yes"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
         <TextView
             android:id="@+id/TextScrollbar"
             android:layout_width="match_parent"
@@ -71,28 +72,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
+            android:paddingVertical="10dp"
             android:text="@string/choose_font_size"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:max="3"
-            android:paddingHorizontal="30dp"
-            android:paddingVertical="5dp"
-            android:progress="0"
-            android:tickMark="@drawable/seeker_circle" />
+            android:layout_marginHorizontal="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="@string/small" />
+
+            <RadioButton
+                android:id="@+id/radioButtonNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="@string/normal" />
+
+            <RadioButton
+                android:id="@+id/radioButtonBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="@string/big" />
+
+            <RadioButton
+                android:id="@+id/radioButtonVerybig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="@string/very_big" />
+        </RadioGroup>
 
         <TextView
-            android:id="@+id/TextSeekbar"
+            android:id="@+id/TextLorum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:paddingHorizontal="10dp"
             android:text="@string/lorem_ipsum"
             android:textColor="@android:color/black"
@@ -104,9 +131,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="30dp"
+            android:background="@android:color/holo_blue_dark"
             android:onClick="SaveSettings"
             android:padding="10dp"
-            android:text="@string/save" />
+            android:text="@string/save"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
