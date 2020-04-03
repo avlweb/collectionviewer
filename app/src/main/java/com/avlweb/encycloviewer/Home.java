@@ -278,7 +278,7 @@ public class Home extends Activity {
             DbItem element = null;
             boolean enterElement = false;
             boolean enterContent = false;
-            boolean enterField = false;
+            boolean enterFielddesc = false;
             // 1 = field, 2 = images
             int type = 0;
             String fName = null;
@@ -287,16 +287,16 @@ public class Home extends Activity {
                     String strNode = xmlFile.getName();
                     if (strNode.equals("content")) {
                         enterContent = true;
-                        enterField = false;
+                        enterFielddesc = false;
                         enterElement = false;
                         MainList.dbInfos = new DatabaseInfos();
-                    } else if (strNode.equals("field")) {
+                    } else if (strNode.equals("fielddesc")) {
                         enterContent = false;
-                        enterField = true;
+                        enterFielddesc = true;
                         enterElement = false;
                     } else if (strNode.equals("element")) {
                         enterContent = false;
-                        enterField = false;
+                        enterFielddesc = false;
                         enterElement = true;
                         element = new DbItem();
                     } else if (enterElement) {
@@ -311,7 +311,7 @@ public class Home extends Activity {
                             type = 2;
                         else if (strNode.equals("version"))
                             type = 3;
-                    } else if (enterField) {
+                    } else if (enterFielddesc) {
                         if (strNode.equals("name"))
                             type = 1;
                         else if (strNode.equals("description"))
@@ -339,7 +339,7 @@ public class Home extends Activity {
                                 MainList.dbInfos.setVersion(xmlFile.getText());
                                 break;
                         }
-                    } else if (enterField) {
+                    } else if (enterFielddesc) {
                         if (type == 1) {
                             fName = xmlFile.getText();
                         }
@@ -354,9 +354,9 @@ public class Home extends Activity {
                         case "content":
                             enterContent = false;
                             break;
-                        case "field":
+                        case "fielddesc":
                             MainList.dbInfos.addFieldName(fName);
-                            enterField = false;
+                            enterFielddesc = false;
                             break;
                     }
                     type = 0;

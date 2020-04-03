@@ -4,13 +4,21 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 import androidx.core.app.NavUtils;
 
@@ -35,6 +43,21 @@ public class SearchInDatabase extends Activity {
         }
 
         if (MainList.dbInfos != null) {
+
+            LinearLayout linearLayout = findViewById(R.id.linearlayout);
+
+            for (String name : MainList.dbInfos.getFieldNames()) {
+                TextView textView = new TextView(this);
+                textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT));
+                textView.setText(name);
+                textView.setTextColor(0xff000000);
+                textView.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                textView.setTypeface(null, Typeface.BOLD);
+                linearLayout.addView(textView);
+            }
+
             TextView textView = findViewById(R.id.TextView01);
             textView.setText(MainList.dbInfos.getFieldName(1));
             textView = findViewById(R.id.TextView02);

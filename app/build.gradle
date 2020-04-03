@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+    viewBinding.enabled = true
+
     signingConfigs {
         config {
             keyAlias 'key0'
@@ -18,8 +20,6 @@ android {
         }
     }
     compileSdkVersion 29
-
-    viewBinding.enabled = true
 
     aaptOptions {
         noCompress "xml"

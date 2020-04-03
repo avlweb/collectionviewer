@@ -36,6 +36,10 @@ public class DatabaseInfos {
         return this.version;
     }
 
+    public ArrayList<String> getFieldNames() {
+        return this.fieldNames;
+    }
+
     public String getFieldName(int num) {
         if (this.fieldNames != null) {
             if ((num > 0) && (num <= this.fieldNames.size()))

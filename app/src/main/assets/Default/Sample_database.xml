@@ -7,26 +7,26 @@
         <changelog>- 1.0 : Initial creation</changelog>
     </content>
     <fields>
-        <field>
+        <fielddesc>
             <name>Name</name>
             <description>Name of the element.</description>
-        </field>
-        <field>
+        </fielddesc>
+        <fielddesc>
             <name>Description</name>
             <description>Description of the element.</description>
-        </field>
-        <field>
+        </fielddesc>
+        <fielddesc>
             <name>Color</name>
             <description>The colors of the shapes in this element.</description>
-        </field>
-        <field>
+        </fielddesc>
+        <fielddesc>
             <name>Number of elements</name>
             <description>The number of shapes in this element.</description>
-        </field>
-        <field>
+        </fielddesc>
+        <fielddesc>
             <name>List of shapes</name>
             <description>The list of shapes in this element.</description>
-        </field>
+        </fielddesc>
     </fields>
     <datas>
         <element>
