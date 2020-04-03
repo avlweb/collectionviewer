@@ -144,11 +144,11 @@ public class SearchInDatabase extends Activity {
 
             for (i = 0; i < MainList.itemsList.size(); i++) {
                 dbItem = MainList.itemsList.get(i);
-                String element1 = dbItem.getField1().toLowerCase();
-                String element2 = dbItem.getField2().toLowerCase();
-                String element3 = dbItem.getField3().toLowerCase();
-                String element4 = dbItem.getField4().toLowerCase();
-                String element5 = dbItem.getField5().toLowerCase();
+                String element1 = dbItem.getField(1).toLowerCase();
+                String element2 = dbItem.getField(2).toLowerCase();
+                String element3 = dbItem.getField(3).toLowerCase();
+                String element4 = dbItem.getField(4).toLowerCase();
+                String element5 = dbItem.getField(5).toLowerCase();
 /*
                 if (stringsToSearch1 != null) {
                     if (element.getField1() == null)

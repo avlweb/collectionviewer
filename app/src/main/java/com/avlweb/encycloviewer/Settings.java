@@ -197,11 +197,14 @@ public class Settings extends Activity {
         Log.d("SETTINGS", "uri = " + uri.getPath());
         DocumentFile dir = DocumentFile.fromTreeUri(this, uri);
         Log.d("SETTINGS", "isDirectory = " + dir.isDirectory());
-        Log.d("SETTINGS", "dir name = " + dir.getName());
+        Log.d("SETTINGS", "dir getName = " + dir.getName());
         DocumentFile[] tmpFiles = dir.listFiles();
         for (DocumentFile tmpFile : tmpFiles) {
-            Log.d("SETTINGS", "tmpFile = " + tmpFile.getName());
-            Log.d("SETTINGS", "tmpFile uri = " + tmpFile.getUri());
+            Log.d("SETTINGS", "tmpFile getUri = " + tmpFile.getUri());
+            Log.d("SETTINGS", "tmpFile getUri.getPath = " + tmpFile.getUri().getPath());
+            Log.d("SETTINGS", "tmpFile getUri.getPathSegments = " + tmpFile.getUri().getPathSegments());
+            Log.d("SETTINGS", "tmpFile getName = " + tmpFile.getName());
+            Log.d("SETTINGS", "tmpFile getParentfile.getName = " + tmpFile.getParentFile().getName());
 //            DocumentFile tmp = DocumentFile.fromSingleUri(this, tmpFile.getUri());
 //            if (tmpFile.isDirectory())
 //                getXmlFiles(files, tmpFile.getUri());

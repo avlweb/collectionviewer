@@ -66,4 +66,5 @@
     <string name="normal">normal</string>
     <string name="big">big</string>
     <string name="very_big">very big</string>
+    <string name="number_slash_number">%1$d/%2$d</string>
 </resources>

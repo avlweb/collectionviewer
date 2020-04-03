@@ -65,48 +65,28 @@ public class Home extends Activity {
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
 
-        // Check that default database is present otherwise copy it to default storage
-        File defaultPath = this.getExternalFilesDir(null);
-        File defaultDir = new File(defaultPath.getAbsolutePath() + File.separator + "Default");
-        Log.d("HOME", "Default dir = " + defaultDir.getAbsolutePath());
-        if (!defaultDir.exists()) {
-            Log.d("HOME", "Default dir does not exists");
-            File defaultImages = new File(defaultDir, "images");
-            boolean mkdirResult = defaultImages.mkdirs();
-            Log.d("HOME", "mkdir result = " + mkdirResult);
-            AssetManager assetManager = getAssets();
-            String[] assets;
-            try {
-                assets = assetManager.list("Default");
-                for (String asset : assets) {
-                    Log.d("HOME", "asset = " + asset);
-                    if (asset.endsWith(".xml")) {
-                        copyFileFromAssets(assetManager, asset, defaultDir.getAbsolutePath());
-                    } else {
-                        copyFileFromAssets(assetManager, asset, defaultImages.getAbsolutePath());
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("HOME", "Default dir exists");
-        }
-
         // Build list of available databases
         ArrayList<String> allFiles = new ArrayList<>();
-        // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Hide sample database"
-        boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_DATABASE, false);
-        // Get Databases Root location
-        String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, this.getExternalFilesDir(null).toString());
 
-        // Add databases found in databases root location
-        getFilesRec(allFiles, databasesRootLocation, true);
-        // Add default database if not deactivated or if there are no other database
-        if ((allFiles.size() == 0) || !hideSampledatabase)
-            getFilesRec(allFiles, defaultDir.getAbsolutePath(), false);
+        // Check that default database is present otherwise we copy it to default storage
+        File defaultPath = this.getExternalFilesDir(null);
+        if (defaultPath != null) {
+            File defaultDir = new File(defaultPath.getAbsolutePath() + File.separator + "Default");
+            checkDefaultDatabase(defaultDir);
+
+            // Get preferences
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
+            // Get flag "Hide sample database"
+            boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_DATABASE, false);
+            // Get Databases Root location
+            String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
+
+            // Add databases found in databases root location
+            getFilesRec(allFiles, databasesRootLocation, true);
+            // Add default database if not deactivated or if there are no other database
+            if ((allFiles.size() == 0) || !hideSampledatabase)
+                getFilesRec(allFiles, defaultDir.getAbsolutePath(), false);
+        }
 
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
@@ -118,7 +98,7 @@ public class Home extends Activity {
                 if (MainList.itemsList != null)
                     MainList.itemsList.clear();
                 MainList.itemsList = null;
-                MainList.itemsList = readListFromXml(path);
+                MainList.itemsList = readXMLFile(path);
                 Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
                 path = new File(path).getParent();
                 MainList.dbpath = path;
@@ -203,6 +183,34 @@ public class Home extends Activity {
         }
     }
 
+    private void checkDefaultDatabase(File defaultPath) {
+        Log.d("HOME", "Default dir = " + defaultPath.getAbsolutePath());
+        if (!defaultPath.exists()) {
+            Log.d("HOME", "Default dir does not exists");
+            File defaultImages = new File(defaultPath, "images");
+            boolean mkdirResult = defaultImages.mkdirs();
+            Log.d("HOME", "mkdir result = " + mkdirResult);
+            AssetManager assetManager = getAssets();
+            try {
+                String[] assets = assetManager.list("Default");
+                if (assets == null)
+                    return;
+                for (String asset : assets) {
+                    Log.d("HOME", "asset = " + asset);
+                    if (asset.endsWith(".xml")) {
+                        copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
+                    } else {
+                        copyFileFromAssets(assetManager, asset, defaultImages.getAbsolutePath());
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d("HOME", "Default dir exists");
+        }
+    }
+
     private void copyFileFromAssets(AssetManager assetManager, String file2Copy, String destDir) {
         FileChannel in_chan = null, out_chan = null;
         try {
@@ -254,14 +262,13 @@ public class Home extends Activity {
         }
     }
 
-    public ArrayList<DbItem> readListFromXml(String path) {
+    public ArrayList<DbItem> readXMLFile(String path) {
         ArrayList<DbItem> itemsList = new ArrayList<>();
         FileInputStream fin = null;
         InputStreamReader isr = null;
 
         XmlPullParser xmlFile = Xml.newPullParser();
         try {
-            //fIn = openFileInput( path);
             fin = new FileInputStream(path);
             isr = new InputStreamReader(fin);
             xmlFile.setInput(isr);
@@ -272,92 +279,51 @@ public class Home extends Activity {
             boolean enterElement = false;
             boolean enterContent = false;
             boolean enterField = false;
-            // 1 = field1, 2 = field2, ... , 6 = images
+            // 1 = field, 2 = images
             int type = 0;
-            int fIndex = 0;
             String fName = null;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
                     String strNode = xmlFile.getName();
-                    if (strNode.equals("element")) {
+                    if (strNode.equals("content")) {
+                        enterContent = true;
+                        enterField = false;
+                        enterElement = false;
+                        MainList.dbInfos = new DatabaseInfos();
+                    } else if (strNode.equals("field")) {
+                        enterContent = false;
+                        enterField = true;
+                        enterElement = false;
+                    } else if (strNode.equals("element")) {
+                        enterContent = false;
+                        enterField = false;
                         enterElement = true;
                         element = new DbItem();
-                    } else if (enterElement && (strNode.equals("field1")))
-                        type = 1;
-                    else if (enterElement && (strNode.equals("field2")))
-                        type = 2;
-                    else if (enterElement && (strNode.equals("field3")))
-                        type = 3;
-                    else if (enterElement && (strNode.equals("field4")))
-                        type = 4;
-                    else if (enterElement && (strNode.equals("field5")))
-                        type = 5;
-                    else if (enterElement && (strNode.equals("img")))
-                        type = 6;
-                    else if (strNode.equals("content")) {
-                        enterContent = true;
-                        MainList.dbInfos = new DatabaseInfos();
-                    } else if (enterContent && (strNode.equals("name")))
-                        type = 1;
-                    else if (enterContent && (strNode.equals("description")))
-                        type = 2;
-                    else if (enterContent && (strNode.equals("version")))
-                        type = 3;
-                    else if (strNode.equals("field")) {
-                        enterField = true;
-                    } else if (enterField && (strNode.equals("name")))
-                        type = 1;
-                    else if (enterField && (strNode.equals("number")))
-                        type = 2;
-                    else if (enterField && (strNode.equals("description")))
-                        type = 3;
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    String strNode = xmlFile.getName();
-                    switch (strNode) {
-                        case "element":
-                            itemsList.add(element);
-                            enterElement = false;
-                            break;
-                        case "content":
-                            enterContent = false;
-                            break;
-                        case "field":
-                            if (fIndex < 1 || fIndex > 5)
-                                Toast.makeText(getApplicationContext(),
-                                        "Field error : index = " + fIndex + ", name = " + fName,
-                                        Toast.LENGTH_LONG).show();
-
-                            MainList.dbInfos.setFieldName(fName, fIndex);
-                            enterField = false;
-                            break;
+                    } else if (enterElement) {
+                        if (strNode.equals("field"))
+                            type = 1;
+                        else if (strNode.equals("img"))
+                            type = 2;
+                    } else if (enterContent) {
+                        if (strNode.equals("name"))
+                            type = 1;
+                        else if (strNode.equals("description"))
+                            type = 2;
+                        else if (strNode.equals("version"))
+                            type = 3;
+                    } else if (enterField) {
+                        if (strNode.equals("name"))
+                            type = 1;
+                        else if (strNode.equals("description"))
+                            type = 2;
                     }
-                    type = 0;
                 } else if (eventType == XmlPullParser.TEXT) {
                     if (enterElement) {
-/*
-                        int nbAttribute = xmlFile.getAttributeCount();
-                        Log.d("HOME", "Number of attributes = " + nbAttribute);
-                        for (int i = 0; i < nbAttribute; i++) {
-                            Log.d("HOME", "Attribute : name = " + xmlFile.getAttributeName(i) + ", value = " + xmlFile.getAttributeValue(i));
-                        }
-*/
                         switch (type) {
                             case 1:
-                                element.setField1(xmlFile.getText());
+                                element.addField(xmlFile.getText());
                                 break;
                             case 2:
-                                element.setField2(xmlFile.getText());
-                                break;
-                            case 3:
-                                element.setField3(xmlFile.getText());
-                                break;
-                            case 4:
-                                element.setField4(xmlFile.getText());
-                                break;
-                            case 5:
-                                element.setField5(xmlFile.getText());
-                                break;
-                            case 6:
                                 element.addImagePath(xmlFile.getText());
                                 break;
                         }
@@ -374,23 +340,32 @@ public class Home extends Activity {
                                 break;
                         }
                     } else if (enterField) {
-                        switch (type) {
-                            case 1:
-                                fName = xmlFile.getText();
-                                break;
-                            case 2:
-                                fIndex = Integer.parseInt(xmlFile.getText());
-                                break;
-                            case 3:
-                                break;
+                        if (type == 1) {
+                            fName = xmlFile.getText();
                         }
                     }
+                } else if (eventType == XmlPullParser.END_TAG) {
+                    String strNode = xmlFile.getName();
+                    switch (strNode) {
+                        case "element":
+                            itemsList.add(element);
+                            enterElement = false;
+                            break;
+                        case "content":
+                            enterContent = false;
+                            break;
+                        case "field":
+                            MainList.dbInfos.addFieldName(fName);
+                            enterField = false;
+                            break;
+                    }
+                    type = 0;
                 }
 
                 eventType = xmlFile.next();
             }
-        } catch (XmlPullParserException | IOException e1) {
-            e1.printStackTrace();
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
         } finally {
             try {
                 if (isr != null) {
