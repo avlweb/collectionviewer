@@ -25,7 +25,7 @@ public class MainList extends Activity {
     public static int selectedItemPosition = -1;
     public static int maxPosition = 0;
     public static DatabaseInfos dbInfos = null;
-    public static int imgIdx = 1;
+    public static int imgIdx = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="utf-8"?>
 <database>
     <content>
         <name>Sample database</name>
         <description>Sample database to show how EncycloViewer works ! This database is a collection of shapes.</description>
         <version>1.0</version>
-        <changelog>- 1.0 : Initial creation</changelog>
     </content>
     <fields>
         <fielddesc>

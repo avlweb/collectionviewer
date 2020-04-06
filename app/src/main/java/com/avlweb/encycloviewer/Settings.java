@@ -180,14 +180,15 @@ public class Settings extends Activity {
                                  Intent resultData) {
         if (requestCode == 102541 && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the directory that the user selected.
-            Uri uri = null;
             if (resultData != null) {
-                uri = resultData.getData();
-                // Perform operations on the directory using its URI
-                ArrayList<String> files = new ArrayList<>();
-                getXmlFiles(files, uri);
-                for (String file : files) {
-                    Log.d("SETTINGS", "file = " + file);
+                Uri uri = resultData.getData();
+                if (uri != null) {
+                    // Perform operations on the directory using its URI
+                    ArrayList<String> files = new ArrayList<>();
+                    getXmlFiles(files, uri);
+                    for (String file : files) {
+                        Log.d("SETTINGS", "file = " + file);
+                    }
                 }
             }
         }

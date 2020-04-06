@@ -6,10 +6,10 @@ public class DatabaseInfos {
     private String name;
     private String description;
     private String version;
-    private ArrayList<String> fieldNames;
+    private ArrayList<FieldDescription> fieldDescriptions;
 
     public DatabaseInfos() {
-        fieldNames = new ArrayList<>();
+        fieldDescriptions = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -36,21 +36,28 @@ public class DatabaseInfos {
         return this.version;
     }
 
-    public ArrayList<String> getFieldNames() {
-        return this.fieldNames;
+    public ArrayList<FieldDescription> getFieldDescriptions() {
+        return this.fieldDescriptions;
+    }
+
+    public int getNbFields() {
+        if (this.fieldDescriptions != null) {
+            return this.fieldDescriptions.size();
+        }
+        return 0;
     }
 
     public String getFieldName(int num) {
-        if (this.fieldNames != null) {
-            if ((num > 0) && (num <= this.fieldNames.size()))
-                return this.fieldNames.get(num - 1);
+        if (this.fieldDescriptions != null) {
+            if ((num >= 0) && (num < this.fieldDescriptions.size()))
+                return this.fieldDescriptions.get(num).getName();
             else
-                return this.fieldNames.get(0);
+                return this.fieldDescriptions.get(0).getName();
         }
         return null;
     }
 
-    public void addFieldName(String name) {
-        this.fieldNames.add(name);
+    public void addFieldDescription(FieldDescription field) {
+        this.fieldDescriptions.add(field);
     }
 }

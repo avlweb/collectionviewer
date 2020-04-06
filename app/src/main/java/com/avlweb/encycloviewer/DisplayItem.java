@@ -167,16 +167,16 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         MainList.selectedItemPosition = this.position;
 
         TextView editText1 = findViewById(R.id.textView1);
-        editText1.setText(currentElement.getField(1));
+        editText1.setText(currentElement.getField(0));
 
         TextView editText2 = findViewById(R.id.textView3);
-        editText2.setText(currentElement.getField(2));
+        editText2.setText(currentElement.getField(1));
 
         if (MainList.imgIdx > currentElement.getLastImageIndex())
-            MainList.imgIdx = 1;
+            MainList.imgIdx = 0;
 
         TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx, currentElement.getLastImageIndex()));
+        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
 
         displayImage();
     }
@@ -185,9 +185,9 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.details));
         builder.setIcon(R.drawable.ic_launcher);
-        builder.setMessage(MainList.dbInfos.getFieldName(3) + " : " + currentElement.getField(3)
-                + "\n" + MainList.dbInfos.getFieldName(4) + " : " + currentElement.getField(4)
-                + "\n" + MainList.dbInfos.getFieldName(5) + " : " + currentElement.getField(5));
+        builder.setMessage(MainList.dbInfos.getFieldName(2) + " : " + currentElement.getField(2)
+                + "\n" + MainList.dbInfos.getFieldName(3) + " : " + currentElement.getField(3)
+                + "\n" + MainList.dbInfos.getFieldName(4) + " : " + currentElement.getField(4));
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -222,13 +222,13 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     private void showNextImage() {
-        if (MainList.imgIdx < currentElement.getLastImageIndex())
+        if (MainList.imgIdx < (currentElement.getLastImageIndex() - 1))
             MainList.imgIdx++;
         else
-            MainList.imgIdx = 1;
+            MainList.imgIdx = 0;
 
         TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx, currentElement.getLastImageIndex()));
+        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
 
         displayImage();
     }

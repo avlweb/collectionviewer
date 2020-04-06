@@ -102,6 +102,7 @@ public class Home extends Activity {
                 Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
                 path = new File(path).getParent();
                 MainList.dbpath = path;
+                MainList.selectedItemPosition = 0;
 
                 openDatabase(null);
             }
@@ -276,12 +277,12 @@ public class Home extends Activity {
             int eventType = xmlFile.getEventType();
 
             DbItem element = null;
+            FieldDescription field = null;
             boolean enterElement = false;
             boolean enterContent = false;
             boolean enterFielddesc = false;
             // 1 = field, 2 = images
             int type = 0;
-            String fName = null;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
                     String strNode = xmlFile.getName();
@@ -294,28 +295,42 @@ public class Home extends Activity {
                         enterContent = false;
                         enterFielddesc = true;
                         enterElement = false;
+                        field = new FieldDescription();
                     } else if (strNode.equals("element")) {
                         enterContent = false;
                         enterFielddesc = false;
                         enterElement = true;
                         element = new DbItem();
                     } else if (enterElement) {
-                        if (strNode.equals("field"))
-                            type = 1;
-                        else if (strNode.equals("img"))
-                            type = 2;
+                        switch (strNode) {
+                            case "field":
+                                type = 1;
+                                break;
+                            case "img":
+                                type = 2;
+                                break;
+                        }
                     } else if (enterContent) {
-                        if (strNode.equals("name"))
-                            type = 1;
-                        else if (strNode.equals("description"))
-                            type = 2;
-                        else if (strNode.equals("version"))
-                            type = 3;
+                        switch (strNode) {
+                            case "name":
+                                type = 1;
+                                break;
+                            case "description":
+                                type = 2;
+                                break;
+                            case "version":
+                                type = 3;
+                                break;
+                        }
                     } else if (enterFielddesc) {
-                        if (strNode.equals("name"))
-                            type = 1;
-                        else if (strNode.equals("description"))
-                            type = 2;
+                        switch (strNode) {
+                            case "name":
+                                type = 1;
+                                break;
+                            case "description":
+                                type = 2;
+                                break;
+                        }
                     }
                 } else if (eventType == XmlPullParser.TEXT) {
                     if (enterElement) {
@@ -340,8 +355,14 @@ public class Home extends Activity {
                                 break;
                         }
                     } else if (enterFielddesc) {
-                        if (type == 1) {
-                            fName = xmlFile.getText();
+                        switch (type) {
+                            case 1:
+                                field.setName(xmlFile.getText());
+                                field.setId(View.generateViewId());
+                                break;
+                            case 2:
+                                field.setDescription(xmlFile.getText());
+                                break;
                         }
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
@@ -355,7 +376,7 @@ public class Home extends Activity {
                             enterContent = false;
                             break;
                         case "fielddesc":
-                            MainList.dbInfos.addFieldName(fName);
+                            MainList.dbInfos.addFieldDescription(field);
                             enterFielddesc = false;
                             break;
                     }

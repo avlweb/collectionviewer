@@ -5,129 +5,24 @@
     tools:context=".SearchInDatabase">
 
     <LinearLayout
-        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/TextView01"
+        <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/field1_"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/EditText01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/words_to_search"
-            android:hint="@string/words_to_search"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/TextView02"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/field2_"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/EditText02"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/words_to_search"
-            android:hint="@string/words_to_search"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/TextView03"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/field3_"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/EditText03"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/words_to_search"
-            android:hint="@string/words_to_search"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/TextView04"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/field4_"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/EditText04"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/words_to_search"
-            android:hint="@string/words_to_search"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/TextView05"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/field5_"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/EditText05"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="@string/words_to_search"
-            android:hint="@string/words_to_search"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:textSize="14sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal">
+            android:layout_marginVertical="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button1"

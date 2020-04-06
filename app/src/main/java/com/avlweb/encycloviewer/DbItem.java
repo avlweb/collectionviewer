@@ -33,8 +33,8 @@ public class DbItem {
     }
 
     public String getField(int num) {
-        if ((num > 0) && (num <= this.fields.size()))
-            return this.fields.get(num - 1);
+        if ((num >= 0) && (num < this.fields.size()))
+            return this.fields.get(num);
         else
             return this.fields.get(0);
     }
@@ -44,8 +44,8 @@ public class DbItem {
     }
 
     public String getImagePath(int num) {
-        if ((num > 0) && (num <= this.imagePaths.size()))
-            return this.imagePaths.get(num - 1);
+        if ((num >= 0) && (num < this.imagePaths.size()))
+            return this.imagePaths.get(num);
         else
             return this.imagePaths.get(0);
     }

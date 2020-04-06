@@ -4,9 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -15,19 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.LinearLayout.LayoutParams;
 
 import androidx.core.app.NavUtils;
 
 public class SearchInDatabase extends Activity {
-    private static String fSearch1 = null;
-    private static String fSearch2 = null;
-    private static String fSearch3 = null;
-    private static String fSearch4 = null;
-    private static String fSearch5 = null;
+    private static String[] fSearch = null;
+    private static int nbFields = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,54 +39,38 @@ public class SearchInDatabase extends Activity {
         }
 
         if (MainList.dbInfos != null) {
-
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
-
-            for (String name : MainList.dbInfos.getFieldNames()) {
+            int idx = 0;
+            if ((nbFields == 0) || (nbFields != MainList.dbInfos.getNbFields())) {
+                nbFields = MainList.dbInfos.getNbFields();
+                fSearch = null;
+                fSearch = new String[nbFields];
+            }
+            for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
                 TextView textView = new TextView(this);
-                textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT));
-                textView.setText(name);
+                textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                textView.setText(field.getName());
                 textView.setTextColor(0xff000000);
-                textView.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
+                textView.setPadding(20, 20, 20, 20);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                 textView.setTypeface(null, Typeface.BOLD);
                 linearLayout.addView(textView);
+
+                EditText editText = new EditText(this);
+                editText.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                editText.setHint(getString(R.string.words_to_search));
+                editText.setHintTextColor(0xffaaaaaa);
+                editText.setGravity(Gravity.TOP);
+                editText.setPadding(20, 0, 20, 10);
+                editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                editText.setSingleLine();
+                editText.setId(field.getId());
+                linearLayout.addView(editText);
+
+                if (fSearch[idx] != null) editText.setText(fSearch[idx]);
+                idx++;
             }
-
-            TextView textView = findViewById(R.id.TextView01);
-            textView.setText(MainList.dbInfos.getFieldName(1));
-            textView = findViewById(R.id.TextView02);
-            textView.setText(MainList.dbInfos.getFieldName(2));
-            textView = findViewById(R.id.TextView03);
-            textView.setText(MainList.dbInfos.getFieldName(3));
-            textView = findViewById(R.id.TextView04);
-            textView.setText(MainList.dbInfos.getFieldName(4));
-            textView = findViewById(R.id.TextView05);
-            textView.setText(MainList.dbInfos.getFieldName(5));
-        }
-
-        EditText editText;
-        if (fSearch1 != null) {
-            editText = findViewById(R.id.EditText01);
-            editText.setText(fSearch1);
-            editText.requestFocus();
-        }
-        if (fSearch2 != null) {
-            editText = findViewById(R.id.EditText02);
-            editText.setText(fSearch2);
-        }
-        if (fSearch3 != null) {
-            editText = findViewById(R.id.EditText03);
-            editText.setText(fSearch3);
-        }
-        if (fSearch4 != null) {
-            editText = findViewById(R.id.EditText04);
-            editText.setText(fSearch4);
-        }
-        if (fSearch5 != null) {
-            editText = findViewById(R.id.EditText05);
-            editText.setText(fSearch5);
         }
     }
 
@@ -100,229 +80,74 @@ public class SearchInDatabase extends Activity {
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     public void searchInDatabase(View view) {
-        String[] stringsToSearch1, stringsToSearch2, stringsToSearch3, stringsToSearch4, stringsToSearch5;
-        int i, j, nbStringsOk;
-        EditText editText;
-        int nbElementsFound = 0;
-        DbItem dbItem;
+        String[][] stringsToSearch = new String[nbFields][];
 
-        stringsToSearch1 = null;
-        stringsToSearch2 = null;
-        stringsToSearch3 = null;
-        stringsToSearch4 = null;
-        stringsToSearch5 = null;
+        int idx = 0;
+        int nbFieldsToMatch = 0;
+        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+            EditText editText = findViewById(field.getId());
+            if ((editText.getText() != null) && (editText.getText().length() > 0)) {
+                fSearch[idx] = editText.getText().toString();
+                stringsToSearch[idx] = fSearch[idx].split(",");
+                nbFieldsToMatch++;
+            }
+            idx++;
+        }
 
-        editText = findViewById(R.id.EditText01);
-        fSearch1 = editText.getText().toString();
-        if (fSearch1.length() > 0)
-            stringsToSearch1 = fSearch1.split(",");
-
-        editText = findViewById(R.id.EditText02);
-        fSearch2 = editText.getText().toString();
-        if (fSearch2.length() > 0)
-            stringsToSearch2 = fSearch2.split(",");
-
-        editText = findViewById(R.id.EditText03);
-        fSearch3 = editText.getText().toString();
-        if (fSearch3.length() > 0)
-            stringsToSearch3 = fSearch3.split(",");
-
-        editText = findViewById(R.id.EditText04);
-        fSearch4 = editText.getText().toString();
-        if (fSearch4.length() > 0)
-            stringsToSearch4 = fSearch4.split(",");
-
-        editText = findViewById(R.id.EditText05);
-        fSearch5 = editText.getText().toString();
-        if (fSearch5.length() > 0)
-            stringsToSearch5 = fSearch5.split(",");
-
-        // Si tous les champs sont vides alors on ne fait rien !
-        if ((fSearch1.length() == 0) && (fSearch2.length() == 0) && (fSearch3.length() == 0) && (fSearch4.length() == 0) && (fSearch5.length() == 0))
+        if (nbFieldsToMatch == 0)
             return;
 
-		/*
-		AlertDialog alertDialog = new AlertDialog.Builder( this).create();
-		alertDialog.setTitle( "Search");
-		alertDialog.setIcon(R.drawable.ic_launcher);
-		alertDialog.setMessage( "Criterias : (" + Arrays.toString(stringsToSearch1)
-				+ "), (" + Arrays.toString(stringsToSearch2)
-				+ "), (" + Arrays.toString(stringsToSearch3)
-				+ "), (" + Arrays.toString(stringsToSearch4)
-				+ "), (" + Arrays.toString(stringsToSearch5) + ")");
-		alertDialog.setButton( "OK", new DialogInterface.OnClickListener()
-		{ 
-			public void onClick( DialogInterface dialog, int which) { dialog.cancel(); }
-		});
-		alertDialog.show();
-		*/
-
         if (MainList.itemsList != null) {
-            for (i = 0; i < MainList.itemsList.size(); i++) {
-                dbItem = MainList.itemsList.get(i);
-                dbItem.setNotSelected();
-            }
+            for (DbItem item : MainList.itemsList)
+                item.setNotSelected();
 
-            for (i = 0; i < MainList.itemsList.size(); i++) {
-                dbItem = MainList.itemsList.get(i);
-                String element1 = dbItem.getField(1).toLowerCase();
-                String element2 = dbItem.getField(2).toLowerCase();
-                String element3 = dbItem.getField(3).toLowerCase();
-                String element4 = dbItem.getField(4).toLowerCase();
-                String element5 = dbItem.getField(5).toLowerCase();
-/*
-                if (stringsToSearch1 != null) {
-                    if (element.getField1() == null)
+            int nbElementsFound = 0;
+            for (DbItem item : MainList.itemsList) {
+
+                int nbFieldsMatching = 0;
+                for (idx = 0; idx < nbFields; idx++) {
+                    if (stringsToSearch[idx] == null)
                         continue;
 
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch1.length; j++) {
-                        if (element.getField1().contains(stringsToSearch1[j]))
+                    String element = item.getField(idx).toLowerCase();
+                    if (element.length() == 0)
+                        continue;
+
+                    int nbStringsOk = 0;
+                    for (int j = 0; j < stringsToSearch[idx].length; j++) {
+                        if (element.contains(stringsToSearch[idx][j]))
                             nbStringsOk++;
+                        else
+                            break;
                     }
-                    if (nbStringsOk != stringsToSearch1.length)
-                        continue;
+
+                    if (nbStringsOk == stringsToSearch[idx].length)
+                        nbFieldsMatching++;
+                    else
+                        break;
                 }
 
-                if (stringsToSearch2 != null) {
-                    if (element.getField2() == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch2.length; j++) {
-                        if (element.getField2().contains(stringsToSearch2[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch2.length)
-                        continue;
+                if (nbFieldsMatching == nbFieldsToMatch) {
+                    item.setSelected();
+                    nbElementsFound++;
                 }
-
-                if (stringsToSearch3 != null) {
-                    if (element.getField3() == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch3.length; j++) {
-                        if (element.getField3().contains(stringsToSearch3[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch3.length)
-                        continue;
-                }
-
-                if (stringsToSearch4 != null) {
-                    if (element.getField4() == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch4.length; j++) {
-                        if (element.getField4().contains(stringsToSearch4[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch4.length)
-                        continue;
-                }
-
-                if (stringsToSearch5 != null) {
-                    if (element.getField5() == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch5.length; j++) {
-                        if (element.getField5().contains(stringsToSearch5[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch5.length)
-                        continue;
-                }
-*/
-                if (stringsToSearch1 != null) {
-                    if (element1 == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch1.length; j++) {
-                        if (element1.contains(stringsToSearch1[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch1.length)
-                        continue;
-                }
-
-                if (stringsToSearch2 != null) {
-                    if (element2 == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch2.length; j++) {
-                        if (element2.contains(stringsToSearch2[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch2.length)
-                        continue;
-                }
-
-                if (stringsToSearch3 != null) {
-                    if (element3 == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch3.length; j++) {
-                        if (element3.contains(stringsToSearch3[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch3.length)
-                        continue;
-                }
-
-                if (stringsToSearch4 != null) {
-                    if (element4 == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch4.length; j++) {
-                        if (element4.contains(stringsToSearch4[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch4.length)
-                        continue;
-                }
-
-                if (stringsToSearch5 != null) {
-                    if (element5 == null)
-                        continue;
-
-                    nbStringsOk = 0;
-                    for (j = 0; j < stringsToSearch5.length; j++) {
-                        if (element5.contains(stringsToSearch5[j]))
-                            nbStringsOk++;
-                    }
-                    if (nbStringsOk != stringsToSearch5.length)
-                        continue;
-                }
-
-                dbItem.setSelected();
-                nbElementsFound++;
             }
 
             if (nbElementsFound == 0) {
-                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle(R.string.search);
-                alertDialog.setIcon(R.drawable.ic_launcher);
-                alertDialog.setMessage(getString(R.string.no_element_found));
-                alertDialog.setButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.search);
+                builder.setIcon(R.drawable.ic_launcher);
+                builder.setMessage(getString(R.string.no_element_found));
+                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-                alertDialog.show();
+                builder.create().show();
 
-                for (i = 0; i < MainList.itemsList.size(); i++) {
-                    dbItem = MainList.itemsList.get(i);
-                    dbItem.setSelected();
-                }
+                for (DbItem item : MainList.itemsList)
+                    item.setSelected();
             } else
                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
 
@@ -331,30 +156,16 @@ public class SearchInDatabase extends Activity {
     }
 
     public void clearSearch(View view) {
-        DbItem element;
-
-        for (int i = 0; i < MainList.itemsList.size(); i++) {
-            element = MainList.itemsList.get(i);
-            element.setSelected();
+        // It's time to clean
+        for (DbItem item : MainList.itemsList)
+            item.setSelected();
+        int idx = 0;
+        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+            EditText editText = findViewById(field.getId());
+            editText.setText("");
+            fSearch[idx] = null;
+            idx++;
         }
-
-        fSearch1 = null;
-        fSearch2 = null;
-        fSearch3 = null;
-        fSearch4 = null;
-        fSearch5 = null;
-
-        EditText editText = findViewById(R.id.EditText01);
-        editText.setText("");
-        editText = findViewById(R.id.EditText02);
-        editText.setText("");
-        editText = findViewById(R.id.EditText03);
-        editText.setText("");
-        editText = findViewById(R.id.EditText04);
-        editText.setText("");
-        editText = findViewById(R.id.EditText05);
-        editText.setText("");
-
         MainList.selectedItemPosition = 0;
         Toast.makeText(getApplicationContext(), R.string.clear_done, Toast.LENGTH_SHORT).show();
     }
