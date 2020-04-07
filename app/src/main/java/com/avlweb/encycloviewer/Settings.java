@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.io.File;
 
 import androidx.core.app.NavUtils;
 import androidx.documentfile.provider.DocumentFile;
@@ -54,9 +55,12 @@ public class Settings extends Activity {
         Switch hide = findViewById(R.id.switch_hide);
         hide.setChecked(hideSampledatabase);
         // Get Databases Root location
-        String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, this.getExternalFilesDir(null).toString());
-        TextView textView = findViewById(R.id.EditTextRootLocation);
-        textView.setText(databasesRootLocation);
+        File defaultPath = this.getExternalFilesDir(null);
+        if (defaultPath != null) {
+            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.toString());
+            TextView textView = findViewById(R.id.EditTextRootLocation);
+            textView.setText(databasesRootLocation);
+        }
         // Get Scrollbar position
         int scrollbar = pref.getInt(KEY_SCROLLBAR, 0);
         Spinner spinner = findViewById(R.id.spinnerScrollbar);
@@ -183,11 +187,31 @@ public class Settings extends Activity {
             if (resultData != null) {
                 Uri uri = resultData.getData();
                 if (uri != null) {
-                    // Perform operations on the directory using its URI
-                    ArrayList<String> files = new ArrayList<>();
-                    getXmlFiles(files, uri);
-                    for (String file : files) {
-                        Log.d("SETTINGS", "file = " + file);
+                    File defaultPath = Environment.getExternalStorageDirectory();
+//                    Log.d("SETTINGS", "getExternalStorageDirectory() = " + Environment.getExternalStorageDirectory());
+//                    Log.d("SETTINGS", "getDataDirectory() = " + Environment.getDataDirectory());
+//                    Log.d("SETTINGS", "getExternalMediaDirs() = " + Arrays.toString(this.getExternalMediaDirs()));
+//                    Log.d("SETTINGS", "getExternalFilesDirs() = " + Arrays.toString(this.getExternalFilesDirs(android.os.Environment.DIRECTORY_DOCUMENTS)));
+                    if (defaultPath != null) {
+                        Log.d("SETTINGS", "default path = " + defaultPath.getAbsolutePath());
+                        String finalPath = defaultPath.getAbsolutePath() + File.separator;
+                        String uriPath = uri.getPath();
+                        if ((uriPath != null) && (uriPath.length() > 0)) {
+                            Log.d("SETTINGS", "uri path = " + uriPath);
+                            if (uriPath.startsWith("/tree/home:")) {
+                                String[] paths = uriPath.split(":");
+                                if (paths.length == 2)
+                                    finalPath += "Documents" + File.separator + paths[1];
+                                else
+                                    finalPath += "Documents";
+                            } else if (uriPath.startsWith("/tree/primary:")) {
+                                String[] paths = uriPath.split(":");
+                                if (paths.length == 2)
+                                    finalPath += paths[1];
+                            }
+                        }
+                        TextView textView = findViewById(R.id.EditTextRootLocation);
+                        textView.setText(finalPath);
                     }
                 }
             }
