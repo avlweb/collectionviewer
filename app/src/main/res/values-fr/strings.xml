@@ -71,4 +71,5 @@
     <string name="name">Nom</string>
     <string name="description">Description</string>
     <string name="fields_list">Liste des champs</string>
+    <string name="open_folder">Open folder</string>
 </resources>

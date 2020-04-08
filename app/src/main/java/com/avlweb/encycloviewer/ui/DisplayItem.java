@@ -234,6 +234,9 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         displayImage();
     }
 
+    public void OpenDetails(View v) {
+    }
+
     @Override
     public void onClick(View v) {
     }
