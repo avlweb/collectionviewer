@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.ui;
 
 import android.Manifest;
 import android.app.ActionBar;
@@ -23,6 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.avlweb.encycloviewer.BuildConfig;
+import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DatabaseInfos;
+import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.FieldDescription;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -91,7 +97,7 @@ public class Home extends Activity {
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
         String[] lv_arr = allFiles.toArray(new String[0]);
-        lv.setAdapter(new ArrayAdapter<>(this, R.layout.mainlist, lv_arr));
+        lv.setAdapter(new ArrayAdapter<>(this, R.layout.my_main_list, lv_arr));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String path = (String) ((TextView) view).getText();

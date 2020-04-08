@@ -1,9 +1,7 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.adapter.MainListAdapter;
+import com.avlweb.encycloviewer.model.DatabaseInfos;
+import com.avlweb.encycloviewer.model.DbItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,25 +66,9 @@ public class MainList extends Activity {
                 return true;
 
             case R.id.menu_about:
-                if (dbInfos != null) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setIcon(R.drawable.ic_launcher);
-                    builder.setTitle(getString(R.string.about_database));
-                    builder.setMessage(getString(R.string.name_points) + dbInfos.getName()
-                            + "\n" +
-                            getString(R.string.description_points) + dbInfos.getDescription()
-                            + "\n" +
-                            getString(R.string.version_points) + dbInfos.getVersion()
-                            + "\n" +
-                            getString(R.string.number_of_items) + itemsList.size());
-                    builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.create().show();
-                }
-
+                intent = new Intent(this, DatabaseDetails.class);
+                intent.putExtra("nbItems", itemsList.size());
+                startActivity(intent);
                 return true;
         }
 

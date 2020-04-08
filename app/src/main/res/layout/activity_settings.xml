@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings">
+    tools:context=".ui.Settings">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,6 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/TextRootLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -64,7 +63,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/TextScrollbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -81,7 +79,6 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/TextFontSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"

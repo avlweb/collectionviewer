@@ -36,14 +36,14 @@
     <string name="view">Vue</string>
     <string name="warning_points">Attention :\u0020</string>
     <string name="warning_permission">Les permissions sont obligatoires donc l\'application va se fermer !</string>
-    <string name="name_points">Nom :\u0020</string>
+    <string name="name_points">Nom :\\u0020</string>
     <string name="not_available">Pas disponible</string>
-    <string name="version_points">Version :\u0020</string>
-    <string name="description_points">Description :\u0020</string>
-    <string name="number_of_items">Nombre d\'éléments :\u0020</string>
+    <string name="version_points">Version :\\u0020</string>
+    <string name="description_points">Description :\\u0020</string>
+    <string name="number_of_items">Nombre d\'éléments</string>
     <string name="build_date_points">Date de compilation :\u0020</string>
     <string name="package_points">Paquet :\u0020</string>
-    <string name="available_databases">Base de données disponibles :</string>
+    <string name="available_databases">Base de données disponibles</string>
     <string name="close">Close</string>
     <string name="settings_saved">Réglages sauvegardés !</string>
     <string name="clear_done">Recherche effacée !</string>
@@ -67,4 +67,8 @@
     <string name="big">gros</string>
     <string name="very_big">très gros</string>
     <string name="number_slash_number">%1$d/%2$d</string>
+    <string name="title_activity_database_details">Database details</string>
+    <string name="name">Nom</string>
+    <string name="description">Description</string>
+    <string name="fields_list">Liste des champs</string>
 </resources>

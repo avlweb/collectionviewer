@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -11,12 +11,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DbItem;
 
 import java.io.File;
 
@@ -98,8 +100,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_display_item, menu);
+        getMenuInflater().inflate(R.menu.activity_display_item, menu);
         return true;
     }
 

@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,7 +19,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avlweb.encycloviewer.R;
+
 import java.io.File;
+import java.util.ArrayList;
 
 import androidx.core.app.NavUtils;
 import androidx.documentfile.provider.DocumentFile;
@@ -65,8 +67,8 @@ public class Settings extends Activity {
         int scrollbar = pref.getInt(KEY_SCROLLBAR, 0);
         Spinner spinner = findViewById(R.id.spinnerScrollbar);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.scrollbar_position_array, R.layout.mainlist);
-        adapter.setDropDownViewResource(R.layout.mainlist);
+                R.array.scrollbar_position_array, R.layout.my_main_list);
+        adapter.setDropDownViewResource(R.layout.my_main_list);
         spinner.setAdapter(adapter);
         spinner.setSelection(scrollbar);
         // Font size
@@ -95,31 +97,24 @@ public class Settings extends Activity {
         button.setChecked(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_search, menu);
-        return true;
-    }
-
     private void doOnFontSizeChanged(RadioGroup group, int checkedId) {
         int checkedRadioId = group.getCheckedRadioButtonId();
-        if (checkedRadioId == R.id.radioButtonSmall) {
-            TextView textSeekbar = findViewById(R.id.TextLorum);
-            textSeekbar.setTextSize(getFontSizeFromPref(0));
-            fontSize = 0;
-        } else if (checkedRadioId == R.id.radioButtonNormal) {
-            TextView textSeekbar = findViewById(R.id.TextLorum);
-            textSeekbar.setTextSize(getFontSizeFromPref(1));
-            fontSize = 1;
-        } else if (checkedRadioId == R.id.radioButtonBig) {
-            TextView textSeekbar = findViewById(R.id.TextLorum);
-            textSeekbar.setTextSize(getFontSizeFromPref(2));
-            fontSize = 2;
-        } else if (checkedRadioId == R.id.radioButtonVerybig) {
-            TextView textSeekbar = findViewById(R.id.TextLorum);
-            textSeekbar.setTextSize(getFontSizeFromPref(3));
-            fontSize = 3;
+        switch (checkedRadioId) {
+            case R.id.radioButtonSmall:
+                fontSize = 0;
+                break;
+            case R.id.radioButtonNormal:
+                fontSize = 1;
+                break;
+            case R.id.radioButtonBig:
+                fontSize = 2;
+                break;
+            case R.id.radioButtonVerybig:
+                fontSize = 3;
+                break;
         }
+        TextView textSeekbar = findViewById(R.id.TextLorum);
+        textSeekbar.setTextSize(getFontSizeFromPref(fontSize));
     }
 
     public static int getFontSizeFromPref(int val) {

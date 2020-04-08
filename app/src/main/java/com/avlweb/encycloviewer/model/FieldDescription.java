@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.model;
 
 public class FieldDescription {
     private int id;
@@ -32,5 +32,10 @@ public class FieldDescription {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

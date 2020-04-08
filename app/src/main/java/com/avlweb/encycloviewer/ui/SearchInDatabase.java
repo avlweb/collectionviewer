@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.FieldDescription;
 
 import androidx.core.app.NavUtils;
 
@@ -72,12 +76,6 @@ public class SearchInDatabase extends Activity {
                 idx++;
             }
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_search, menu);
-        return true;
     }
 
     public void searchInDatabase(View view) {

@@ -37,13 +37,15 @@
     <string name="warning_points">Warning :\u0020</string>
     <string name="warning_permission">Permission is mandatory so application will close !</string>
     <string name="name_points">Name :\u0020</string>
+    <string name="name">Name</string>
     <string name="not_available">Not available</string>
     <string name="version_points">Version :\u0020</string>
     <string name="description_points">Description :\u0020</string>
-    <string name="number_of_items">Number of items :\u0020</string>
+    <string name="description">Description</string>
+    <string name="number_of_items">Number of items</string>
     <string name="build_date_points">Build Date :\u0020</string>
     <string name="package_points">Package :\u0020</string>
-    <string name="available_databases">Available databases :</string>
+    <string name="available_databases">Available databases</string>
     <string name="close">Close</string>
     <string name="settings_saved">Settings saved !</string>
     <string name="clear_done">Clear done !</string>
@@ -67,4 +69,6 @@
     <string name="big">big</string>
     <string name="very_big">very big</string>
     <string name="number_slash_number">%1$d/%2$d</string>
+    <string name="title_activity_database_details">Database details</string>
+    <string name="fields_list">Fields list</string>
 </resources>

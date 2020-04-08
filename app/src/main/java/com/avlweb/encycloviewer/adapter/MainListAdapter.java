@@ -1,8 +1,10 @@
-package com.avlweb.encycloviewer;
+package com.avlweb.encycloviewer.adapter;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.SectionIndexer;
+
+import com.avlweb.encycloviewer.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +19,8 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
     private HashMap<String, Integer> mapIndex;
     private String[] sections;
 
-    MainListAdapter(Context context, List<String> list) {
-        super(context, R.layout.mainlist, list);
+    public MainListAdapter(Context context, List<String> list) {
+        super(context, R.layout.my_main_list, list);
 
         mapIndex = new LinkedHashMap<>();
 
