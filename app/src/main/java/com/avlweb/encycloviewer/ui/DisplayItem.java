@@ -10,11 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.GestureDetector;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.avlweb.encycloviewer.R;
@@ -22,18 +23,20 @@ import com.avlweb.encycloviewer.model.DbItem;
 
 import java.io.File;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NavUtils;
 
 public class DisplayItem extends Activity implements View.OnClickListener {
 
-    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector gestureDetector;
     private View.OnTouchListener gestureListener;
-
     private int position;
+    private boolean detailsOpen = false;
     private DbItem currentElement = null;
+    private boolean imageZoomed;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,19 +68,60 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             }
         };
 
+        ImageView imageView = findViewById(R.id.imageView1);
+        imageView.setOnTouchListener(gestureListener);
+
         displayElement();
+    }
+
+    public void ZoomImage(View v) {
+        ConstraintLayout mConstrainLayout = findViewById(R.id.myclayout);
+        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mConstrainLayout.getLayoutParams();
+        if (!imageZoomed) {
+            lp.matchConstraintPercentHeight = (float) 0.90;
+            View tmpView = findViewById(R.id.view2);
+            tmpView.setVisibility(View.GONE);
+            tmpView = findViewById(R.id.view3);
+            tmpView.setVisibility(View.GONE);
+            TextView textView = findViewById(R.id.textViewDetails);
+            textView.setVisibility(View.GONE);
+            textView = findViewById(R.id.textViewDetails2);
+            textView.setVisibility(View.GONE);
+            ScrollView scrollView = findViewById(R.id.scrollview);
+            scrollView.setVisibility(View.GONE);
+            ImageButton button = findViewById(R.id.buttonPrevious);
+            button.setVisibility(View.GONE);
+            button = findViewById(R.id.buttonBottom);
+            button.setVisibility(View.GONE);
+            imageZoomed = true;
+        } else {
+            lp.matchConstraintPercentHeight = (float) 0.45;
+            View tmpView = findViewById(R.id.view2);
+            tmpView.setVisibility(View.VISIBLE);
+            tmpView = findViewById(R.id.view3);
+            tmpView.setVisibility(View.VISIBLE);
+            TextView textView = findViewById(R.id.textViewDetails);
+            textView.setVisibility(View.VISIBLE);
+            textView = findViewById(R.id.textViewDetails2);
+            textView.setVisibility(View.VISIBLE);
+            ScrollView scrollView = findViewById(R.id.scrollview);
+            scrollView.setVisibility(View.VISIBLE);
+            detailsOpen = true;
+            OpenDetails(null);
+            imageZoomed = false;
+        }
+        mConstrainLayout.setLayoutParams(lp);
     }
 
     private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
-                // right to left swipe
-                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
+                    ZoomImage(null);
+                } else if ((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     displayNextElement();
-                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                } else if ((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     displayPreviousElement();
                 }
             } catch (Exception ignored) {
@@ -99,12 +143,6 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_display_item, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -114,15 +152,6 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             case R.id.details_btn:
                 displayElementDetails();
                 return true;
-/*
-            case R.id.next_btn:
-                displayNextElement();
-                return true;
-
-            case R.id.previous_btn:
-                displayPreviousElement();
-                return true;
-*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -167,17 +196,22 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         MainList.selectedItemPosition = this.position;
 
-        TextView editText1 = findViewById(R.id.textView1);
-        editText1.setText(currentElement.getField(0));
+        TextView textView1 = findViewById(R.id.textView1);
+        textView1.setText(currentElement.getField(0));
 
-        TextView editText2 = findViewById(R.id.textView3);
-        editText2.setText(currentElement.getField(1));
+        TextView textView2 = findViewById(R.id.textView3);
+        textView2.setText(currentElement.getField(1));
 
-        if (MainList.imgIdx > currentElement.getLastImageIndex())
+        if (MainList.imgIdx >= currentElement.getLastImageIndex())
             MainList.imgIdx = 0;
 
-        TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
+        TextView textView3 = findViewById(R.id.textView2);
+        textView3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
+
+        TextView textView4 = findViewById(R.id.textViewDetails2);
+        textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
+                MainList.dbInfos.getFieldName(2), currentElement.getField(2), MainList.dbInfos.getFieldName(3),
+                currentElement.getField(3), MainList.dbInfos.getFieldName(4), currentElement.getField(4)));
 
         displayImage();
     }
@@ -207,7 +241,6 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             ImageView imageView = findViewById(R.id.imageView1);
             imageView.setImageBitmap(myBitmap);
-            imageView.setOnTouchListener(gestureListener);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_launcher);
@@ -235,6 +268,20 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     public void OpenDetails(View v) {
+        ImageButton buttonBottom = findViewById(R.id.buttonBottom);
+        ImageButton buttonPrevious = findViewById(R.id.buttonPrevious);
+        TextView textView = findViewById(R.id.textViewDetails2);
+        if (detailsOpen) {
+            buttonBottom.setVisibility(View.VISIBLE);
+            buttonPrevious.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+            detailsOpen = false;
+        } else {
+            buttonBottom.setVisibility(View.GONE);
+            buttonPrevious.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+            detailsOpen = true;
+        }
     }
 
     @Override
