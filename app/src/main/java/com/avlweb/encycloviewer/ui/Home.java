@@ -100,7 +100,7 @@ public class Home extends Activity {
         lv.setAdapter(new ArrayAdapter<>(this, R.layout.my_main_list, lv_arr));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String path = (String) ((TextView) view).getText();
+                String path = ((TextView) view).getText().toString();
                 if (MainList.itemsList != null)
                     MainList.itemsList.clear();
                 MainList.itemsList = null;

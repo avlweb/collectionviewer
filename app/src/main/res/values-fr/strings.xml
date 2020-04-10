@@ -50,7 +50,7 @@
     <string name="databases_root_location">Chemin par défaut des bases de données</string>
     <string name="hide_sample_database">Cacher la base d\'exemple</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="words_to_search">Mots à chercher séparés par une virgule</string>
+    <string name="words_to_search">Mots à chercher dans %1$s</string>
     <string name="path_personal_root">Path to personal databases</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>

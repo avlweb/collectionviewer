@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="@color/dark_gray"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/app_name"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@android:color/holo_blue_light"
+        android:divider="@color/dark_blue"
         android:dividerHeight="1dp"
         android:paddingHorizontal="5dp" />
 

@@ -2,10 +2,9 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <!--    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
-        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textColor">@color/dark_blue</item>
 
-        <item name="android:colorControlActivated">@android:color/holo_blue_dark</item>
+        <item name="android:colorControlActivated">@color/dark_blue</item>
 
         <!--        <item name="android:fastScrollTextColor">@android:color/white</item>-->
         <!--        <item name="android:fastScrollPreviewBackgroundLeft">@android:color/holo_blue_dark</item>-->

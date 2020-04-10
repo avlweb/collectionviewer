@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class SearchInDatabase extends Activity {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textView.setText(field.getName());
-                textView.setTextColor(0xff000000);
+                textView.setTextColor(getColor(R.color.black));
                 textView.setPadding(20, 20, 20, 20);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                 textView.setTypeface(null, Typeface.BOLD);
@@ -62,11 +61,12 @@ public class SearchInDatabase extends Activity {
 
                 EditText editText = new EditText(this);
                 editText.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-                editText.setHint(getString(R.string.words_to_search));
-                editText.setHintTextColor(0xffaaaaaa);
+                editText.setHint(String.format(getString(R.string.words_to_search), field.getName()));
+                editText.setHintTextColor(getColor(R.color.dark_gray));
                 editText.setGravity(Gravity.TOP);
                 editText.setPadding(20, 0, 20, 10);
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                editText.setMinHeight(48);
                 editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                 editText.setSingleLine();
                 editText.setId(field.getId());

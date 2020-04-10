@@ -52,7 +52,7 @@
     <string name="databases_root_location">Databases Root Location</string>
     <string name="hide_sample_database">Hide sample database</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="words_to_search">Words to search comma separated</string>
+    <string name="words_to_search">Words to search in %1$s</string>
     <string name="path_personal_root">Path to personal databases</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>

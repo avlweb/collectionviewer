@@ -13,6 +13,7 @@
             android:id="@+id/switch_hide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/hide_sample_database"
             android:textColor="@android:color/black"
@@ -44,9 +45,10 @@
                 android:autofillHints="@string/path_personal_root"
                 android:hint="@string/path_personal_root"
                 android:inputType="text"
+                android:minHeight="48dp"
                 android:paddingHorizontal="10dp"
-                android:paddingBottom="10dp"
                 android:textColor="@android:color/black"
+                android:textColorHint="@color/dark_gray"
                 android:textSize="14sp" />
 
             <ImageButton
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="5dp"
-                android:background="@android:color/holo_blue_dark"
+                android:background="@color/dark_blue"
                 android:contentDescription="@string/open_folder"
                 android:onClick="SearchFolder"
                 android:padding="5dp"
@@ -78,6 +80,7 @@
             android:id="@+id/spinnerScrollbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:padding="5dp" />
 
         <TextView
@@ -143,7 +146,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="30dp"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@color/dark_blue"
+            android:contentDescription="@string/save"
             android:onClick="SaveSettings"
             android:padding="10dp"
             android:text="@string/save"

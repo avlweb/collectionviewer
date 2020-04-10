@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="4dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView1" />
 
@@ -48,12 +48,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="25dp"
+        android:background="@color/dark_blue"
         android:contentDescription="@string/zoom"
         android:onClick="ZoomImage"
-        android:padding="5dp"
         android:src="@drawable/action_zoom"
-        app:layout_constraintEnd_toStartOf="@id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/textView1"
+        app:layout_constraintEnd_toStartOf="@id/textView2" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myclayout"
@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="4dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/myclayout" />
 
@@ -101,29 +101,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/dark_blue"
         android:contentDescription="@string/open_folder"
         android:onClick="OpenDetails"
-        android:paddingHorizontal="3dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="3dp"
         android:src="@drawable/navigation_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewDetails" />
+        app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <ImageButton
         android:id="@+id/buttonPrevious"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/dark_blue"
         android:contentDescription="@string/open_folder"
         android:onClick="OpenDetails"
-        android:paddingHorizontal="3dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="3dp"
         android:src="@drawable/navigation_previous_item"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewDetails" />
+        app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <TextView
         android:id="@+id/textViewDetails2"
@@ -144,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="4dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewDetails2" />
 
