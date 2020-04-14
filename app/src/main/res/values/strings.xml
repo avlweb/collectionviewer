@@ -34,17 +34,13 @@
     <string name="list_position">List position = </string>
     <string name="element_not_found">Element not found !</string>
     <string name="view">View</string>
-    <string name="warning_points">Warning :\u0020</string>
+    <string name="warning_points">Warning :</string>
     <string name="warning_permission">Permission is mandatory so application will close !</string>
-    <string name="name_points">Name :\u0020</string>
+    <string name="appli_version">Name : %1$s\nPackage : %2$s\nVersion : %3$s\nDate : %4$s</string>
     <string name="name">Name</string>
     <string name="not_available">Not available</string>
-    <string name="version_points">Version :\u0020</string>
-    <string name="description_points">Description :\u0020</string>
     <string name="description">Description</string>
     <string name="number_of_items">Number of items</string>
-    <string name="build_date_points">Build Date :\u0020</string>
-    <string name="package_points">Package :\u0020</string>
     <string name="available_databases">Available databases</string>
     <string name="close">Close</string>
     <string name="settings_saved">Settings saved !</string>

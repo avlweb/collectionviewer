@@ -24,7 +24,7 @@
     <string name="about_database">Au sujet de la base</string>
     <string name="version">Version</string>
     <string name="settings">Réglages</string>
-    <string name="language">Langue :\u0020</string>
+    <string name="language">Langue</string>
     <string name="scrollbar_position">Position de la barre de défilement</string>
     <string name="save">Sauvegarder</string>
     <string name="ok">OK</string>
@@ -34,15 +34,11 @@
     <string name="list_position">Position dans la liste = </string>
     <string name="element_not_found">Elément non trouvé !</string>
     <string name="view">Vue</string>
-    <string name="warning_points">Attention :\u0020</string>
+    <string name="warning_points">Attention :</string>
     <string name="warning_permission">Les permissions sont obligatoires donc l\'application va se fermer !</string>
-    <string name="name_points">Nom :\\u0020</string>
+    <string name="appli_version">Nom : %1$s\nPaquet : %2$s\nVersion : %3$s\nDate : %4$s</string>
     <string name="not_available">Pas disponible</string>
-    <string name="version_points">Version :\\u0020</string>
-    <string name="description_points">Description :\\u0020</string>
     <string name="number_of_items">Nombre d\'éléments</string>
-    <string name="build_date_points">Date de compilation :\u0020</string>
-    <string name="package_points">Paquet :\u0020</string>
     <string name="available_databases">Base de données disponibles</string>
     <string name="close">Close</string>
     <string name="settings_saved">Réglages sauvegardés !</string>

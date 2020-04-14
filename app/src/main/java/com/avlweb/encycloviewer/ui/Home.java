@@ -24,6 +24,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
+
 import com.avlweb.encycloviewer.BuildConfig;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
@@ -32,23 +36,22 @@ import com.avlweb.encycloviewer.model.FieldDescription;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NavUtils;
-import androidx.core.content.ContextCompat;
-
 public class Home extends Activity {
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
+    private static final String ns = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,11 +67,12 @@ public class Home extends Activity {
         }
 
         // Check permissions because external access is mandatory
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE);
         }
 
         // Build list of available databases
@@ -135,6 +139,7 @@ public class Home extends Activity {
                 return true;
 
             case R.id.menu_version:
+                writeXml();
                 Context context = getApplicationContext();
                 PackageManager packageManager = context.getPackageManager();
                 String packageName = context.getPackageName();
@@ -149,13 +154,8 @@ public class Home extends Activity {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.version));
                 builder.setIcon(R.drawable.ic_launcher);
-                builder.setMessage(getString(R.string.name_points) + context.getString(R.string.app_name)
-                        + "\n" +
-                        getString(R.string.package_points) + packageName
-                        + "\n" +
-                        getString(R.string.version_points) + versionName
-                        + "\n" +
-                        getString(R.string.build_date_points) + buildDate);
+                builder.setMessage(String.format(getString(R.string.appli_version),
+                        context.getString(R.string.app_name), packageName, versionName, buildDate));
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -169,8 +169,10 @@ public class Home extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
-            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE) {
+            // If request is cancelled, the result arrays are empty.
+            if ((grantResults.length >= 2) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
                 // permission was granted, yay!
             } else {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -274,48 +276,39 @@ public class Home extends Activity {
         FileInputStream fin = null;
         InputStreamReader isr = null;
 
-        XmlPullParser xmlFile = Xml.newPullParser();
+        XmlPullParser parser = Xml.newPullParser();
         try {
             fin = new FileInputStream(path);
             isr = new InputStreamReader(fin);
-            xmlFile.setInput(isr);
+            parser.setInput(isr);
 
-            int eventType = xmlFile.getEventType();
+            int eventType = parser.getEventType();
 
-            DbItem element = null;
+            DbItem item = null;
             FieldDescription field = null;
-            boolean enterElement = false;
+            boolean enterItem = false;
             boolean enterContent = false;
             boolean enterFielddesc = false;
             // 1 = field, 2 = images
             int type = 0;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
-                    String strNode = xmlFile.getName();
+                    String strNode = parser.getName();
                     if (strNode.equals("content")) {
                         enterContent = true;
                         enterFielddesc = false;
-                        enterElement = false;
+                        enterItem = false;
                         MainList.dbInfos = new DatabaseInfos();
                     } else if (strNode.equals("fielddesc")) {
                         enterContent = false;
                         enterFielddesc = true;
-                        enterElement = false;
+                        enterItem = false;
                         field = new FieldDescription();
-                    } else if (strNode.equals("element")) {
+                    } else if (strNode.equals("item")) {
                         enterContent = false;
                         enterFielddesc = false;
-                        enterElement = true;
-                        element = new DbItem();
-                    } else if (enterElement) {
-                        switch (strNode) {
-                            case "field":
-                                type = 1;
-                                break;
-                            case "img":
-                                type = 2;
-                                break;
-                        }
+                        enterItem = true;
+                        item = new DbItem();
                     } else if (enterContent) {
                         switch (strNode) {
                             case "name":
@@ -337,47 +330,52 @@ public class Home extends Activity {
                                 type = 2;
                                 break;
                         }
-                    }
-                } else if (eventType == XmlPullParser.TEXT) {
-                    if (enterElement) {
-                        switch (type) {
-                            case 1:
-                                element.addField(xmlFile.getText());
+                    } else if (enterItem) {
+                        switch (strNode) {
+                            case "field":
+                                type = 1;
                                 break;
-                            case 2:
-                                element.addImagePath(xmlFile.getText());
+                            case "img":
+                                type = 2;
                                 break;
                         }
-                    } else if (enterContent) {
+                    }
+                } else if (eventType == XmlPullParser.TEXT) {
+                    if (enterContent) {
                         switch (type) {
                             case 1:
-                                MainList.dbInfos.setName(xmlFile.getText());
+                                MainList.dbInfos.setName(parser.getText());
                                 break;
                             case 2:
-                                MainList.dbInfos.setDescription(xmlFile.getText());
+                                MainList.dbInfos.setDescription(parser.getText());
                                 break;
                             case 3:
-                                MainList.dbInfos.setVersion(xmlFile.getText());
+                                MainList.dbInfos.setVersion(parser.getText());
                                 break;
                         }
                     } else if (enterFielddesc) {
                         switch (type) {
                             case 1:
-                                field.setName(xmlFile.getText());
+                                field.setName(parser.getText());
                                 field.setId(View.generateViewId());
                                 break;
                             case 2:
-                                field.setDescription(xmlFile.getText());
+                                field.setDescription(parser.getText());
+                                break;
+                        }
+                    } else if (enterItem) {
+                        switch (type) {
+                            case 1:
+                                item.addField(parser.getText());
+                                break;
+                            case 2:
+                                item.addImagePath(parser.getText());
                                 break;
                         }
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
-                    String strNode = xmlFile.getName();
+                    String strNode = parser.getName();
                     switch (strNode) {
-                        case "element":
-                            itemsList.add(element);
-                            enterElement = false;
-                            break;
                         case "content":
                             enterContent = false;
                             break;
@@ -385,11 +383,15 @@ public class Home extends Activity {
                             MainList.dbInfos.addFieldDescription(field);
                             enterFielddesc = false;
                             break;
+                        case "item":
+                            itemsList.add(item);
+                            enterItem = false;
+                            break;
                     }
                     type = 0;
                 }
 
-                eventType = xmlFile.next();
+                eventType = parser.next();
             }
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
@@ -407,5 +409,90 @@ public class Home extends Activity {
         }
 
         return itemsList;
+    }
+
+    public void writeXml() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("/storage/emulated/0/Documents/sample_database.xml");
+            XmlSerializer xmlSerializer = Xml.newSerializer();
+            xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            StringWriter writer = new StringWriter();
+
+            xmlSerializer.setOutput(writer);
+            xmlSerializer.startDocument("UTF-8", true);
+            xmlSerializer.startTag(ns, "database");
+
+            insertContent(xmlSerializer);
+            insertFields(xmlSerializer);
+            insertItems(xmlSerializer);
+
+            xmlSerializer.endTag(ns, "database");
+            xmlSerializer.endDocument();
+            xmlSerializer.flush();
+            String dataWrite = writer.toString();
+            fileOutputStream.write(dataWrite.getBytes());
+            fileOutputStream.close();
+
+        } catch (IllegalArgumentException | IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertContent(XmlSerializer xmlSerializer) throws IOException {
+        xmlSerializer.startTag(ns, "content");
+
+        xmlSerializer.startTag(ns, "name");
+        xmlSerializer.text(MainList.dbInfos.getName());
+        xmlSerializer.endTag(ns, "name");
+
+        xmlSerializer.startTag(ns, "description");
+        xmlSerializer.text(MainList.dbInfos.getDescription());
+        xmlSerializer.endTag(ns, "description");
+
+        xmlSerializer.startTag(ns, "version");
+        xmlSerializer.text(MainList.dbInfos.getVersion());
+        xmlSerializer.endTag(ns, "version");
+
+        xmlSerializer.endTag(ns, "content");
+    }
+
+    private void insertFields(XmlSerializer xmlSerializer) throws IOException {
+        xmlSerializer.startTag(ns, "fielddescs");
+        for (FieldDescription desc : MainList.dbInfos.getFieldDescriptions()) {
+            xmlSerializer.startTag(ns, "fielddesc");
+
+            xmlSerializer.startTag(ns, "name");
+            xmlSerializer.text(desc.getName());
+            xmlSerializer.endTag(ns, "name");
+
+            xmlSerializer.startTag(ns, "description");
+            xmlSerializer.text(desc.getDescription());
+            xmlSerializer.endTag(ns, "description");
+
+            xmlSerializer.endTag(ns, "fielddesc");
+        }
+        xmlSerializer.endTag(ns, "fielddescs");
+    }
+
+    public void insertItems(XmlSerializer xmlSerializer) throws IOException {
+        xmlSerializer.startTag(ns, "items");
+        for (DbItem item : MainList.itemsList) {
+            xmlSerializer.startTag(ns, "item");
+
+            for (int idx = 0; idx < item.getNbFields(); idx++) {
+                xmlSerializer.startTag(ns, "field");
+                xmlSerializer.text(item.getField(idx));
+                xmlSerializer.endTag(ns, "field");
+            }
+
+            for (int idx = 0; idx < item.getNbImages(); idx++) {
+                xmlSerializer.startTag(ns, "img");
+                xmlSerializer.text(item.getImagePath(idx));
+                xmlSerializer.endTag(ns, "img");
+            }
+
+            xmlSerializer.endTag(ns, "item");
+        }
+        xmlSerializer.endTag(ns, "items");
     }
 }

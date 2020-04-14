@@ -202,11 +202,11 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         TextView textView2 = findViewById(R.id.textView3);
         textView2.setText(currentElement.getField(1));
 
-        if (MainList.imgIdx >= currentElement.getLastImageIndex())
+        if (MainList.imgIdx >= currentElement.getNbImages())
             MainList.imgIdx = 0;
 
         TextView textView3 = findViewById(R.id.textView2);
-        textView3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
+        textView3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getNbImages()));
 
         TextView textView4 = findViewById(R.id.textViewDetails2);
         textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
@@ -256,13 +256,13 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     private void showNextImage() {
-        if (MainList.imgIdx < (currentElement.getLastImageIndex() - 1))
+        if (MainList.imgIdx < (currentElement.getNbImages() - 1))
             MainList.imgIdx++;
         else
             MainList.imgIdx = 0;
 
         TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getLastImageIndex()));
+        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getNbImages()));
 
         displayImage();
     }

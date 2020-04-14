@@ -32,6 +32,10 @@ public class DbItem {
         this.fields.add(field);
     }
 
+    public int getNbFields() {
+        return this.fields.size();
+    }
+
     public String getField(int num) {
         if ((num >= 0) && (num < this.fields.size()))
             return this.fields.get(num);
@@ -50,7 +54,7 @@ public class DbItem {
             return this.imagePaths.get(0);
     }
 
-    public int getLastImageIndex() {
+    public int getNbImages() {
         return this.imagePaths.size();
     }
 
