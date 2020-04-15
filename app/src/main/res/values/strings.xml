@@ -70,4 +70,15 @@
     <string name="open_folder">Open folder</string>
     <string name="zoom">Zoom</string>
     <string name="modify">Modify</string>
+    <string name="informations">Informations</string>
+    <string name="successfully_saved">Successfully saved !</string>
+    <string name="problem_during_save">There was a problem during save !</string>
+    <string name="field_name">Enter field name</string>
+    <string name="cancel">Cancel</string>
+    <string name="field_description">Field description</string>
+    <string name="add">Add</string>
+    <string name="database_name">Database name</string>
+    <string name="new_database">New Database</string>
+    <string name="new_field">New Field</string>
+    <string name="message_new_database">A new batabase will be created with the given name. You will have to fill its description and add items !</string>
 </resources>

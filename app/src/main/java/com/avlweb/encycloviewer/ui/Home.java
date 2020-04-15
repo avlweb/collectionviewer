@@ -12,13 +12,17 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -128,6 +132,38 @@ public class Home extends Activity {
                 startActivity(intent);
                 return true;
 
+            case R.id.menu_add:
+                LayoutInflater inflater = LayoutInflater.from(this);
+                View dialog = inflater.inflate(R.layout.dialog_new_database, null);
+                final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle(getString(R.string.new_database));
+                alertDialog.setCancelable(true);
+                alertDialog.setMessage(getString(R.string.message_new_database));
+                final EditText fieldName = dialog.findViewById(R.id.fieldName);
+                fieldName.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = fieldName.getText().toString();
+                        if (name.length() > 0) {
+//                        addNewField(name);
+                        }
+                        hideKeyboard();
+                    }
+                });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.setView(dialog);
+                alertDialog.show();
+                return true;
+
             case R.id.menu_version:
                 Context context = getApplicationContext();
                 PackageManager packageManager = context.getPackageManager();
@@ -179,6 +215,11 @@ public class Home extends Activity {
                 alertDialog.show();
             }
         }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
     private void checkDefaultDatabase(File defaultPath) {

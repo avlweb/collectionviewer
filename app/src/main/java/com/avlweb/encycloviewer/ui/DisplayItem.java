@@ -18,13 +18,13 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NavUtils;
+
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 
 import java.io.File;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NavUtils;
 
 public class DisplayItem extends Activity implements View.OnClickListener {
 
@@ -46,7 +46,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
-            actionbar.setDisplayShowTitleEnabled(false);
+//            actionbar.setDisplayShowTitleEnabled(false);
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setDisplayShowHomeEnabled(false);
         }
@@ -78,7 +78,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         ConstraintLayout mConstrainLayout = findViewById(R.id.myclayout);
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mConstrainLayout.getLayoutParams();
         if (!imageZoomed) {
-            lp.matchConstraintPercentHeight = (float) 0.90;
+            lp.matchConstraintPercentHeight = (float) 0.95;
             View tmpView = findViewById(R.id.view2);
             tmpView.setVisibility(View.GONE);
             tmpView = findViewById(R.id.view3);
@@ -95,7 +95,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             button.setVisibility(View.GONE);
             imageZoomed = true;
         } else {
-            lp.matchConstraintPercentHeight = (float) 0.45;
+            lp.matchConstraintPercentHeight = (float) 0.5;
             View tmpView = findViewById(R.id.view2);
             tmpView.setVisibility(View.VISIBLE);
             tmpView = findViewById(R.id.view3);
@@ -196,8 +196,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         MainList.selectedItemPosition = this.position;
 
-        TextView textView1 = findViewById(R.id.textView1);
-        textView1.setText(currentElement.getField(0));
+        setTitle(currentElement.getField(0));
 
         TextView textView2 = findViewById(R.id.textView3);
         textView2.setText(currentElement.getField(1));
