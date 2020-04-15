@@ -69,4 +69,5 @@
     <string name="fields_list">Liste des champs</string>
     <string name="open_folder">Open folder</string>
     <string name="zoom">Zoom</string>
+    <string name="modify">Modifier</string>
 </resources>
