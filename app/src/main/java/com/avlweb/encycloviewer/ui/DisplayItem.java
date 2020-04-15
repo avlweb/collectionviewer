@@ -46,7 +46,6 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
-//            actionbar.setDisplayShowTitleEnabled(false);
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setDisplayShowHomeEnabled(false);
         }

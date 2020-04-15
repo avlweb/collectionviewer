@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
 import com.avlweb.encycloviewer.ui.MainList;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class xmlFactory {
     private static final String ns = null;
@@ -162,7 +164,7 @@ public class xmlFactory {
         return itemsList;
     }
 
-    public static void writeXml() {
+    public static void writeXml(EncycloDatabase database) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("/storage/emulated/0/Documents/sample_database.xml");
             XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -173,13 +175,14 @@ public class xmlFactory {
             xmlSerializer.startDocument("UTF-8", true);
             xmlSerializer.startTag(ns, "database");
 
-            insertContent(xmlSerializer);
-            insertFields(xmlSerializer);
-            insertItems(xmlSerializer);
+            insertContent(xmlSerializer, database.getInfos());
+            insertFields(xmlSerializer, database.getInfos());
+            insertItems(xmlSerializer, database.getItemsList());
 
             xmlSerializer.endTag(ns, "database");
             xmlSerializer.endDocument();
             xmlSerializer.flush();
+
             String dataWrite = writer.toString();
             fileOutputStream.write(dataWrite.getBytes());
             fileOutputStream.close();
@@ -189,27 +192,27 @@ public class xmlFactory {
         }
     }
 
-    private static void insertContent(XmlSerializer xmlSerializer) throws IOException {
+    private static void insertContent(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "content");
 
         xmlSerializer.startTag(ns, "name");
-        xmlSerializer.text(MainList.dbInfos.getName());
+        xmlSerializer.text(dbInfos.getName());
         xmlSerializer.endTag(ns, "name");
 
         xmlSerializer.startTag(ns, "description");
-        xmlSerializer.text(MainList.dbInfos.getDescription());
+        xmlSerializer.text(dbInfos.getDescription());
         xmlSerializer.endTag(ns, "description");
 
         xmlSerializer.startTag(ns, "version");
-        xmlSerializer.text(MainList.dbInfos.getVersion());
+        xmlSerializer.text(dbInfos.getVersion());
         xmlSerializer.endTag(ns, "version");
 
         xmlSerializer.endTag(ns, "content");
     }
 
-    private static void insertFields(XmlSerializer xmlSerializer) throws IOException {
+    private static void insertFields(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "fielddescs");
-        for (FieldDescription desc : MainList.dbInfos.getFieldDescriptions()) {
+        for (FieldDescription desc : dbInfos.getFieldDescriptions()) {
             xmlSerializer.startTag(ns, "fielddesc");
 
             xmlSerializer.startTag(ns, "name");
@@ -225,23 +228,20 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "fielddescs");
     }
 
-    private static void insertItems(XmlSerializer xmlSerializer) throws IOException {
+    private static void insertItems(XmlSerializer xmlSerializer, List<DbItem> items) throws IOException {
         xmlSerializer.startTag(ns, "items");
-        for (DbItem item : MainList.itemsList) {
+        for (DbItem item : items) {
             xmlSerializer.startTag(ns, "item");
-
             for (int idx = 0; idx < item.getNbFields(); idx++) {
                 xmlSerializer.startTag(ns, "field");
                 xmlSerializer.text(item.getField(idx));
                 xmlSerializer.endTag(ns, "field");
             }
-
             for (int idx = 0; idx < item.getNbImages(); idx++) {
                 xmlSerializer.startTag(ns, "img");
                 xmlSerializer.text(item.getImagePath(idx));
                 xmlSerializer.endTag(ns, "img");
             }
-
             xmlSerializer.endTag(ns, "item");
         }
         xmlSerializer.endTag(ns, "items");

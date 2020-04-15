@@ -33,6 +33,10 @@ import androidx.core.content.ContextCompat;
 
 import com.avlweb.encycloviewer.BuildConfig;
 import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DatabaseInfos;
+import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.EncycloDatabase;
+import com.avlweb.encycloviewer.model.FieldDescription;
 import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.io.File;
@@ -147,7 +151,7 @@ public class Home extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         String name = fieldName.getText().toString();
                         if (name.length() > 0) {
-//                        addNewField(name);
+                            createNewDatabase(name);
                         }
                         hideKeyboard();
                     }
@@ -190,6 +194,31 @@ public class Home extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createNewDatabase(String name) {
+        EncycloDatabase database = new EncycloDatabase();
+        DatabaseInfos infos = new DatabaseInfos();
+        infos.setName(name);
+        infos.setDescription("Description");
+        infos.setVersion("1.0");
+        FieldDescription desc = new FieldDescription();
+        desc.setName("Name");
+        desc.setDescription("Name");
+        desc.setId(View.generateViewId());
+        infos.addFieldDescription(desc);
+        desc = new FieldDescription();
+        desc.setName("Description");
+        desc.setDescription("Description");
+        desc.setId(View.generateViewId());
+        infos.addFieldDescription(desc);
+        database.setInfos(infos);
+        DbItem item = new DbItem();
+        item.addField("Item 1");
+        item.addField("Item 1");
+        database.addItemToList(item);
+
+        xmlFactory.writeXml(database);
     }
 
     @Override
@@ -236,7 +265,7 @@ public class Home extends Activity {
                     return;
                 for (String asset : assets) {
                     Log.d("HOME", "asset = " + asset);
-                    if (asset.endsWith(".xml")) {
+                    if (asset.endsWith("Sample_database.xml")) {
                         copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
                     } else {
                         copyFileFromAssets(assetManager, asset, defaultImages.getAbsolutePath());

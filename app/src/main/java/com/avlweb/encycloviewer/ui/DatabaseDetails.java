@@ -26,7 +26,6 @@ import androidx.core.app.NavUtils;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.FieldDescription;
-import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +104,7 @@ public class DatabaseDetails extends Activity {
     }
 
     private boolean writeFile() {
-        xmlFactory.writeXml();
+        //xmlFactory.writeXml();
         return true;
     }
 

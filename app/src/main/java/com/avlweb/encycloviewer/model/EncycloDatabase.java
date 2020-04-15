@@ -24,4 +24,10 @@ public class EncycloDatabase {
     public void setItemsList(ArrayList<DbItem> itemsList) {
         this.itemsList = itemsList;
     }
+
+    public void addItemToList(DbItem item) {
+        if (itemsList == null)
+            itemsList = new ArrayList<>();
+        this.itemsList.add(item);
+    }
 }
