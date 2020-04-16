@@ -81,4 +81,5 @@
     <string name="new_database">Nouvelle base de données</string>
     <string name="new_field">Nouveau champ</string>
     <string name="message_new_database">A new batabase will be created with the given name. You will have to fill its description and add items !</string>
+    <string name="database_successfully_created">Database successfully created.</string>
 </resources>

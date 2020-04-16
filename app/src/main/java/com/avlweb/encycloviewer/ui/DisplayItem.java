@@ -23,20 +23,21 @@ import androidx.core.app.NavUtils;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.EncycloDatabase;
 
 import java.io.File;
 
-public class DisplayItem extends Activity implements View.OnClickListener {
+public class DisplayItem extends Activity {
 
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector gestureDetector;
-    private View.OnTouchListener gestureListener;
     private int position;
     private boolean detailsOpen = false;
     private DbItem currentElement = null;
     private boolean imageZoomed;
+    private EncycloDatabase database = EncycloDatabase.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         // Gesture detection
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
-        gestureListener = new View.OnTouchListener() {
+        View.OnTouchListener gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
             }
@@ -173,11 +174,11 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     private void displayElement() {
         currentElement = null;
 
-        for (int i = 0; i < MainList.itemsList.size(); i++) {
-            currentElement = MainList.itemsList.get(i);
-            if ((currentElement.getListPosition() != -1) &&
-                    (currentElement.getListPosition() == this.position))
+        for (DbItem item : database.getItemsList()) {
+            if ((item.getListPosition() != -1) && (item.getListPosition() == this.position)) {
+                currentElement = item;
                 break;
+            }
         }
 
         if (currentElement == null) {
@@ -191,6 +192,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
                 }
             });
             builder.create().show();
+            return;
         }
 
         MainList.selectedItemPosition = this.position;
@@ -208,8 +210,8 @@ public class DisplayItem extends Activity implements View.OnClickListener {
 
         TextView textView4 = findViewById(R.id.textViewDetails2);
         textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
-                MainList.dbInfos.getFieldName(2), currentElement.getField(2), MainList.dbInfos.getFieldName(3),
-                currentElement.getField(3), MainList.dbInfos.getFieldName(4), currentElement.getField(4)));
+                database.getFieldName(2), currentElement.getField(2), database.getFieldName(3),
+                currentElement.getField(3), database.getFieldName(4), currentElement.getField(4)));
 
         displayImage();
     }
@@ -218,9 +220,9 @@ public class DisplayItem extends Activity implements View.OnClickListener {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.details));
         builder.setIcon(R.drawable.ic_launcher);
-        builder.setMessage(MainList.dbInfos.getFieldName(2) + " : " + currentElement.getField(2)
-                + "\n" + MainList.dbInfos.getFieldName(3) + " : " + currentElement.getField(3)
-                + "\n" + MainList.dbInfos.getFieldName(4) + " : " + currentElement.getField(4));
+        builder.setMessage(database.getFieldName(2) + " : " + currentElement.getField(2)
+                + "\n" + database.getFieldName(3) + " : " + currentElement.getField(3)
+                + "\n" + database.getFieldName(4) + " : " + currentElement.getField(4));
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -230,8 +232,7 @@ public class DisplayItem extends Activity implements View.OnClickListener {
     }
 
     private void displayImage() {
-        String imgpath = MainList.dbpath + File.separatorChar +
-                currentElement.getImagePath(MainList.imgIdx);
+        String imgpath = database.getInfos().getPath() + File.separatorChar + currentElement.getImagePath(MainList.imgIdx);
         String newPath = imgpath.replace("\\", "/");
 
         File imgFile = new File(newPath);
@@ -280,9 +281,5 @@ public class DisplayItem extends Activity implements View.OnClickListener {
             textView.setVisibility(View.VISIBLE);
             detailsOpen = true;
         }
-    }
-
-    @Override
-    public void onClick(View v) {
     }
 }

@@ -18,11 +18,14 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NavUtils;
+
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
+import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
 
-import androidx.core.app.NavUtils;
+import java.util.List;
 
 public class SearchInDatabase extends Activity {
     private static String[] fSearch = null;
@@ -41,15 +44,16 @@ public class SearchInDatabase extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        if (MainList.dbInfos != null) {
+        EncycloDatabase database = EncycloDatabase.getInstance();
+        if (database.getFieldDescriptions() != null) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
-            if ((nbFields == 0) || (nbFields != MainList.dbInfos.getNbFields())) {
-                nbFields = MainList.dbInfos.getNbFields();
+            if ((nbFields == 0) || (nbFields != database.getNbFields())) {
+                nbFields = database.getNbFields();
                 fSearch = null;
                 fSearch = new String[nbFields];
             }
-            for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+            for (FieldDescription field : database.getFieldDescriptions()) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textView.setText(field.getName());
@@ -80,10 +84,11 @@ public class SearchInDatabase extends Activity {
 
     public void searchInDatabase(View view) {
         String[][] stringsToSearch = new String[nbFields][];
+        EncycloDatabase database = EncycloDatabase.getInstance();
 
         int idx = 0;
         int nbFieldsToMatch = 0;
-        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+        for (FieldDescription field : database.getFieldDescriptions()) {
             EditText editText = findViewById(field.getId());
             if ((editText.getText() != null) && (editText.getText().length() > 0)) {
                 fSearch[idx] = editText.getText().toString();
@@ -96,12 +101,13 @@ public class SearchInDatabase extends Activity {
         if (nbFieldsToMatch == 0)
             return;
 
-        if (MainList.itemsList != null) {
-            for (DbItem item : MainList.itemsList)
+        List<DbItem> items = database.getItemsList();
+        if (items != null) {
+            for (DbItem item : items)
                 item.setNotSelected();
 
             int nbElementsFound = 0;
-            for (DbItem item : MainList.itemsList) {
+            for (DbItem item : items) {
 
                 int nbFieldsMatching = 0;
                 for (idx = 0; idx < nbFields; idx++) {
@@ -144,7 +150,7 @@ public class SearchInDatabase extends Activity {
                 });
                 builder.create().show();
 
-                for (DbItem item : MainList.itemsList)
+                for (DbItem item : items)
                     item.setSelected();
             } else
                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
@@ -155,10 +161,11 @@ public class SearchInDatabase extends Activity {
 
     public void clearSearch(View view) {
         // It's time to clean
-        for (DbItem item : MainList.itemsList)
+        List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        for (DbItem item : items)
             item.setSelected();
         int idx = 0;
-        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
             EditText editText = findViewById(field.getId());
             editText.setText("");
             fSearch[idx] = null;

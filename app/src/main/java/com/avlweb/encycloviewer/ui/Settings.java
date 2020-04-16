@@ -19,13 +19,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NavUtils;
+import androidx.documentfile.provider.DocumentFile;
+
 import com.avlweb.encycloviewer.R;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import androidx.core.app.NavUtils;
-import androidx.documentfile.provider.DocumentFile;
 
 public class Settings extends Activity {
 

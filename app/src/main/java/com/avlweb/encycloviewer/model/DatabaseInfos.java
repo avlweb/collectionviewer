@@ -1,15 +1,12 @@
 package com.avlweb.encycloviewer.model;
 
-import java.util.ArrayList;
-
 public class DatabaseInfos {
     private String name;
     private String description;
     private String version;
-    private ArrayList<FieldDescription> fieldDescriptions;
+    private String path;
 
     public DatabaseInfos() {
-        fieldDescriptions = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -36,28 +33,11 @@ public class DatabaseInfos {
         return this.version;
     }
 
-    public ArrayList<FieldDescription> getFieldDescriptions() {
-        return this.fieldDescriptions;
+    public String getPath() {
+        return path;
     }
 
-    public int getNbFields() {
-        if (this.fieldDescriptions != null) {
-            return this.fieldDescriptions.size();
-        }
-        return 0;
-    }
-
-    public String getFieldName(int num) {
-        if (this.fieldDescriptions != null) {
-            if ((num >= 0) && (num < this.fieldDescriptions.size()))
-                return this.fieldDescriptions.get(num).getName();
-            else
-                return this.fieldDescriptions.get(0).getName();
-        }
-        return null;
-    }
-
-    public void addFieldDescription(FieldDescription field) {
-        this.fieldDescriptions.add(field);
+    public void setPath(String path) {
+        this.path = path;
     }
 }

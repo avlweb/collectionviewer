@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -25,6 +24,8 @@ import android.widget.Toast;
 import androidx.core.app.NavUtils;
 
 import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DatabaseInfos;
+import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
 
 import java.util.ArrayList;
@@ -47,19 +48,18 @@ public class DatabaseDetails extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
+        DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
-        textView.setText(MainList.dbInfos.getName());
+        textView.setText(dbInfos.getName());
 
         textView = findViewById(R.id.textDescription);
-        textView.setText(MainList.dbInfos.getDescription());
+        textView.setText(dbInfos.getDescription());
 
         textView = findViewById(R.id.textVersion);
-        textView.setText(MainList.dbInfos.getVersion());
+        textView.setText(dbInfos.getVersion());
 
-        Intent intent = getIntent();
-        int nbItems = intent.getIntExtra("nbItems", 0);
         textView = findViewById(R.id.textNbItems);
-        textView.setText(Integer.toString(nbItems));
+        textView.setText(String.format("%d", EncycloDatabase.getInstance().getItemsList().size()));
 
         createFieldList();
     }
@@ -72,7 +72,7 @@ public class DatabaseDetails extends Activity {
 
     private ArrayList<Map<String, String>> buildData() {
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
             list.add(putData(field));
         }
         return list;
@@ -150,7 +150,7 @@ public class DatabaseDetails extends Activity {
         field.setName(name);
         field.setId(View.generateViewId());
         field.setDescription(null);
-        MainList.dbInfos.addFieldDescription(field);
+        EncycloDatabase.getInstance().addFieldDescription(field);
 
         addField(field);
 
@@ -195,7 +195,7 @@ public class DatabaseDetails extends Activity {
     }
 
     private void createFieldList() {
-        for (FieldDescription field : MainList.dbInfos.getFieldDescriptions()) {
+        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
             addField(field);
         }
     }

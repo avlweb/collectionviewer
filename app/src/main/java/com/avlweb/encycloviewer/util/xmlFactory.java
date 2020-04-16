@@ -7,7 +7,6 @@ import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
-import com.avlweb.encycloviewer.ui.MainList;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,16 +17,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class xmlFactory {
     private static final String ns = null;
 
-    public static ArrayList<DbItem> readXMLFile(String path) {
-        ArrayList<DbItem> itemsList = new ArrayList<>();
+    public static void readXMLFile(String path) {
+        EncycloDatabase database = EncycloDatabase.getInstance();
         FileInputStream fin = null;
         InputStreamReader isr = null;
+        DbItem item = null;
+        FieldDescription field = null;
+        DatabaseInfos dbInfos = null;
 
         XmlPullParser parser = Xml.newPullParser();
         try {
@@ -37,8 +38,6 @@ public class xmlFactory {
 
             int eventType = parser.getEventType();
 
-            DbItem item = null;
-            FieldDescription field = null;
             boolean enterItem = false;
             boolean enterContent = false;
             boolean enterFielddesc = false;
@@ -51,7 +50,7 @@ public class xmlFactory {
                         enterContent = true;
                         enterFielddesc = false;
                         enterItem = false;
-                        MainList.dbInfos = new DatabaseInfos();
+                        dbInfos = new DatabaseInfos();
                     } else if (strNode.equals("fielddesc")) {
                         enterContent = false;
                         enterFielddesc = true;
@@ -97,13 +96,13 @@ public class xmlFactory {
                     if (enterContent) {
                         switch (type) {
                             case 1:
-                                MainList.dbInfos.setName(parser.getText());
+                                dbInfos.setName(parser.getText());
                                 break;
                             case 2:
-                                MainList.dbInfos.setDescription(parser.getText());
+                                dbInfos.setDescription(parser.getText());
                                 break;
                             case 3:
-                                MainList.dbInfos.setVersion(parser.getText());
+                                dbInfos.setVersion(parser.getText());
                                 break;
                         }
                     } else if (enterFielddesc) {
@@ -130,14 +129,15 @@ public class xmlFactory {
                     String strNode = parser.getName();
                     switch (strNode) {
                         case "content":
+                            database.setInfos(dbInfos);
                             enterContent = false;
                             break;
                         case "fielddesc":
-                            MainList.dbInfos.addFieldDescription(field);
+                            database.addFieldDescription(field);
                             enterFielddesc = false;
                             break;
                         case "item":
-                            itemsList.add(item);
+                            database.addItemToList(item);
                             enterItem = false;
                             break;
                     }
@@ -160,13 +160,13 @@ public class xmlFactory {
                 e.printStackTrace();
             }
         }
-
-        return itemsList;
     }
 
-    public static void writeXml(EncycloDatabase database) {
+    public static void writeXml() {
+
+        EncycloDatabase database = EncycloDatabase.getInstance();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("/storage/emulated/0/Documents/sample_database.xml");
+            FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getPath());
             XmlSerializer xmlSerializer = Xml.newSerializer();
             xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             StringWriter writer = new StringWriter();
@@ -176,7 +176,7 @@ public class xmlFactory {
             xmlSerializer.startTag(ns, "database");
 
             insertContent(xmlSerializer, database.getInfos());
-            insertFields(xmlSerializer, database.getInfos());
+            insertFields(xmlSerializer, database.getFieldDescriptions());
             insertItems(xmlSerializer, database.getItemsList());
 
             xmlSerializer.endTag(ns, "database");
@@ -210,9 +210,9 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "content");
     }
 
-    private static void insertFields(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
+    private static void insertFields(XmlSerializer xmlSerializer, List<FieldDescription> dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "fielddescs");
-        for (FieldDescription desc : dbInfos.getFieldDescriptions()) {
+        for (FieldDescription desc : dbInfos) {
             xmlSerializer.startTag(ns, "fielddesc");
 
             xmlSerializer.startTag(ns, "name");

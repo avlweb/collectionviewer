@@ -14,6 +14,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat;
 
 import com.avlweb.encycloviewer.BuildConfig;
 import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.adapter.HomeListAdapter;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
@@ -48,8 +49,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.avlweb.encycloviewer.ui.Settings.KEY_DATABASES_ROOT_LOCATION;
+import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_SAMPLE_DATABASE;
+import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
+
 public class Home extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
+    private HomeListAdapter adapter;
+    ArrayList<String> xmlfiles = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,8 +81,6 @@ public class Home extends Activity {
         }
 
         // Build list of available databases
-        ArrayList<String> allFiles = new ArrayList<>();
-
         // Check that default database is present otherwise we copy it to default storage
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
@@ -83,38 +88,39 @@ public class Home extends Activity {
             checkDefaultDatabase(defaultDir);
 
             // Get preferences
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
             // Get flag "Hide sample database"
-            boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_DATABASE, false);
+            boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
             // Get Databases Root location
-            String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
+            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
 
             // Add databases found in databases root location
-            getFilesRec(allFiles, databasesRootLocation, true);
+            getFilesRec(xmlfiles, databasesRootLocation, true);
             // Add default database if not deactivated or if there are no other database
-            if ((allFiles.size() == 0) || !hideSampledatabase)
-                getFilesRec(allFiles, defaultDir.getAbsolutePath(), false);
+            if ((xmlfiles.size() == 0) || !hideSampledatabase)
+                getFilesRec(xmlfiles, defaultDir.getAbsolutePath(), false);
         }
 
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
-        String[] lv_arr = allFiles.toArray(new String[0]);
-        lv.setAdapter(new ArrayAdapter<>(this, R.layout.my_main_list, lv_arr));
+//        String[] lv_arr = allFiles.toArray(new String[0]);
+        adapter = new HomeListAdapter(getApplicationContext(), xmlfiles);
+        lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String path = ((TextView) view).getText().toString();
-                if (MainList.itemsList != null)
-                    MainList.itemsList.clear();
-                MainList.itemsList = null;
-                MainList.itemsList = xmlFactory.readXMLFile(path);
+                EncycloDatabase database = EncycloDatabase.getInstance();
+                database.clear();
+                xmlFactory.readXMLFile(path);
                 Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
                 path = new File(path).getParent();
-                MainList.dbpath = path;
+                database.getInfos().setPath(path);
                 MainList.selectedItemPosition = 0;
 
                 openDatabase(null);
             }
         });
+        registerForContextMenu(lv);
     }
 
     @Override
@@ -122,6 +128,11 @@ public class Home extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_home, menu);
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -149,11 +160,11 @@ public class Home extends Activity {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        hideKeyboard();
                         String name = fieldName.getText().toString();
                         if (name.length() > 0) {
                             createNewDatabase(name);
                         }
-                        hideKeyboard();
                     }
                 });
 
@@ -197,28 +208,80 @@ public class Home extends Activity {
     }
 
     private void createNewDatabase(String name) {
-        EncycloDatabase database = new EncycloDatabase();
+        // Initialize new database
+        EncycloDatabase database = EncycloDatabase.getInstance();
+        database.clear();
+
+        // Set database infos
         DatabaseInfos infos = new DatabaseInfos();
         infos.setName(name);
         infos.setDescription("Description");
         infos.setVersion("1.0");
-        FieldDescription desc = new FieldDescription();
-        desc.setName("Name");
-        desc.setDescription("Name");
-        desc.setId(View.generateViewId());
-        infos.addFieldDescription(desc);
-        desc = new FieldDescription();
-        desc.setName("Description");
-        desc.setDescription("Description");
-        desc.setId(View.generateViewId());
-        infos.addFieldDescription(desc);
         database.setInfos(infos);
+
+        // Add 5 fields descriptions
+        FieldDescription desc = new FieldDescription();
+        desc.setName("Field 1");
+        desc.setDescription("Description 1");
+        desc.setId(View.generateViewId());
+        database.addFieldDescription(desc);
+        desc = new FieldDescription();
+        desc.setName("Field 2");
+        desc.setDescription("Description 2");
+        desc.setId(View.generateViewId());
+        database.addFieldDescription(desc);
+        desc = new FieldDescription();
+        desc.setName("Field 3");
+        desc.setDescription("Description 3");
+        desc.setId(View.generateViewId());
+        database.addFieldDescription(desc);
+        desc = new FieldDescription();
+        desc.setName("Field 4");
+        desc.setDescription("Description 4");
+        desc.setId(View.generateViewId());
+        database.addFieldDescription(desc);
+        desc = new FieldDescription();
+        desc.setName("Field 5");
+        desc.setDescription("Description 5");
+        desc.setId(View.generateViewId());
+        database.addFieldDescription(desc);
+
+        // Add one item
         DbItem item = new DbItem();
-        item.addField("Item 1");
-        item.addField("Item 1");
+        item.addField("Content 1");
+        item.addField("Content 2");
+        item.addField("Content 3");
+        item.addField("Content 4");
+        item.addField("Content 5");
+        item.addImagePath("images/image1.jpg");
         database.addItemToList(item);
 
-        xmlFactory.writeXml(database);
+        // Generate database XML file
+        // Get preferences
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        // Get Default External location
+        File defaultPath = this.getExternalFilesDir(null);
+        if (defaultPath != null) {
+            // Get Databases Root location from preferences
+            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getAbsolutePath());
+            // Format DB name and directory name
+            String dbName = name.toLowerCase().replace(" ", "_");
+            String dbDirectory = name.toUpperCase().replace(" ", "_");
+            String dbPath = databasesRootLocation + File.separatorChar + dbDirectory;
+            // Create new database directory
+            File defaultImagesPath = new File(dbPath, "images");
+            if (defaultImagesPath.mkdirs()) {
+                String xmlPath = dbPath + File.separatorChar + dbName + ".xml";
+                database.getInfos().setPath(xmlPath);
+                // Add new XML file to list to refresh adapter
+                xmlfiles.add(xmlPath);
+                adapter.updateData(xmlfiles);
+                // Write XML file
+                xmlFactory.writeXml();
+                // display success
+                Toast.makeText(getApplicationContext(), R.string.database_successfully_created, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -243,6 +306,28 @@ public class Home extends Activity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_home, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_add:
+                Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_settings:
+                Toast.makeText(getApplicationContext(), R.string.about_database, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 
