@@ -24,7 +24,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -53,7 +52,7 @@ import static com.avlweb.encycloviewer.ui.Settings.KEY_DATABASES_ROOT_LOCATION;
 import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_SAMPLE_DATABASE;
 import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 
-public class Home extends Activity {
+public class Home extends Activity implements HomeListAdapter.customButtonListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
     private HomeListAdapter adapter;
     ArrayList<String> xmlfiles = new ArrayList<>();
@@ -103,7 +102,7 @@ public class Home extends Activity {
 
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
-//        String[] lv_arr = allFiles.toArray(new String[0]);
+/*
         adapter = new HomeListAdapter(getApplicationContext(), xmlfiles);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,6 +120,15 @@ public class Home extends Activity {
             }
         });
         registerForContextMenu(lv);
+*/
+        HomeListAdapter adapter = new HomeListAdapter(this, xmlfiles);
+        adapter.setCustomButtonListener(this);
+        lv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onButtonClickListener(int position, String value) {
+        Toast.makeText(this, "Button click " + value, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -128,11 +136,6 @@ public class Home extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_home, menu);
         return true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -167,7 +170,6 @@ public class Home extends Activity {
                         }
                     }
                 });
-
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -275,7 +277,7 @@ public class Home extends Activity {
                 database.getInfos().setPath(xmlPath);
                 // Add new XML file to list to refresh adapter
                 xmlfiles.add(xmlPath);
-                adapter.updateData(xmlfiles);
+                //adapter.updateData(xmlfiles);
                 // Write XML file
                 xmlFactory.writeXml();
                 // display success
