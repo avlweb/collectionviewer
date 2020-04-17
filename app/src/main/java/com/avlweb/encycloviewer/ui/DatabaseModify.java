@@ -29,6 +29,8 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
 import com.avlweb.encycloviewer.util.xmlFactory;
 
+import java.util.List;
+
 public class DatabaseModify extends Activity {
 
     @Override
@@ -72,14 +74,36 @@ public class DatabaseModify extends Activity {
                 return true;
 
             case R.id.save_btn:
-                if (xmlFactory.writeXml())
-                    Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
+                saveDatas();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveDatas() {
+        // Get new datas
+        DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
+        TextView textView = findViewById(R.id.textName);
+        dbInfos.setName(textView.getText().toString());
+
+        textView = findViewById(R.id.textDescription);
+        dbInfos.setDescription(textView.getText().toString());
+
+        textView = findViewById(R.id.textVersion);
+        dbInfos.setVersion(textView.getText().toString());
+
+        List<FieldDescription> descs = EncycloDatabase.getInstance().getFieldDescriptions();
+        for (FieldDescription desc : descs) {
+            EditText editText = findViewById(desc.getId());
+            desc.setDescription(editText.getText().toString());
+        }
+
+        // Finally write datas to XML file
+        if (xmlFactory.writeXml())
+            Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
     }
 
     public void addField(View view) {

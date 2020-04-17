@@ -22,8 +22,6 @@ import java.util.Arrays;
 
 public class MainList extends Activity {
     public static int selectedItemPosition = -1;
-    public static int maxPosition = 0;
-    public static int imgIdx = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +99,7 @@ public class MainList extends Activity {
                         item.setListPosition(-1);
                 }
 
-                maxPosition = lv_arr.length - 1;
+                final int maxPosition = lv_arr.length - 1;
 
                 lv.setAdapter(new MainListAdapter(getApplicationContext(), Arrays.asList(lv_arr)));
                 lv.setOnItemClickListener(new OnItemClickListener() {
@@ -110,6 +108,7 @@ public class MainList extends Activity {
 
                         Intent intent = new Intent(MainList.this, DisplayItem.class);
                         intent.putExtra("position", position);
+                        intent.putExtra("maxPosition", maxPosition);
                         startActivity(intent);
                     }
                 });

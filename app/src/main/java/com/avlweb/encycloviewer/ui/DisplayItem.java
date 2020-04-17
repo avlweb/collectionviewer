@@ -28,7 +28,6 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 import java.io.File;
 
 public class DisplayItem extends Activity {
-
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
@@ -38,6 +37,8 @@ public class DisplayItem extends Activity {
     private DbItem currentElement = null;
     private boolean imageZoomed;
     private EncycloDatabase database = EncycloDatabase.getInstance();
+    private int imgIdx = 0;
+    private int maxPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class DisplayItem extends Activity {
 
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
+        this.maxPosition = intent.getIntExtra("maxPosition", 0);
 
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
@@ -158,7 +160,7 @@ public class DisplayItem extends Activity {
     }
 
     public void displayNextElement() {
-        if (this.position < MainList.maxPosition) {
+        if (this.position < this.maxPosition) {
             this.position++;
             displayElement();
         }
@@ -202,11 +204,11 @@ public class DisplayItem extends Activity {
         TextView textView2 = findViewById(R.id.textView3);
         textView2.setText(currentElement.getField(1));
 
-        if (MainList.imgIdx >= currentElement.getNbImages())
-            MainList.imgIdx = 0;
+        if (imgIdx >= currentElement.getNbImages())
+            imgIdx = 0;
 
         TextView textView3 = findViewById(R.id.textView2);
-        textView3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getNbImages()));
+        textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
 
         TextView textView4 = findViewById(R.id.textViewDetails2);
         textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
@@ -232,7 +234,7 @@ public class DisplayItem extends Activity {
     }
 
     private void displayImage() {
-        String imgpath = database.getInfos().getPath() + File.separatorChar + currentElement.getImagePath(MainList.imgIdx);
+        String imgpath = database.getInfos().getPath() + File.separatorChar + currentElement.getImagePath(imgIdx);
         String newPath = imgpath.replace("\\", "/");
 
         File imgFile = new File(newPath);
@@ -255,13 +257,13 @@ public class DisplayItem extends Activity {
     }
 
     private void showNextImage() {
-        if (MainList.imgIdx < (currentElement.getNbImages() - 1))
-            MainList.imgIdx++;
+        if (imgIdx < (currentElement.getNbImages() - 1))
+            imgIdx++;
         else
-            MainList.imgIdx = 0;
+            imgIdx = 0;
 
         TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), MainList.imgIdx + 1, currentElement.getNbImages()));
+        editText3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
 
         displayImage();
     }
