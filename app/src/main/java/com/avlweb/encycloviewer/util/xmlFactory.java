@@ -162,7 +162,7 @@ public class xmlFactory {
         }
     }
 
-    public static void writeXml() {
+    public static boolean writeXml() {
 
         EncycloDatabase database = EncycloDatabase.getInstance();
         try {
@@ -189,7 +189,9 @@ public class xmlFactory {
 
         } catch (IllegalArgumentException | IllegalStateException | IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     private static void insertContent(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {

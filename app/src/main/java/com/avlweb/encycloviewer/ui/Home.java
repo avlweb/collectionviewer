@@ -21,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -54,8 +53,9 @@ import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 
 public class Home extends Activity implements HomeListAdapter.customButtonListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
+    private ArrayList<String> xmlfiles = new ArrayList<>();
+    private String selectedDatabase;
     private HomeListAdapter adapter;
-    ArrayList<String> xmlfiles = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,7 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
         // Build list of available databases
         // Check that default database is present otherwise we copy it to default storage
         File defaultPath = this.getExternalFilesDir(null);
+        String databasesRootLocation = null;
         if (defaultPath != null) {
             File defaultDir = new File(defaultPath.getAbsolutePath() + File.separator + "Default");
             checkDefaultDatabase(defaultDir);
@@ -91,7 +92,7 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
             // Get flag "Hide sample database"
             boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
             // Get Databases Root location
-            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
+            databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
 
             // Add databases found in databases root location
             getFilesRec(xmlfiles, databasesRootLocation, true);
@@ -102,33 +103,10 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
 
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
-/*
-        adapter = new HomeListAdapter(getApplicationContext(), xmlfiles);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String path = ((TextView) view).getText().toString();
-                EncycloDatabase database = EncycloDatabase.getInstance();
-                database.clear();
-                xmlFactory.readXMLFile(path);
-                Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
-                path = new File(path).getParent();
-                database.getInfos().setPath(path);
-                MainList.selectedItemPosition = 0;
-
-                openDatabase(null);
-            }
-        });
-        registerForContextMenu(lv);
-*/
-        HomeListAdapter adapter = new HomeListAdapter(this, xmlfiles);
+        adapter = new HomeListAdapter(this, xmlfiles, databasesRootLocation);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
-    }
-
-    @Override
-    public void onButtonClickListener(int position, String value) {
-        Toast.makeText(this, "Button click " + value, Toast.LENGTH_SHORT).show();
+        registerForContextMenu(lv);
     }
 
     @Override
@@ -209,6 +187,25 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onButtonClickListener(View view, int position, String value) {
+        this.selectedDatabase = value;
+        openContextMenu(view);
+    }
+
+    @Override
+    public void onTextClickListener(int position, String path) {
+        EncycloDatabase database = EncycloDatabase.getInstance();
+        database.clear();
+        xmlFactory.readXMLFile(path);
+        Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
+        database.getInfos().setPath(new File(path).getParent());
+        MainList.selectedItemPosition = 0;
+
+        Intent intent = new Intent(this, MainList.class);
+        startActivity(intent);
+    }
+
     private void createNewDatabase(String name) {
         // Initialize new database
         EncycloDatabase database = EncycloDatabase.getInstance();
@@ -277,11 +274,11 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 database.getInfos().setPath(xmlPath);
                 // Add new XML file to list to refresh adapter
                 xmlfiles.add(xmlPath);
-                //adapter.updateData(xmlfiles);
                 // Write XML file
-                xmlFactory.writeXml();
-                // display success
-                Toast.makeText(getApplicationContext(), R.string.database_successfully_created, Toast.LENGTH_SHORT).show();
+                if (xmlFactory.writeXml())
+                    Toast.makeText(getApplicationContext(), R.string.database_successfully_created, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), R.string.database_creation_error, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -315,22 +312,73 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_home, menu);
+        inflater.inflate(R.menu.activity_home_list, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            case R.id.menu_add:
-                Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
+            case R.id.menu_modify:
+                // Load database
+                EncycloDatabase database = EncycloDatabase.getInstance();
+                database.clear();
+                xmlFactory.readXMLFile(this.selectedDatabase);
+                database.getInfos().setPath(this.selectedDatabase);
+                // Display activity to modify the database
+                Intent intent = new Intent(this, DatabaseModify.class);
+                startActivity(intent);
                 return true;
-            case R.id.menu_settings:
-                Toast.makeText(getApplicationContext(), R.string.about_database, Toast.LENGTH_SHORT).show();
+            case R.id.menu_delete:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(R.string.warning);
+                alertDialogBuilder.setIcon(R.drawable.ic_warning);
+                alertDialogBuilder.setMessage(R.string.warning_database_deletion);
+                alertDialogBuilder.setNegativeButton(getString(R.string.no),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                File databaseDir = new File(selectedDatabase);
+                                if (deleteRecursive(databaseDir.getParentFile())) {
+                                    removeDatabaseFromList(selectedDatabase);
+                                    Toast.makeText(getApplicationContext(), R.string.deletion_successful, Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void removeDatabaseFromList(String database) {
+        if ((xmlfiles != null) && (database != null)) {
+            xmlfiles.remove(database);
+            adapter.remove(database);
+        }
+    }
+
+    private boolean deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory != null) {
+            if (fileOrDirectory.isDirectory()) {
+                File[] files = fileOrDirectory.listFiles();
+                if (files != null) {
+                    for (File child : files)
+                        deleteRecursive(child);
+                }
+            }
+            return fileOrDirectory.delete();
+        }
+        return false;
     }
 
     private void hideKeyboard() {
@@ -392,11 +440,6 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 ioe.printStackTrace();
             }
         }
-    }
-
-    public void openDatabase(View view) {
-        Intent intent = new Intent(this, MainList.class);
-        startActivity(intent);
     }
 
     private void getFilesRec(ArrayList<String> files, String root, boolean skipDefault) {

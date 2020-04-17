@@ -48,11 +48,18 @@
         </activity>
         <activity
             android:name=".ui.DatabaseDetails"
-            android:label="@string/title_activity_database_details"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:label="@string/title_activity_database_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.avlweb.encycloviewer.ui.MainList" />
+        </activity>
+        <activity
+            android:name=".ui.DatabaseModify"
+            android:label="@string/title_activity_database_modify"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.avlweb.encycloviewer.ui.Home" />
         </activity>
     </application>
 

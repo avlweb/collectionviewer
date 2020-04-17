@@ -9,8 +9,7 @@
     <string name="menu_previous_element">Précédent</string>
     <string name="menu_next_element">Suivant</string>
     <string name="menu_details_element">Détails</string>
-    <string name="menu_open_database">Ouvrir</string>
-    <string name="title_activity_open_database">Ouvrie une base de données</string>
+    <string name="menu_open_database">Ouvrir Base de données</string>
     <string name="title_activity_search">Rechercher</string>
     <string name="title_activity_settings">Réglages</string>
     <string name="field1_">Field1 :</string>
@@ -44,10 +43,10 @@
     <string name="settings_saved">Réglages sauvegardés !</string>
     <string name="clear_done">Recherche effacée !</string>
     <string name="databases_root_location">Chemin par défaut des bases de données</string>
+    <string name="default_root_location">Chemin par défaut</string>
     <string name="hide_sample_database">Cacher la base d\'exemple</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="words_to_search">Mots à chercher dans %1$s</string>
-    <string name="path_personal_root">Path to personal databases</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>
     <string name="no_element_found">Aucun élément n\'a été trouvé avec ces critères de recherche.</string>
@@ -63,7 +62,7 @@
     <string name="big">gros</string>
     <string name="very_big">très gros</string>
     <string name="number_slash_number">%1$d/%2$d</string>
-    <string name="title_activity_database_details">Database details</string>
+    <string name="title_activity_database_details">Détails de la base</string>
     <string name="name">Nom</string>
     <string name="description">Description</string>
     <string name="fields_list">Liste des champs</string>
@@ -80,6 +79,14 @@
     <string name="database_name">Nom de la base</string>
     <string name="new_database">Nouvelle base de données</string>
     <string name="new_field">Nouveau champ</string>
-    <string name="message_new_database">A new batabase will be created with the given name. You will have to fill its description and add items !</string>
-    <string name="database_successfully_created">Database successfully created.</string>
+    <string name="message_new_database">Une nouvelle base de donnée va être crée. Il faudra remplir sa description et y ajouter des éléments !</string>
+    <string name="database_successfully_created">Base de données crée avec succès.</string>
+    <string name="menu_database">Menu Base de données</string>
+    <string name="delete">Supprimer</string>
+    <string name="title_activity_database_modify">Modifier la base</string>
+    <string name="deletion_successful">Database successfully deleted.</string>
+    <string name="deletion_error">An error occured during deletion !</string>
+    <string name="database_creation_error">An error occured during creation !</string>
+    <string name="warning_database_deletion">Do you really want to delete this database ?</string>
+    <string name="warning">Warning</string>
 </resources>

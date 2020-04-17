@@ -2,24 +2,11 @@ package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.NavUtils;
 
@@ -30,6 +17,7 @@ import com.avlweb.encycloviewer.model.FieldDescription;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DatabaseDetails extends Activity {
@@ -59,15 +47,14 @@ public class DatabaseDetails extends Activity {
         textView.setText(dbInfos.getVersion());
 
         textView = findViewById(R.id.textNbItems);
-        textView.setText(String.format("%d", EncycloDatabase.getInstance().getItemsList().size()));
+        textView.setText(String.format(Locale.getDefault(), "%d", EncycloDatabase.getInstance().getItemsList().size()));
 
-        createFieldList();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_database_details, menu);
-        return true;
+        ListView lv = findViewById(R.id.fieldsList);
+        ArrayList<Map<String, String>> list = buildData();
+        String[] from = {"name", "description"};
+        int[] to = {android.R.id.text1, android.R.id.text2};
+        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_simple_list_2, from, to);
+        lv.setAdapter(adapter);
     }
 
     private ArrayList<Map<String, String>> buildData() {
@@ -87,116 +74,11 @@ public class DatabaseDetails extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-
-            case R.id.save_btn:
-                if (writeFile())
-                    Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean writeFile() {
-        //xmlFactory.writeXml();
-        return true;
-    }
-
-    public void addField(View view) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View dialog = inflater.inflate(R.layout.dialog_new_field, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.new_field));
-        alertDialog.setCancelable(true);
-        final EditText fieldName = dialog.findViewById(R.id.fieldName);
-        fieldName.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                hideKeyboard();
-                String name = fieldName.getText().toString();
-                if (name.length() > 0) {
-                    addNewField(name);
-                }
-            }
-        });
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                hideKeyboard();
-                alertDialog.dismiss();
-            }
-        });
-
-        alertDialog.setView(dialog);
-        alertDialog.show();
-    }
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-    }
-
-    private void addNewField(String name) {
-        FieldDescription field = new FieldDescription();
-        field.setName(name);
-        field.setId(View.generateViewId());
-        field.setDescription(null);
-        EncycloDatabase.getInstance().addFieldDescription(field);
-
-        addField(field);
-
-        final ScrollView scrollView = findViewById(R.id.detailsScrollview);
-        scrollView.post(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ignored) {
-                }
-                scrollView.fullScroll(View.FOCUS_DOWN);
-            }
-        });
-    }
-
-    private void addField(FieldDescription field) {
-        LinearLayout linearLayout = findViewById(R.id.linearlayout);
-
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText(field.getName());
-        textView.setTextColor(getColor(R.color.black));
-        textView.setPadding(20, 20, 20, 20);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        textView.setTypeface(null, Typeface.BOLD);
-        linearLayout.addView(textView);
-
-        EditText editText = new EditText(this);
-        editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        editText.setHint(getString(R.string.field_description));
-        editText.setHintTextColor(getColor(R.color.dark_gray));
-        editText.setGravity(Gravity.TOP);
-        if (field.getDescription() != null)
-            editText.setText(field.getDescription());
-        editText.setPadding(20, 0, 20, 10);
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        editText.setMinHeight(48);
-        editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        editText.setSingleLine(true);
-        editText.setId(field.getId());
-        linearLayout.addView(editText);
-    }
-
-    private void createFieldList() {
-        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
-            addField(field);
-        }
     }
 }
