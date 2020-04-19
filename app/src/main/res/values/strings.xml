@@ -79,7 +79,7 @@
     <string name="database_name">Database name</string>
     <string name="new_database">New Database</string>
     <string name="new_field">New Field</string>
-    <string name="message_new_database">A new batabase will be created with the given name. You will have to fill its description and add items !</string>
+    <string name="message_new_database">A new database will be created with the given name. You will have to fill its description and add items !</string>
     <string name="database_successfully_created">Database successfully created.</string>
     <string name="menu_database">Database Menu</string>
     <string name="delete">Delete</string>
@@ -89,4 +89,5 @@
     <string name="database_creation_error">An error occured during creation !</string>
     <string name="warning_database_deletion">Do you really want to delete this database ?</string>
     <string name="warning">Warning</string>
+    <string name="title_activity_modify_item">Modify</string>
 </resources>

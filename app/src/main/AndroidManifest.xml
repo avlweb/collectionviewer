@@ -31,6 +31,14 @@
                 android:value="com.avlweb.encycloviewer.ui.MainList" />
         </activity>
         <activity
+            android:name=".ui.ModifyItem"
+            android:label="@string/title_activity_modify_item"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.avlweb.encycloviewer.ui.MainList" />
+        </activity>
+        <activity
             android:name=".ui.SearchInDatabase"
             android:label="@string/title_activity_search"
             android:windowSoftInputMode="adjustPan|stateHidden">

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.DisplayItem">
+    tools:context=".ui.ModifyItem">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/myclayout"
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="3dp"
         android:padding="5dp"
-        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintHeight_percent=".4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -58,61 +58,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/myclayout" />
 
-    <TextView
-        android:id="@+id/textViewDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="6dp"
-        android:text="@string/details"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view2" />
-
-    <TextView
-        android:id="@+id/textViewDetails2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:paddingHorizontal="4dp"
-        android:paddingVertical="2dp"
-        android:text="@string/lorem_ipsum"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDetails" />
-
     <ImageButton
-        android:id="@+id/buttonBottom"
+        android:id="@+id/buttonAdd"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_height="32dp"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/open_folder"
-        android:onClick="OpenDetails"
-        android:src="@drawable/navigation_bottom_black"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="AddImage"
+        android:src="@drawable/action_add_black"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <ImageButton
-        android:id="@+id/buttonPrevious"
+        android:id="@+id/buttonDelete"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_height="32dp"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/open_folder"
-        android:onClick="OpenDetails"
-        android:src="@drawable/navigation_previous_black"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="DeleteImage"
+        android:src="@drawable/action_delete_black"
+        app:layout_constraintStart_toEndOf="@id/buttonAdd"
         app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <View
@@ -122,7 +91,7 @@
         android:layout_marginVertical="4dp"
         android:background="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDetails2" />
+        app:layout_constraintTop_toBottomOf="@id/buttonAdd" />
 
     <ScrollView
         android:id="@+id/scrollview"
@@ -139,14 +108,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view3">
 
-        <TextView
-            android:id="@+id/textView3"
+        <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/lorem_ipsum"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+
+        </LinearLayout>
 
     </ScrollView>
 

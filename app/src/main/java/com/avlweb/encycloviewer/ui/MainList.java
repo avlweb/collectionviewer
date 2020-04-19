@@ -5,12 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.adapter.MainListAdapter;
@@ -20,8 +21,11 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainList extends Activity {
+public class MainList extends Activity implements MainListAdapter.customButtonListener {
     public static int selectedItemPosition = -1;
+    private MainListAdapter adapter;
+    private int position;
+    private int maxPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,29 @@ public class MainList extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_home_list, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_modify:
+                Intent intent = new Intent(this, ModifyItem.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+                return true;
+            case R.id.menu_delete:
+                Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
     public void loadDatabaseInList() {
         ArrayList<DbItem> items = EncycloDatabase.getInstance().getItemsList();
         if (items != null) {
@@ -99,22 +126,31 @@ public class MainList extends Activity {
                         item.setListPosition(-1);
                 }
 
-                final int maxPosition = lv_arr.length - 1;
+                maxPosition = lv_arr.length - 1;
 
-                lv.setAdapter(new MainListAdapter(getApplicationContext(), Arrays.asList(lv_arr)));
-                lv.setOnItemClickListener(new OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedItemPosition = position;
-
-                        Intent intent = new Intent(MainList.this, DisplayItem.class);
-                        intent.putExtra("position", position);
-                        intent.putExtra("maxPosition", maxPosition);
-                        startActivity(intent);
-                    }
-                });
-
+                adapter = new MainListAdapter(this, Arrays.asList(lv_arr));
+                adapter.setCustomButtonListener(this);
+                lv.setAdapter(adapter);
                 lv.setSelectionFromTop(selectedItemPosition, 15);
+                registerForContextMenu(lv);
             }
         }
+    }
+
+    @Override
+    public void onButtonClickListener(View view, int position, String value) {
+        selectedItemPosition = position;
+        this.position = position;
+        openContextMenu(view);
+    }
+
+    @Override
+    public void onTextClickListener(int position, String value) {
+        selectedItemPosition = position;
+        this.position = position;
+        Intent intent = new Intent(MainList.this, DisplayItem.class);
+        intent.putExtra("position", position);
+        intent.putExtra("maxPosition", this.maxPosition);
+        startActivity(intent);
     }
 }
