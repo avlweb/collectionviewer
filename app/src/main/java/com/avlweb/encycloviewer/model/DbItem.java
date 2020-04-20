@@ -67,6 +67,13 @@ public class DbItem {
     }
 
     public int getListPosition() {
-        return listPosition;
+        return this.listPosition;
+    }
+
+    public void setField(int idx, String value) {
+        if (idx >= this.fields.size())
+            this.fields.add(value);
+        else
+            this.fields.set(idx, value);
     }
 }

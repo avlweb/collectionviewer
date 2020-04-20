@@ -11,36 +11,28 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.TypedValue;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NavUtils;
+import android.widget.Toast;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.io.File;
 
 public class ModifyItem extends Activity {
-    private static final int SWIPE_MIN_DISTANCE = 100;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    private GestureDetector gestureDetector;
     private int position;
-    private DbItem currentElement = null;
+    private DbItem currentItem = null;
     private boolean imageZoomed;
     private EncycloDatabase database = EncycloDatabase.getInstance();
     private int imgIdx = 0;
@@ -59,17 +51,6 @@ public class ModifyItem extends Activity {
 
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
-
-        // Gesture detection
-        gestureDetector = new GestureDetector(this, new MyGestureDetector());
-        View.OnTouchListener gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };
-
-        ImageView imageView = findViewById(R.id.imageView1);
-        imageView.setOnTouchListener(gestureListener);
 
         EncycloDatabase database = EncycloDatabase.getInstance();
         if (database.getFieldDescriptions() != null) {
@@ -99,7 +80,7 @@ public class ModifyItem extends Activity {
             }
         }
 
-        displayElement();
+        displayItem();
     }
 
     @Override
@@ -108,76 +89,66 @@ public class ModifyItem extends Activity {
         return true;
     }
 
-    public void ZoomImage(View v) {
-        ConstraintLayout mConstrainLayout = findViewById(R.id.myclayout);
-        ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mConstrainLayout.getLayoutParams();
+    public void zoomImage(View v) {
+        ImageView imageView = findViewById(R.id.imageView1);
         if (!imageZoomed) {
-            lp.matchConstraintPercentHeight = (float) 0.9;
-            ScrollView scrollView = findViewById(R.id.scrollview);
-            scrollView.setVisibility(View.GONE);
+            imageView.setMinimumHeight(400);
             imageZoomed = true;
         } else {
-            lp.matchConstraintPercentHeight = (float) 0.4;
-            ScrollView scrollView = findViewById(R.id.scrollview);
-            scrollView.setVisibility(View.VISIBLE);
+            imageView.setMinimumHeight(200);
             imageZoomed = false;
         }
-        mConstrainLayout.setLayoutParams(lp);
     }
 
-    public void AddImage(View view) {
+    public void addImage(View view) {
     }
 
-    public void DeleteImage(View view) {
-    }
-
-    private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
-                    ZoomImage(null);
-                }
-            } catch (Exception ignored) {
-            }
-            return false;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            // display next image
-            showNextImage();
-            return true;
-        }
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
+    public void deleteImage(View view) {
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("position", this.position);
+                setResult(Activity.RESULT_OK, resultIntent);
+                this.finish();
+                return true;
+            case R.id.save_btn:
+                saveItem();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void displayElement() {
-        currentElement = null;
+    private void saveItem() {
+        int idx = 0;
+        for (FieldDescription field : database.getFieldDescriptions()) {
+            EditText editText = findViewById(field.getId());
+            if ((editText.getText() != null) && (editText.getText().length() > 0)) {
+                currentItem.setField(idx, editText.getText().toString());
+            }
+            idx++;
+        }
+        if (xmlFactory.writeXml())
+            Toast.makeText(getApplicationContext(), R.string.item_successfully_saved, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), R.string.item_error_save, Toast.LENGTH_LONG).show();
+    }
+
+    private void displayItem() {
+        currentItem = null;
 
         for (DbItem item : database.getItemsList()) {
             if ((item.getListPosition() != -1) && (item.getListPosition() == this.position)) {
-                currentElement = item;
+                currentItem = item;
                 break;
             }
         }
 
-        if (currentElement == null) {
+        if (currentItem == null) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.element_not_found));
             builder.setIcon(R.drawable.ic_launcher);
@@ -191,20 +162,18 @@ public class ModifyItem extends Activity {
             return;
         }
 
-        MainList.selectedItemPosition = this.position;
-
-        if (imgIdx >= currentElement.getNbImages())
+        if (imgIdx >= currentItem.getNbImages())
             imgIdx = 0;
 
         TextView textView3 = findViewById(R.id.textView2);
-        textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
+        textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
 
         EncycloDatabase database = EncycloDatabase.getInstance();
         if (database.getFieldDescriptions() != null) {
             int idx = 0;
             for (FieldDescription field : database.getFieldDescriptions()) {
                 EditText editText = findViewById(field.getId());
-                editText.setText(currentElement.getField(idx));
+                editText.setText(currentItem.getField(idx));
                 idx++;
             }
         }
@@ -213,7 +182,7 @@ public class ModifyItem extends Activity {
     }
 
     private void displayImage() {
-        String imgpath = database.getInfos().getPath() + File.separatorChar + currentElement.getImagePath(imgIdx);
+        String imgpath = database.getInfos().getPath() + File.separatorChar + currentItem.getImagePath(imgIdx);
         String newPath = imgpath.replace("\\", "/");
 
         File imgFile = new File(newPath);
@@ -235,14 +204,14 @@ public class ModifyItem extends Activity {
         }
     }
 
-    private void showNextImage() {
-        if (imgIdx < (currentElement.getNbImages() - 1))
+    private void showNextImage(View view) {
+        if (imgIdx < (currentItem.getNbImages() - 1))
             imgIdx++;
         else
             imgIdx = 0;
 
         TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
+        editText3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
 
         displayImage();
     }

@@ -166,7 +166,7 @@ public class xmlFactory {
 
         EncycloDatabase database = EncycloDatabase.getInstance();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getPath());
+            FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getXmlPath());
             XmlSerializer xmlSerializer = Xml.newSerializer();
             xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             StringWriter writer = new StringWriter();

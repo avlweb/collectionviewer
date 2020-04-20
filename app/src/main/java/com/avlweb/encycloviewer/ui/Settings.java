@@ -175,8 +175,7 @@ public class Settings extends Activity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (requestCode == 102541 && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the directory that the user selected.
             if (resultData != null) {

@@ -200,7 +200,7 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
         xmlFactory.readXMLFile(path);
         Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
         database.getInfos().setPath(new File(path).getParent());
-        MainList.selectedItemPosition = 0;
+        database.getInfos().setXmlPath(path);
 
         Intent intent = new Intent(this, MainList.class);
         startActivity(intent);
@@ -271,7 +271,8 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
             File defaultImagesPath = new File(dbPath, "images");
             if (defaultImagesPath.mkdirs()) {
                 String xmlPath = dbPath + File.separatorChar + dbName + ".xml";
-                database.getInfos().setPath(xmlPath);
+                database.getInfos().setXmlPath(xmlPath);
+                database.getInfos().setPath(new File(xmlPath).getParent());
                 // Add new XML file to list to refresh adapter
                 xmlfiles.add(xmlPath);
                 // Write XML file
@@ -323,7 +324,8 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 EncycloDatabase database = EncycloDatabase.getInstance();
                 database.clear();
                 xmlFactory.readXMLFile(this.selectedDatabase);
-                database.getInfos().setPath(this.selectedDatabase);
+                database.getInfos().setXmlPath(this.selectedDatabase);
+                database.getInfos().setPath(new File(this.selectedDatabase).getParent());
                 // Display activity to modify the database
                 Intent intent = new Intent(this, DatabaseModify.class);
                 startActivity(intent);

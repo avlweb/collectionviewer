@@ -154,8 +154,6 @@ public class SearchInDatabase extends Activity {
                     item.setSelected();
             } else
                 Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
-
-            MainList.selectedItemPosition = 0;
         }
     }
 
@@ -171,7 +169,6 @@ public class SearchInDatabase extends Activity {
             fSearch[idx] = null;
             idx++;
         }
-        MainList.selectedItemPosition = 0;
         Toast.makeText(getApplicationContext(), R.string.clear_done, Toast.LENGTH_SHORT).show();
     }
 

@@ -1,121 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.ModifyItem">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/myclayout"
+    <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="3dp"
-        android:padding="5dp"
-        app:layout_constraintHeight_percent=".4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/image_not_found"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/imageView1"
-            app:layout_constraintEnd_toEndOf="@id/imageView1"
-            app:layout_constraintStart_toStartOf="@id/imageView1"
-            app:layout_constraintTop_toTopOf="@id/imageView1" />
+            android:background="@color/dark_blue"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="2"
+                android:padding="5dp"
+                android:text="@string/images"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:padding="5dp"
+                android:text="@string/_1_1"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/image_content" />
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            android:contentDescription="@string/image_content"
+            android:onClick="showNextImage" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/_1_1"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/dark_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/myclayout" />
-
-    <ImageButton
-        android:id="@+id/buttonAdd"
-        android:layout_width="48dp"
-        android:layout_height="32dp"
-        android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/open_folder"
-        android:onClick="AddImage"
-        android:src="@drawable/action_add_black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view2" />
-
-    <ImageButton
-        android:id="@+id/buttonDelete"
-        android:layout_width="48dp"
-        android:layout_height="32dp"
-        android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="4dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/open_folder"
-        android:onClick="DeleteImage"
-        android:src="@drawable/action_delete_black"
-        app:layout_constraintStart_toEndOf="@id/buttonAdd"
-        app:layout_constraintTop_toBottomOf="@id/view2" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="4dp"
-        android:background="@color/dark_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonAdd" />
-
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:fadeScrollbars="false"
-        android:fastScrollAlwaysVisible="true"
-        android:fastScrollEnabled="false"
-        android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view3">
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/dark_blue" />
 
         <LinearLayout
-            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonZoom"
+                android:layout_width="48dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/zoom"
+                android:onClick="zoomImage"
+                android:src="@drawable/action_add_black" />
+
+            <ImageButton
+                android:id="@+id/buttonAdd"
+                android:layout_width="48dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/open_folder"
+                android:onClick="addImage"
+                android:src="@drawable/action_add_black" />
+
+            <ImageButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="48dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/open_folder"
+                android:onClick="deleteImage"
+                android:src="@drawable/action_delete_black" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_blue"
+            android:padding="9dp"
+            android:text="@string/content"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</ScrollView>

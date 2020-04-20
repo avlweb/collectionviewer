@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainList extends Activity implements MainListAdapter.customButtonListener {
-    public static int selectedItemPosition = -1;
-    private MainListAdapter adapter;
     private int position;
     private int maxPosition;
 
@@ -83,13 +81,25 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
             case R.id.menu_modify:
                 Intent intent = new Intent(this, ModifyItem.class);
                 intent.putExtra("position", position);
-                startActivity(intent);
+                startActivityForResult(intent, 48484848);
                 return true;
             case R.id.menu_delete:
                 Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (((requestCode == 48484848) || (requestCode == 846516548)) && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                int newPosition = resultData.getIntExtra("position", 0);
+                this.position = newPosition;
+                ListView lv = findViewById(R.id.listView1);
+                lv.setSelectionFromTop(this.position, 30);
+            }
         }
     }
 
@@ -126,12 +136,12 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                         item.setListPosition(-1);
                 }
 
-                maxPosition = lv_arr.length - 1;
+                this.maxPosition = lv_arr.length - 1;
 
-                adapter = new MainListAdapter(this, Arrays.asList(lv_arr));
+                MainListAdapter adapter = new MainListAdapter(this, Arrays.asList(lv_arr));
                 adapter.setCustomButtonListener(this);
                 lv.setAdapter(adapter);
-                lv.setSelectionFromTop(selectedItemPosition, 15);
+                lv.setSelectionFromTop(this.position, 30);
                 registerForContextMenu(lv);
             }
         }
@@ -139,18 +149,16 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
 
     @Override
     public void onButtonClickListener(View view, int position, String value) {
-        selectedItemPosition = position;
         this.position = position;
         openContextMenu(view);
     }
 
     @Override
     public void onTextClickListener(int position, String value) {
-        selectedItemPosition = position;
         this.position = position;
-        Intent intent = new Intent(MainList.this, DisplayItem.class);
+        Intent intent = new Intent(this, DisplayItem.class);
         intent.putExtra("position", position);
         intent.putExtra("maxPosition", this.maxPosition);
-        startActivity(intent);
+        startActivityForResult(intent, 846516548);
     }
 }

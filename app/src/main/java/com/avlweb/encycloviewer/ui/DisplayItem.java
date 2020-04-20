@@ -19,7 +19,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NavUtils;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
@@ -148,7 +147,10 @@ public class DisplayItem extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("position", this.position);
+                setResult(Activity.RESULT_OK, resultIntent);
+                this.finish();
                 return true;
 
             case R.id.details_btn:
@@ -196,8 +198,6 @@ public class DisplayItem extends Activity {
             builder.create().show();
             return;
         }
-
-        MainList.selectedItemPosition = this.position;
 
         setTitle(currentElement.getField(0));
 

@@ -90,4 +90,8 @@
     <string name="warning_database_deletion">Do you really want to delete this database ?</string>
     <string name="warning">Warning</string>
     <string name="title_activity_modify_item">Modify</string>
+    <string name="item_successfully_saved">Changes successfully saved.</string>
+    <string name="item_error_save">An error occured during save !</string>
+    <string name="images">Images</string>
+    <string name="content">Contents of fields</string>
 </resources>

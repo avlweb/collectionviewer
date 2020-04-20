@@ -5,6 +5,7 @@ public class DatabaseInfos {
     private String description;
     private String version;
     private String path;
+    private String xmlPath;
 
     public DatabaseInfos() {
     }
@@ -39,5 +40,13 @@ public class DatabaseInfos {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getXmlPath() {
+        return xmlPath;
+    }
+
+    public void setXmlPath(String xmlPath) {
+        this.xmlPath = xmlPath;
     }
 }
