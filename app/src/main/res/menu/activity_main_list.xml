@@ -11,6 +11,11 @@
         android:showAsAction="ifRoom"
         android:title="@string/search" />
     <item
+        android:id="@+id/add_btn"
+        android:icon="@drawable/action_add2"
+        android:showAsAction="ifRoom"
+        android:title="@string/add_item" />
+    <item
         android:id="@+id/menu_about"
         android:icon="@drawable/action_about"
         android:showAsAction="ifRoom"

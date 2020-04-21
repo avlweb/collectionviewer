@@ -24,14 +24,14 @@
                 android:value="com.avlweb.encycloviewer.ui.Home" />
         </activity>
         <activity
-            android:name=".ui.DisplayItem"
+            android:name=".ui.ItemDisplay"
             android:label="@string/title_activity_display_item">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.avlweb.encycloviewer.ui.MainList" />
         </activity>
         <activity
-            android:name=".ui.ModifyItem"
+            android:name=".ui.ItemModify"
             android:label="@string/title_activity_modify_item"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data

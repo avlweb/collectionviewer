@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -177,17 +178,20 @@ public class DatabaseModify extends Activity {
         linearLayout.addView(textView);
 
         EditText editText = new EditText(this);
-        editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.TOP;
+        lp.setMargins(10, 10, 10, 10);
+        editText.setLayoutParams(lp);
         editText.setHint(getString(R.string.field_description));
         editText.setHintTextColor(getColor(R.color.dark_gray));
         editText.setGravity(Gravity.TOP);
         if (field.getDescription() != null)
             editText.setText(field.getDescription());
-        editText.setPadding(20, 0, 20, 10);
+        editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        editText.setMinHeight(48);
-        editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        editText.setSingleLine(true);
+        editText.setSingleLine(false);
+        editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         editText.setId(field.getId());
         linearLayout.addView(editText);
     }

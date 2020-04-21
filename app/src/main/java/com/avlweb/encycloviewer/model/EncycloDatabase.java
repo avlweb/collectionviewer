@@ -29,6 +29,10 @@ public class EncycloDatabase {
         return itemsList;
     }
 
+    public int getNbItems() {
+        return itemsList.size();
+    }
+
     public void addItemToList(DbItem item) {
         if (this.itemsList == null)
             this.itemsList = new ArrayList<>();

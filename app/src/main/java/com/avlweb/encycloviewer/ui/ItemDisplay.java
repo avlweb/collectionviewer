@@ -26,7 +26,7 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 
 import java.io.File;
 
-public class DisplayItem extends Activity {
+public class ItemDisplay extends Activity {
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;

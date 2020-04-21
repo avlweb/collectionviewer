@@ -94,4 +94,5 @@
     <string name="item_error_save">An error occured during save !</string>
     <string name="images">Images</string>
     <string name="content">Contents of fields</string>
+    <string name="add_item">Add item</string>
 </resources>

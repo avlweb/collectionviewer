@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ModifyItem">
+    tools:context=".ui.ItemModify">
 
     <LinearLayout
         android:id="@+id/linearlayout"
@@ -52,7 +52,6 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="4dp"
             android:background="@color/dark_blue" />
 
         <LinearLayout
@@ -67,7 +66,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/zoom"
                 android:onClick="zoomImage"
-                android:src="@drawable/action_add_black" />
+                android:src="@drawable/action_zoom_black" />
 
             <ImageButton
                 android:id="@+id/buttonAdd"
@@ -76,7 +75,7 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/open_folder"
                 android:onClick="addImage"
-                android:src="@drawable/action_add_black" />
+                android:src="@drawable/action_add_black_square" />
 
             <ImageButton
                 android:id="@+id/buttonDelete"

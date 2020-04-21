@@ -10,12 +10,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +31,8 @@ import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.io.File;
 
-public class ModifyItem extends Activity {
+public class ItemModify extends Activity {
+    private DisplayMetrics metrics = new DisplayMetrics();
     private int position;
     private DbItem currentItem = null;
     private boolean imageZoomed;
@@ -49,6 +51,8 @@ public class ModifyItem extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
@@ -57,7 +61,7 @@ public class ModifyItem extends Activity {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             for (FieldDescription field : database.getFieldDescriptions()) {
                 TextView textView = new TextView(this);
-                textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 textView.setText(field.getName());
                 textView.setTextColor(getColor(R.color.black));
                 textView.setPadding(20, 20, 20, 20);
@@ -66,15 +70,18 @@ public class ModifyItem extends Activity {
                 linearLayout.addView(textView);
 
                 EditText editText = new EditText(this);
-                editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.gravity = Gravity.TOP;
+                lp.setMargins(10, 10, 10, 10);
+                editText.setLayoutParams(lp);
                 editText.setHint(String.format(getString(R.string.words_to_search), field.getName()));
                 editText.setHintTextColor(getColor(R.color.dark_gray));
                 editText.setGravity(Gravity.TOP);
-                editText.setPadding(20, 0, 20, 10);
+                editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                editText.setMinHeight(48);
-                editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                editText.setSingleLine();
+                editText.setSingleLine(false);
+                editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 editText.setId(field.getId());
                 linearLayout.addView(editText);
             }
@@ -90,20 +97,16 @@ public class ModifyItem extends Activity {
     }
 
     public void zoomImage(View v) {
-        ImageView imageView = findViewById(R.id.imageView1);
-        if (!imageZoomed) {
-            imageView.setMinimumHeight(400);
-            imageZoomed = true;
-        } else {
-            imageView.setMinimumHeight(200);
-            imageZoomed = false;
-        }
+        imageZoomed = !imageZoomed;
+        displayImage();
     }
 
     public void addImage(View view) {
+        Toast.makeText(getApplicationContext(), "Add image", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteImage(View view) {
+        Toast.makeText(getApplicationContext(), "Delete image", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -189,6 +192,14 @@ public class ModifyItem extends Activity {
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             ImageView imageView = findViewById(R.id.imageView1);
+            LinearLayout.LayoutParams llp;
+            if (imageZoomed) {
+                llp = new LinearLayout.LayoutParams(metrics.widthPixels - 20, (int) (metrics.heightPixels * 0.6));
+            } else {
+                llp = new LinearLayout.LayoutParams(metrics.widthPixels - 20, (int) (metrics.heightPixels * 0.3));
+            }
+            llp.setMargins(10, 10, 10, 10);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(llp));
             imageView.setImageBitmap(myBitmap);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -204,7 +215,7 @@ public class ModifyItem extends Activity {
         }
     }
 
-    private void showNextImage(View view) {
+    public void showNextImage(View view) {
         if (imgIdx < (currentItem.getNbImages() - 1))
             imgIdx++;
         else

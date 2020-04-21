@@ -17,6 +17,7 @@ import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.adapter.MainListAdapter;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
+import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,10 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 startActivity(intent);
                 return true;
 
+            case R.id.add_btn:
+                createNewItem();
+                return true;
+
             case R.id.search_btn:
                 intent = new Intent(this, SearchInDatabase.class);
                 startActivity(intent);
@@ -79,7 +84,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_modify:
-                Intent intent = new Intent(this, ModifyItem.class);
+                Intent intent = new Intent(this, ItemModify.class);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, 48484848);
                 return true;
@@ -156,9 +161,27 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     @Override
     public void onTextClickListener(int position, String value) {
         this.position = position;
-        Intent intent = new Intent(this, DisplayItem.class);
+        Intent intent = new Intent(this, ItemDisplay.class);
         intent.putExtra("position", position);
         intent.putExtra("maxPosition", this.maxPosition);
+        startActivityForResult(intent, 846516548);
+    }
+
+    private void createNewItem() {
+        // Create new item
+        DbItem item = new DbItem();
+        EncycloDatabase database = EncycloDatabase.getInstance();
+        for (int idx = 1; idx < database.getNbFields(); idx++) {
+            item.addField("Content " + idx);
+        }
+        item.addImagePath("images/image1.jpg");
+        EncycloDatabase.getInstance().addItemToList(item);
+        // Write XML file
+        xmlFactory.writeXml();
+        // Call modification page
+        this.position = database.getNbItems();
+        Intent intent = new Intent(this, ItemModify.class);
+        intent.putExtra("position", position);
         startActivityForResult(intent, 846516548);
     }
 }
