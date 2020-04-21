@@ -74,7 +74,7 @@ public class ItemModify extends Activity {
                 lp.gravity = Gravity.TOP;
                 lp.setMargins(10, 10, 10, 10);
                 editText.setLayoutParams(lp);
-                editText.setHint(String.format(getString(R.string.words_to_search), field.getName()));
+                editText.setHint(field.getName());
                 editText.setHintTextColor(getColor(R.color.dark_gray));
                 editText.setGravity(Gravity.TOP);
                 editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());

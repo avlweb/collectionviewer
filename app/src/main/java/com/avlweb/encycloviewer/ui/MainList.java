@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.adapter.MainListAdapter;
@@ -21,10 +20,12 @@ import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainList extends Activity implements MainListAdapter.customButtonListener {
     private int position;
     private int maxPosition;
+    private MainListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 startActivityForResult(intent, 48484848);
                 return true;
             case R.id.menu_delete:
-                Toast.makeText(getApplicationContext(), "Delete", Toast.LENGTH_SHORT).show();
+                deleteItem();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -143,7 +144,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
 
                 this.maxPosition = lv_arr.length - 1;
 
-                MainListAdapter adapter = new MainListAdapter(this, Arrays.asList(lv_arr));
+                adapter = new MainListAdapter(this, Arrays.asList(lv_arr));
                 adapter.setCustomButtonListener(this);
                 lv.setAdapter(adapter);
                 lv.setSelectionFromTop(this.position, 30);
@@ -171,17 +172,22 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         // Create new item
         DbItem item = new DbItem();
         EncycloDatabase database = EncycloDatabase.getInstance();
-        for (int idx = 1; idx < database.getNbFields(); idx++) {
-            item.addField("Content " + idx);
-        }
+        for (int idx = 1; idx <= database.getNbFields(); idx++)
+            item.addField("New content " + idx);
         item.addImagePath("images/image1.jpg");
-        EncycloDatabase.getInstance().addItemToList(item);
+        item.setListPosition(database.getNbItems());
+        database.addItemToList(item);
         // Write XML file
         xmlFactory.writeXml();
         // Call modification page
-        this.position = database.getNbItems();
+        this.position = database.getNbItems() - 1;
         Intent intent = new Intent(this, ItemModify.class);
         intent.putExtra("position", position);
         startActivityForResult(intent, 846516548);
+    }
+
+    private void deleteItem() {
+        List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        items.remove(this.position);
     }
 }
