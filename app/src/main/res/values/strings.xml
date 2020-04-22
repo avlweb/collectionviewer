@@ -48,7 +48,7 @@
     <string name="default_root_location">Default Location</string>
     <string name="hide_sample_database">Hide sample database</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
-    <string name="words_to_search">Words to search in %1$s</string>
+    <string name="words_to_search">Words to search comma separated</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="no_element_found">No element was found with those criteria.</string>
@@ -70,7 +70,7 @@
     <string name="zoom">Zoom</string>
     <string name="modify">Modify</string>
     <string name="informations">Informations</string>
-    <string name="successfully_saved">Successfully saved !</string>
+    <string name="successfully_saved">Database saved !</string>
     <string name="problem_during_save">There was a problem during save !</string>
     <string name="field_name">Enter field name</string>
     <string name="cancel">Cancel</string>
@@ -85,14 +85,22 @@
     <string name="delete">Delete</string>
     <string name="title_activity_database_modify">Modify database</string>
     <string name="deletion_successful">Database successfully deleted.</string>
-    <string name="deletion_error">An error occured during deletion !</string>
-    <string name="database_creation_error">An error occured during creation !</string>
+    <string name="deletion_error">An error occurred during deletion !</string>
+    <string name="database_creation_error">An error occurred during creation !</string>
     <string name="warning_database_deletion">Do you really want to delete this database ?</string>
     <string name="warning">Warning</string>
     <string name="title_activity_modify_item">Modify</string>
     <string name="item_successfully_saved">Changes successfully saved.</string>
-    <string name="item_error_save">An error occured during save !</string>
+    <string name="item_error_save">An error occurred during save !</string>
     <string name="images">Images</string>
-    <string name="content">Contents of fields</string>
+    <string name="fields">Fields</string>
     <string name="add_item">Add item</string>
+    <string name="warning_item_deletion">Do you really want to delete this item ?</string>
+    <string name="database_is_empty">Database is empty !</string>
+    <string name="no_image_to_display">No image to display !</string>
+    <string name="database_modify">Database modify</string>
+    <string name="no_fields_to_display">No fields to display !</string>
+    <string name="to_be_completed">To be completed</string>
+    <string name="new_item">New item</string>
+    <string name="message_new_item">A new item will be created with the given name. You will have to fill its fields and add images !</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -47,14 +48,20 @@ public class DatabaseDetails extends Activity {
         textView.setText(dbInfos.getVersion());
 
         textView = findViewById(R.id.textNbItems);
-        textView.setText(String.format(Locale.getDefault(), "%d", EncycloDatabase.getInstance().getItemsList().size()));
+        textView.setText(String.format(Locale.getDefault(), "%d", EncycloDatabase.getInstance().getNbItems()));
 
         ListView lv = findViewById(R.id.fieldsList);
-        ArrayList<Map<String, String>> list = buildData();
-        String[] from = {"name", "description"};
-        int[] to = {android.R.id.text1, android.R.id.text2};
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_simple_list_2, from, to);
-        lv.setAdapter(adapter);
+        if (EncycloDatabase.getInstance().getNbFields() > 0) {
+            ArrayList<Map<String, String>> list = buildData();
+            String[] from = {"name", "description"};
+            int[] to = {android.R.id.text1, android.R.id.text2};
+            SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.my_simple_list_2, from, to);
+            lv.setAdapter(adapter);
+        } else {
+            textView = findViewById(R.id.textView);
+            textView.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.GONE);
+        }
     }
 
     private ArrayList<Map<String, String>> buildData() {

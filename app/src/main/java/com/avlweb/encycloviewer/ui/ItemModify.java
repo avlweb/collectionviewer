@@ -27,7 +27,6 @@ import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
-import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.io.File;
 
@@ -43,7 +42,7 @@ public class ItemModify extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_modify_item);
+        setContentView(R.layout.activity_item_modify);
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -74,7 +73,7 @@ public class ItemModify extends Activity {
                 lp.gravity = Gravity.TOP;
                 lp.setMargins(10, 10, 10, 10);
                 editText.setLayoutParams(lp);
-                editText.setHint(field.getName());
+                editText.setHint(R.string.to_be_completed);
                 editText.setHintTextColor(getColor(R.color.dark_gray));
                 editText.setGravity(Gravity.TOP);
                 editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());
@@ -128,17 +127,18 @@ public class ItemModify extends Activity {
 
     private void saveItem() {
         int idx = 0;
+        // Save name
+        EditText editText = findViewById(R.id.textName);
+        currentItem.setName(editText.getText().toString());
+        // save fields
         for (FieldDescription field : database.getFieldDescriptions()) {
-            EditText editText = findViewById(field.getId());
+            editText = findViewById(field.getId());
             if ((editText.getText() != null) && (editText.getText().length() > 0)) {
                 currentItem.setField(idx, editText.getText().toString());
             }
             idx++;
         }
-        if (xmlFactory.writeXml())
-            Toast.makeText(getApplicationContext(), R.string.item_successfully_saved, Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getApplicationContext(), R.string.item_error_save, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.item_successfully_saved, Toast.LENGTH_SHORT).show();
     }
 
     private void displayItem() {
@@ -171,11 +171,14 @@ public class ItemModify extends Activity {
         TextView textView3 = findViewById(R.id.textView2);
         textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
 
+        EditText editText = findViewById(R.id.textName);
+        editText.setText(currentItem.getName());
+
         EncycloDatabase database = EncycloDatabase.getInstance();
         if (database.getFieldDescriptions() != null) {
             int idx = 0;
             for (FieldDescription field : database.getFieldDescriptions()) {
-                EditText editText = findViewById(field.getId());
+                editText = findViewById(field.getId());
                 editText.setText(currentItem.getField(idx));
                 idx++;
             }
@@ -185,13 +188,21 @@ public class ItemModify extends Activity {
     }
 
     private void displayImage() {
-        String imgpath = database.getInfos().getPath() + File.separatorChar + currentItem.getImagePath(imgIdx);
-        String newPath = imgpath.replace("\\", "/");
+        ImageView imageView = findViewById(R.id.imageView1);
 
-        File imgFile = new File(newPath);
+        String imagePath = currentItem.getImagePath(imgIdx);
+        if (imagePath == null) {
+            TextView textView = findViewById(R.id.textView1);
+            textView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.GONE);
+            return;
+        }
+
+        String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
+        absolutePath = absolutePath.replace("\\", "/");
+        File imgFile = new File(absolutePath);
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            ImageView imageView = findViewById(R.id.imageView1);
             LinearLayout.LayoutParams llp;
             if (imageZoomed) {
                 llp = new LinearLayout.LayoutParams(metrics.widthPixels - 20, (int) (metrics.heightPixels * 0.6));
@@ -205,7 +216,7 @@ public class ItemModify extends Activity {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_launcher);
             builder.setTitle(getString(R.string.image_not_found));
-            builder.setMessage(getString(R.string.path) + newPath);
+            builder.setMessage(getString(R.string.path) + absolutePath);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();

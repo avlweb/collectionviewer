@@ -34,8 +34,8 @@
             android:id="@+id/textName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/name"
-            android:hint="@string/name"
+            android:autofillHints="@string/to_be_completed"
+            android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions"
             android:paddingHorizontal="5dp"
             android:text="@string/lorem_ipsum"
@@ -55,8 +55,8 @@
             android:id="@+id/textDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/description"
-            android:hint="@string/description"
+            android:autofillHints="@string/to_be_completed"
+            android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions|textMultiLine"
             android:paddingHorizontal="5dp"
             android:text="@string/lorem_ipsum"
@@ -76,10 +76,10 @@
             android:id="@+id/textVersion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/version"
-            android:hint="@string/version"
-            android:inputType="textNoSuggestions"
             android:layout_marginBottom="5dp"
+            android:autofillHints="@string/to_be_completed"
+            android:hint="@string/to_be_completed"
+            android:inputType="textNoSuggestions"
             android:paddingHorizontal="5dp"
             android:text="@string/lorem_ipsum"
             android:textColor="@android:color/black"
@@ -115,6 +115,18 @@
                 android:src="@drawable/action_add" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textNoFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/no_fields_to_display"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </LinearLayout>
 

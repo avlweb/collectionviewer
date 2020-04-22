@@ -33,9 +33,7 @@ import com.avlweb.encycloviewer.BuildConfig;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.adapter.HomeListAdapter;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
-import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
 import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.io.File;
@@ -214,48 +212,10 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
         // Set database infos
         DatabaseInfos infos = new DatabaseInfos();
         infos.setName(name);
-        infos.setDescription("Description");
         infos.setVersion("1.0");
         database.setInfos(infos);
 
-        // Add 5 fields descriptions
-        FieldDescription desc = new FieldDescription();
-        desc.setName("Field 1");
-        desc.setDescription("Description 1");
-        desc.setId(View.generateViewId());
-        database.addFieldDescription(desc);
-        desc = new FieldDescription();
-        desc.setName("Field 2");
-        desc.setDescription("Description 2");
-        desc.setId(View.generateViewId());
-        database.addFieldDescription(desc);
-        desc = new FieldDescription();
-        desc.setName("Field 3");
-        desc.setDescription("Description 3");
-        desc.setId(View.generateViewId());
-        database.addFieldDescription(desc);
-        desc = new FieldDescription();
-        desc.setName("Field 4");
-        desc.setDescription("Description 4");
-        desc.setId(View.generateViewId());
-        database.addFieldDescription(desc);
-        desc = new FieldDescription();
-        desc.setName("Field 5");
-        desc.setDescription("Description 5");
-        desc.setId(View.generateViewId());
-        database.addFieldDescription(desc);
-
-        // Add one item
-        DbItem item = new DbItem();
-        item.addField("Content 1");
-        item.addField("Content 2");
-        item.addField("Content 3");
-        item.addField("Content 4");
-        item.addField("Content 5");
-        item.addImagePath("images/image1.jpg");
-        database.addItemToList(item);
-
-        // Generate database XML file
+        // Generate database XML file in default root location
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         // Get Default External location
@@ -276,9 +236,12 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 // Add new XML file to list to refresh adapter
                 xmlfiles.add(xmlPath);
                 // Write XML file
-                if (xmlFactory.writeXml())
+                if (xmlFactory.writeXml()) {
                     Toast.makeText(getApplicationContext(), R.string.database_successfully_created, Toast.LENGTH_SHORT).show();
-                else
+                    // Display activity to modify the database
+                    Intent intent = new Intent(this, DatabaseModify.class);
+                    startActivity(intent);
+                } else
                     Toast.makeText(getApplicationContext(), R.string.database_creation_error, Toast.LENGTH_SHORT).show();
             }
         }

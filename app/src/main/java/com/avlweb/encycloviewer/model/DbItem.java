@@ -3,6 +3,7 @@ package com.avlweb.encycloviewer.model;
 import java.util.ArrayList;
 
 public class DbItem {
+    private String name;
     private ArrayList<String> fields;
     private ArrayList<String> imagePaths;
     private boolean selected;
@@ -10,10 +11,17 @@ public class DbItem {
 
     public DbItem() {
         this.selected = true;
-        this.imagePaths = null;
         this.listPosition = -1;
         this.fields = new ArrayList<>();
         this.imagePaths = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSelected() {
@@ -59,7 +67,7 @@ public class DbItem {
     }
 
     public String toString() {
-        return this.fields.get(0);
+        return this.name;
     }
 
     public void setListPosition(int listPosition) {

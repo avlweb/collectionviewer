@@ -5,6 +5,18 @@
     android:orientation="vertical"
     tools:context=".ui.MainList">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/database_is_empty"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"

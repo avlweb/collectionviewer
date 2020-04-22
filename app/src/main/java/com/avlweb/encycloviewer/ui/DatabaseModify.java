@@ -40,7 +40,7 @@ public class DatabaseModify extends Activity {
 
         setContentView(R.layout.activity_database_modify);
 
-        setTitle(getString(R.string.about_database));
+        setTitle(getString(R.string.database_modify));
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -58,7 +58,12 @@ public class DatabaseModify extends Activity {
         textView = findViewById(R.id.textVersion);
         textView.setText(dbInfos.getVersion());
 
-        createFieldList();
+        if (EncycloDatabase.getInstance().getNbFields() > 0) {
+            createFieldList();
+        } else {
+            textView = findViewById(R.id.textNoFields);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -153,6 +158,9 @@ public class DatabaseModify extends Activity {
 
         addField(field);
 
+        TextView textView = findViewById(R.id.textNoFields);
+        textView.setVisibility(View.GONE);
+
         final ScrollView scrollView = findViewById(R.id.detailsScrollview);
         scrollView.post(new Runnable() {
             public void run() {
@@ -182,7 +190,7 @@ public class DatabaseModify extends Activity {
         lp.gravity = Gravity.TOP;
         lp.setMargins(10, 10, 10, 10);
         editText.setLayoutParams(lp);
-        editText.setHint(getString(R.string.field_description));
+        editText.setHint(R.string.to_be_completed);
         editText.setHintTextColor(getColor(R.color.dark_gray));
         editText.setGravity(Gravity.TOP);
         if (field.getDescription() != null)

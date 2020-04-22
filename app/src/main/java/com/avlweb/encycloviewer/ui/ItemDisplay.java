@@ -33,7 +33,7 @@ public class ItemDisplay extends Activity {
     private GestureDetector gestureDetector;
     private int position;
     private boolean detailsOpen = false;
-    private DbItem currentElement = null;
+    private DbItem currentItem = null;
     private boolean imageZoomed;
     private EncycloDatabase database = EncycloDatabase.getInstance();
     private int imgIdx = 0;
@@ -43,7 +43,7 @@ public class ItemDisplay extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_display_item);
+        setContentView(R.layout.activity_item_display);
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -176,16 +176,16 @@ public class ItemDisplay extends Activity {
     }
 
     private void displayElement() {
-        currentElement = null;
+        currentItem = null;
 
         for (DbItem item : database.getItemsList()) {
             if ((item.getListPosition() != -1) && (item.getListPosition() == this.position)) {
-                currentElement = item;
+                currentItem = item;
                 break;
             }
         }
 
-        if (currentElement == null) {
+        if (currentItem == null) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.element_not_found));
             builder.setIcon(R.drawable.ic_launcher);
@@ -199,21 +199,19 @@ public class ItemDisplay extends Activity {
             return;
         }
 
-        setTitle(currentElement.getField(0));
+        setTitle(currentItem.getName());
 
         TextView textView2 = findViewById(R.id.textView3);
-        textView2.setText(currentElement.getField(1));
-
-        if (imgIdx >= currentElement.getNbImages())
-            imgIdx = 0;
-
-        TextView textView3 = findViewById(R.id.textView2);
-        textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
+        textView2.setText(currentItem.getField(0));
 
         TextView textView4 = findViewById(R.id.textViewDetails2);
         textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
-                database.getFieldName(2), currentElement.getField(2), database.getFieldName(3),
-                currentElement.getField(3), database.getFieldName(4), currentElement.getField(4)));
+                database.getFieldName(1), currentItem.getField(1),
+                database.getFieldName(2), currentItem.getField(2),
+                database.getFieldName(3), currentItem.getField(3)));
+
+        if (imgIdx >= currentItem.getNbImages())
+            imgIdx = 0;
 
         displayImage();
     }
@@ -222,9 +220,9 @@ public class ItemDisplay extends Activity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.details));
         builder.setIcon(R.drawable.ic_launcher);
-        builder.setMessage(database.getFieldName(2) + " : " + currentElement.getField(2)
-                + "\n" + database.getFieldName(3) + " : " + currentElement.getField(3)
-                + "\n" + database.getFieldName(4) + " : " + currentElement.getField(4));
+        builder.setMessage(database.getFieldName(2) + " : " + currentItem.getField(2)
+                + "\n" + database.getFieldName(3) + " : " + currentItem.getField(3)
+                + "\n" + database.getFieldName(4) + " : " + currentItem.getField(4));
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -234,10 +232,21 @@ public class ItemDisplay extends Activity {
     }
 
     private void displayImage() {
-        String imgpath = database.getInfos().getPath() + File.separatorChar + currentElement.getImagePath(imgIdx);
-        String newPath = imgpath.replace("\\", "/");
+        TextView textView3 = findViewById(R.id.textView2);
+        if (currentItem.getNbImages() == 0) {
+            textView3.setVisibility(View.GONE);
+        } else {
+            textView3.setVisibility(View.VISIBLE);
+            textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+        }
 
-        File imgFile = new File(newPath);
+        String imagePath = currentItem.getImagePath(imgIdx);
+        if (imagePath == null)
+            return;
+
+        String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
+        absolutePath = absolutePath.replace("\\", "/");
+        File imgFile = new File(absolutePath);
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             ImageView imageView = findViewById(R.id.imageView1);
@@ -246,7 +255,7 @@ public class ItemDisplay extends Activity {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(R.drawable.ic_launcher);
             builder.setTitle(getString(R.string.image_not_found));
-            builder.setMessage(getString(R.string.path) + newPath);
+            builder.setMessage(getString(R.string.path) + absolutePath);
             builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -257,13 +266,10 @@ public class ItemDisplay extends Activity {
     }
 
     private void showNextImage() {
-        if (imgIdx < (currentElement.getNbImages() - 1))
+        if (imgIdx < (currentItem.getNbImages() - 1))
             imgIdx++;
         else
             imgIdx = 0;
-
-        TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentElement.getNbImages()));
 
         displayImage();
     }

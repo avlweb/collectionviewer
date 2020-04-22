@@ -41,7 +41,6 @@ public class xmlFactory {
             boolean enterItem = false;
             boolean enterContent = false;
             boolean enterFielddesc = false;
-            // 1 = field, 2 = images
             int type = 0;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
@@ -90,6 +89,9 @@ public class xmlFactory {
                             case "img":
                                 type = 2;
                                 break;
+                            case "name":
+                                type = 3;
+                                break;
                         }
                     }
                 } else if (eventType == XmlPullParser.TEXT) {
@@ -122,6 +124,9 @@ public class xmlFactory {
                                 break;
                             case 2:
                                 item.addImagePath(parser.getText());
+                                break;
+                            case 3:
+                                item.setName(parser.getText());
                                 break;
                         }
                     }
@@ -185,6 +190,7 @@ public class xmlFactory {
 
             String dataWrite = writer.toString();
             fileOutputStream.write(dataWrite.getBytes());
+            fileOutputStream.flush();
             fileOutputStream.close();
 
         } catch (IllegalArgumentException | IllegalStateException | IOException e) {
@@ -202,11 +208,13 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "name");
 
         xmlSerializer.startTag(ns, "description");
-        xmlSerializer.text(dbInfos.getDescription());
+        if (dbInfos.getDescription() != null)
+            xmlSerializer.text(dbInfos.getDescription());
         xmlSerializer.endTag(ns, "description");
 
         xmlSerializer.startTag(ns, "version");
-        xmlSerializer.text(dbInfos.getVersion());
+        if (dbInfos.getVersion() != null)
+            xmlSerializer.text(dbInfos.getVersion());
         xmlSerializer.endTag(ns, "version");
 
         xmlSerializer.endTag(ns, "content");
@@ -214,37 +222,48 @@ public class xmlFactory {
 
     private static void insertFields(XmlSerializer xmlSerializer, List<FieldDescription> dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "fielddescs");
-        for (FieldDescription desc : dbInfos) {
-            xmlSerializer.startTag(ns, "fielddesc");
+        if ((dbInfos != null) && (dbInfos.size() > 0)) {
+            for (FieldDescription desc : dbInfos) {
+                xmlSerializer.startTag(ns, "fielddesc");
 
-            xmlSerializer.startTag(ns, "name");
-            xmlSerializer.text(desc.getName());
-            xmlSerializer.endTag(ns, "name");
+                xmlSerializer.startTag(ns, "name");
+                xmlSerializer.text(desc.getName());
+                xmlSerializer.endTag(ns, "name");
 
-            xmlSerializer.startTag(ns, "description");
-            xmlSerializer.text(desc.getDescription());
-            xmlSerializer.endTag(ns, "description");
+                xmlSerializer.startTag(ns, "description");
+                if (desc.getDescription() != null)
+                    xmlSerializer.text(desc.getDescription());
+                xmlSerializer.endTag(ns, "description");
 
-            xmlSerializer.endTag(ns, "fielddesc");
+                xmlSerializer.endTag(ns, "fielddesc");
+            }
         }
         xmlSerializer.endTag(ns, "fielddescs");
     }
 
     private static void insertItems(XmlSerializer xmlSerializer, List<DbItem> items) throws IOException {
         xmlSerializer.startTag(ns, "items");
-        for (DbItem item : items) {
-            xmlSerializer.startTag(ns, "item");
-            for (int idx = 0; idx < item.getNbFields(); idx++) {
-                xmlSerializer.startTag(ns, "field");
-                xmlSerializer.text(item.getField(idx));
-                xmlSerializer.endTag(ns, "field");
+        if ((items != null) && (items.size() > 0)) {
+            for (DbItem item : items) {
+                xmlSerializer.startTag(ns, "item");
+                // Add name
+                xmlSerializer.startTag(ns, "name");
+                xmlSerializer.text(item.getName());
+                xmlSerializer.endTag(ns, "name");
+                // Add fields
+                for (int idx = 0; idx < item.getNbFields(); idx++) {
+                    xmlSerializer.startTag(ns, "field");
+                    xmlSerializer.text(item.getField(idx));
+                    xmlSerializer.endTag(ns, "field");
+                }
+                // Add images
+                for (int idx = 0; idx < item.getNbImages(); idx++) {
+                    xmlSerializer.startTag(ns, "img");
+                    xmlSerializer.text(item.getImagePath(idx));
+                    xmlSerializer.endTag(ns, "img");
+                }
+                xmlSerializer.endTag(ns, "item");
             }
-            for (int idx = 0; idx < item.getNbImages(); idx++) {
-                xmlSerializer.startTag(ns, "img");
-                xmlSerializer.text(item.getImagePath(idx));
-                xmlSerializer.endTag(ns, "img");
-            }
-            xmlSerializer.endTag(ns, "item");
         }
         xmlSerializer.endTag(ns, "items");
     }

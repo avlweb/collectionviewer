@@ -30,7 +30,10 @@ public class EncycloDatabase {
     }
 
     public int getNbItems() {
-        return itemsList.size();
+        if (this.itemsList != null)
+            return this.itemsList.size();
+        else
+            return 0;
     }
 
     public void addItemToList(DbItem item) {
@@ -44,10 +47,10 @@ public class EncycloDatabase {
     }
 
     public int getNbFields() {
-        if (this.fieldDescriptions != null) {
+        if (this.fieldDescriptions != null)
             return this.fieldDescriptions.size();
-        }
-        return 0;
+        else
+            return 0;
     }
 
     public String getFieldName(int num) {
