@@ -49,7 +49,7 @@
             android:gravity="center_horizontal"
             android:text="@string/no_image_to_display"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -114,8 +114,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
             android:layout_marginHorizontal="6dp"
+            android:paddingVertical="5dp"
             android:text="@string/name"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -125,10 +125,10 @@
             android:id="@+id/textName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
             android:autofillHints="@string/to_be_completed"
             android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions"
-            android:layout_marginHorizontal="4dp"
             android:text="@string/name"
             android:textColor="@android:color/black"
             android:textSize="14sp" />

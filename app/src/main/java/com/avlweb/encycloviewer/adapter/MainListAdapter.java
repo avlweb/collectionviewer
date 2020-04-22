@@ -10,6 +10,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.avlweb.encycloviewer.R;
+import com.avlweb.encycloviewer.model.DbItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,12 +20,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class MainListAdapter extends ArrayAdapter<String> implements SectionIndexer {
+public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionIndexer {
     private HashMap<String, Integer> mapIndex;
     private String[] sections;
     private customButtonListener customListener;
     private Context context;
-    private List<String> data;
+    private List<DbItem> data;
 
     public interface customButtonListener {
         void onButtonClickListener(View view, int position, String value);
@@ -36,7 +37,7 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
         this.customListener = listener;
     }
 
-    public MainListAdapter(Context context, List<String> list) {
+    public MainListAdapter(Context context, List<DbItem> list) {
         super(context, R.layout.my_main_list, list);
         this.data = list;
         this.context = context;
@@ -45,7 +46,7 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
 
         int len = list.size();
         for (int x = 0; x < len; x++) {
-            String item = list.get(x);
+            String item = getItem(x).getName();
             String ch = item.substring(0, 1).toUpperCase(Locale.FRANCE);
 
             // HashMap will prevent duplicates
@@ -58,12 +59,8 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
 
         // create a list from the set to sort
         ArrayList<String> sectionList = new ArrayList<>(sectionLetters);
-
-        //Log.d("sectionList", sectionList.toString());
         Collections.sort(sectionList);
-
         sections = new String[sectionList.size()];
-
         sectionList.toArray(sections);
     }
 
@@ -80,7 +77,7 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final String temp = getItem(position);
+        final String temp = getItem(position).getName();
         viewHolder.text.setText(temp);
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +106,10 @@ public class MainListAdapter extends ArrayAdapter<String> implements SectionInde
     }
 
     public int getPositionForSection(int section) {
-        //Log.d("getPositionForSection ", "" + section);
         return mapIndex.get(sections[section]);
     }
 
     public int getSectionForPosition(int position) {
-        //Log.d("getSectionForPosition ", "" + position);
         return 0;
     }
 

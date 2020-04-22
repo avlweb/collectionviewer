@@ -168,9 +168,6 @@ public class ItemModify extends Activity {
         if (imgIdx >= currentItem.getNbImages())
             imgIdx = 0;
 
-        TextView textView3 = findViewById(R.id.textView2);
-        textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
-
         EditText editText = findViewById(R.id.textName);
         editText.setText(currentItem.getName());
 
@@ -189,10 +186,18 @@ public class ItemModify extends Activity {
 
     private void displayImage() {
         ImageView imageView = findViewById(R.id.imageView1);
+        TextView textView = findViewById(R.id.textView2);
+
+        if (currentItem.getNbImages() == 0) {
+            textView.setVisibility(View.GONE);
+        } else {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+        }
 
         String imagePath = currentItem.getImagePath(imgIdx);
         if (imagePath == null) {
-            TextView textView = findViewById(R.id.textView1);
+            textView = findViewById(R.id.textView1);
             textView.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
             return;
@@ -231,9 +236,6 @@ public class ItemModify extends Activity {
             imgIdx++;
         else
             imgIdx = 0;
-
-        TextView editText3 = findViewById(R.id.textView2);
-        editText3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
 
         displayImage();
     }

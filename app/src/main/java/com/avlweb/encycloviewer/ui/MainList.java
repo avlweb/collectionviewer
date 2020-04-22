@@ -147,7 +147,6 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 startActivityForResult(intent, 48484848);
                 return true;
             case R.id.menu_delete:
-                databaseModified = true;
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
@@ -176,7 +175,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (((requestCode == 48484848) || (requestCode == 846516548)) && resultCode == Activity.RESULT_OK) {
+        if ((requestCode == 48675848) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
                 this.position = resultData.getIntExtra("position", 0);
                 ListView lv = findViewById(R.id.listView1);
@@ -184,17 +183,23 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 // Reload list
                 loadDatabaseInList();
             }
+        } else if (((requestCode == 48484848) || (requestCode == 846516548)) && (resultCode == Activity.RESULT_OK)) {
+            if (resultData != null) {
+                this.position = resultData.getIntExtra("position", 0);
+                ListView lv = findViewById(R.id.listView1);
+                lv.setSelectionFromTop(this.position, 30);
+            }
         }
     }
 
     public void loadDatabaseInList() {
         ArrayList<DbItem> items = EncycloDatabase.getInstance().getItemsList();
         if (items != null) {
-            ArrayList<String> selectedItems = new ArrayList<>();
+            ArrayList<DbItem> selectedItems = new ArrayList<>();
             int idx = 0;
             for (DbItem item : items) {
                 if (item.isSelected()) {
-                    selectedItems.add(item.getName());
+                    selectedItems.add(item);
                     item.setListPosition(idx);
                     idx++;
                 } else
@@ -247,15 +252,15 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         this.position = database.getNbItems() - 1;
         Intent intent = new Intent(this, ItemModify.class);
         intent.putExtra("position", position);
-        startActivityForResult(intent, 48484848);
+        startActivityForResult(intent, 48675848);
     }
 
     private void deleteItem() {
         // Delete item
         List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        adapter.remove(items.get(this.position));
         items.remove(this.position);
-        // Reload list
-        loadDatabaseInList();
+        databaseModified = true;
     }
 
     private void hideKeyboard() {

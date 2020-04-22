@@ -49,7 +49,10 @@ public class HomeListAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final String temp = getItem(position);
-        if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
+        if (temp.endsWith("Sample_database.xml")) {
+            viewHolder.text.setText("Sample_database.xml");
+            viewHolder.button.setVisibility(View.GONE);
+        } else if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
             viewHolder.text.setText(temp.substring(this.databasesRootLocation.length()));
         else
             viewHolder.text.setText(temp);

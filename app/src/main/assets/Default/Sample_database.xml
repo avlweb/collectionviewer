@@ -7,10 +7,6 @@
     </content>
     <fielddescs>
         <fielddesc>
-            <name>Name</name>
-            <description>Name of the item.</description>
-        </fielddesc>
-        <fielddesc>
             <name>Description</name>
             <description>Description of the item.</description>
         </fielddesc>
@@ -29,7 +25,7 @@
     </fielddescs>
     <items>
         <item>
-            <field>Item 1</field>
+            <name>Item 1</name>
             <field>One red diamond.</field>
             <field>red</field>
             <field>1</field>
@@ -38,7 +34,7 @@
             <img>images\content1_2.jpg</img>
         </item>
         <item>
-            <field>Item 2</field>
+            <name>Item 2</name>
             <field>One brown square.</field>
             <field>brown</field>
             <field>1</field>
@@ -46,7 +42,7 @@
             <img>images\content2_1.jpg</img>
         </item>
         <item>
-            <field>Item 3</field>
+            <name>Item 3</name>
             <field>One yellow rectangle.</field>
             <field>yellow</field>
             <field>1</field>
@@ -55,7 +51,7 @@
             <img>images\content3_2.jpg</img>
         </item>
         <item>
-            <field>Item 4</field>
+            <name>Item 4</name>
             <field>A square and a rectangle in grey.</field>
             <field>grey</field>
             <field>2</field>
@@ -65,7 +61,7 @@
             <img>images\content4_3.jpg</img>
         </item>
         <item>
-            <field>Item 5</field>
+            <name>Item 5</name>
             <field>One purple circle.</field>
             <field>purple</field>
             <field>1</field>
@@ -73,7 +69,7 @@
             <img>images\content5_1.jpg</img>
         </item>
         <item>
-            <field>Item 6</field>
+            <name>Item 6</name>
             <field>Two blue circles.</field>
             <field>blue</field>
             <field>2</field>
@@ -82,7 +78,7 @@
             <img>images\content6_2.jpg</img>
         </item>
         <item>
-            <field>Item 7</field>
+            <name>Item 7</name>
             <field>One orange hexagon.</field>
             <field>orange</field>
             <field>1</field>
@@ -91,7 +87,7 @@
             <img>images\content7_2.jpg</img>
         </item>
         <item>
-            <field>Item 8</field>
+            <name>Item 8</name>
             <field>One red triangle.</field>
             <field>red</field>
             <field>1</field>
@@ -100,7 +96,7 @@
             <img>images\content8_2.jpg</img>
         </item>
         <item>
-            <field>Item 9</field>
+            <name>Item 9</name>
             <field>Two blue squares.</field>
             <field>blue</field>
             <field>2</field>
@@ -109,7 +105,7 @@
             <img>images\content9_2.jpg</img>
         </item>
         <item>
-            <field>Item 10</field>
+            <name>Item 10</name>
             <field>One orange square.</field>
             <field>orange</field>
             <field>1</field>
@@ -117,7 +113,7 @@
             <img>images\content10_1.jpg</img>
         </item>
         <item>
-            <field>Item 11</field>
+            <name>Item 11</name>
             <field>Three purple rectangles.</field>
             <field>purple</field>
             <field>3</field>
@@ -126,7 +122,7 @@
             <img>images\content11_2.jpg</img>
         </item>
         <item>
-            <field>Item 12</field>
+            <name>Item 12</name>
             <field>One brown circle.</field>
             <field>brown</field>
             <field>1</field>
@@ -134,7 +130,7 @@
             <img>images\content12_1.jpg</img>
         </item>
         <item>
-            <field>Item 13</field>
+            <name>Item 13</name>
             <field>Two triangles. One red and one green.</field>
             <field>red,green</field>
             <field>2</field>
