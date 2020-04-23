@@ -7,9 +7,9 @@
         android:id="@+id/thetext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_margin="5dp"
         android:layout_weight="2"
+        android:gravity="center_vertical"
         android:minHeight="32dp"
         android:text="@string/lorem_ipsum"
         android:textColor="@android:color/black"
@@ -22,7 +22,6 @@
         android:layout_gravity="end|center_vertical"
         android:background="@android:color/transparent"
         android:contentDescription="@string/menu_database"
-        android:onClick="SearchFolder"
         android:padding="10dp"
         android:src="@drawable/action_three_points" />
 

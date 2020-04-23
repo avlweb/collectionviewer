@@ -26,7 +26,7 @@
     <items>
         <item>
             <name>Item 1</name>
-            <field>One red diamond.</field>
+            <description>One red diamond.</description>
             <field>red</field>
             <field>1</field>
             <field>diamond</field>
@@ -35,7 +35,7 @@
         </item>
         <item>
             <name>Item 2</name>
-            <field>One brown square.</field>
+            <description>One brown square.</description>
             <field>brown</field>
             <field>1</field>
             <field>square</field>
@@ -43,7 +43,7 @@
         </item>
         <item>
             <name>Item 3</name>
-            <field>One yellow rectangle.</field>
+            <description>One yellow rectangle.</description>
             <field>yellow</field>
             <field>1</field>
             <field>rectangle</field>
@@ -52,7 +52,7 @@
         </item>
         <item>
             <name>Item 4</name>
-            <field>A square and a rectangle in grey.</field>
+            <description>A square and a rectangle in grey.</description>
             <field>grey</field>
             <field>2</field>
             <field>square,rectangle</field>
@@ -62,7 +62,7 @@
         </item>
         <item>
             <name>Item 5</name>
-            <field>One purple circle.</field>
+            <description>One purple circle.</description>
             <field>purple</field>
             <field>1</field>
             <field>circle</field>
@@ -70,7 +70,7 @@
         </item>
         <item>
             <name>Item 6</name>
-            <field>Two blue circles.</field>
+            <description>Two blue circles.</description>
             <field>blue</field>
             <field>2</field>
             <field>circle</field>
@@ -79,7 +79,7 @@
         </item>
         <item>
             <name>Item 7</name>
-            <field>One orange hexagon.</field>
+            <description>One orange hexagon.</description>
             <field>orange</field>
             <field>1</field>
             <field>hexagon</field>
@@ -88,7 +88,7 @@
         </item>
         <item>
             <name>Item 8</name>
-            <field>One red triangle.</field>
+            <description>One red triangle.</description>
             <field>red</field>
             <field>1</field>
             <field>triangle</field>
@@ -97,7 +97,7 @@
         </item>
         <item>
             <name>Item 9</name>
-            <field>Two blue squares.</field>
+            <description>Two blue squares.</description>
             <field>blue</field>
             <field>2</field>
             <field>square</field>
@@ -106,7 +106,7 @@
         </item>
         <item>
             <name>Item 10</name>
-            <field>One orange square.</field>
+            <description>One orange square.</description>
             <field>orange</field>
             <field>1</field>
             <field>square</field>
@@ -114,7 +114,7 @@
         </item>
         <item>
             <name>Item 11</name>
-            <field>Three purple rectangles.</field>
+            <description>Three purple rectangles.</description>
             <field>purple</field>
             <field>3</field>
             <field>rectangle</field>
@@ -123,7 +123,7 @@
         </item>
         <item>
             <name>Item 12</name>
-            <field>One brown circle.</field>
+            <description>One brown circle.</description>
             <field>brown</field>
             <field>1</field>
             <field>circle</field>
@@ -131,7 +131,7 @@
         </item>
         <item>
             <name>Item 13</name>
-            <field>Two triangles. One red and one green.</field>
+            <description>Two triangles. One red and one green.</description>
             <field>red,green</field>
             <field>2</field>
             <field>triangle</field>

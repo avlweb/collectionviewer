@@ -23,8 +23,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
+import com.avlweb.encycloviewer.model.FieldDescription;
 
 import java.io.File;
+import java.util.List;
 
 public class ItemDisplay extends Activity {
     private static final int SWIPE_MIN_DISTANCE = 100;
@@ -145,17 +147,12 @@ public class ItemDisplay extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("position", this.position);
-                setResult(Activity.RESULT_OK, resultIntent);
-                this.finish();
-                return true;
-
-            case R.id.details_btn:
-                displayElementDetails();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("position", this.position);
+            setResult(Activity.RESULT_OK, resultIntent);
+            this.finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -176,10 +173,10 @@ public class ItemDisplay extends Activity {
     }
 
     private void displayElement() {
-        currentItem = null;
+        currentItem = database.getItem(this.position);
 
         for (DbItem item : database.getItemsList()) {
-            if ((item.getListPosition() != -1) && (item.getListPosition() == this.position)) {
+            if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
             }
@@ -201,14 +198,28 @@ public class ItemDisplay extends Activity {
 
         setTitle(currentItem.getName());
 
-        TextView textView2 = findViewById(R.id.textView3);
-        textView2.setText(currentItem.getField(0));
+        if ((currentItem.getDescription() != null) && (currentItem.getDescription().length() > 0)) {
+            TextView textView = findViewById(R.id.textView3);
+            textView.setText(currentItem.getDescription());
+        }
 
-        TextView textView4 = findViewById(R.id.textViewDetails2);
-        textView4.setText(String.format("%s : %s\n%s : %s\n%s : %s",
-                database.getFieldName(1), currentItem.getField(1),
-                database.getFieldName(2), currentItem.getField(2),
-                database.getFieldName(3), currentItem.getField(3)));
+        // Format details string
+        List<FieldDescription> descs = database.getFieldDescriptions();
+        if ((descs != null) && (descs.size() > 0)) {
+            StringBuilder tmp = new StringBuilder();
+            for (int idx = 0; idx < descs.size(); idx++) {
+                String value = currentItem.getField(idx);
+                if ((value != null) && (value.length() > 0)) {
+                    tmp.append(descs.get(idx).getName());
+                    tmp.append(" : ");
+                    tmp.append(currentItem.getField(idx));
+                    if (idx < (descs.size() - 1))
+                        tmp.append("\n");
+                }
+            }
+            TextView textView = findViewById(R.id.textViewDetails2);
+            textView.setText(tmp.toString());
+        }
 
         if (imgIdx >= currentItem.getNbImages())
             imgIdx = 0;
@@ -216,28 +227,13 @@ public class ItemDisplay extends Activity {
         displayImage();
     }
 
-    private void displayElementDetails() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.details));
-        builder.setIcon(R.drawable.ic_launcher);
-        builder.setMessage(database.getFieldName(2) + " : " + currentItem.getField(2)
-                + "\n" + database.getFieldName(3) + " : " + currentItem.getField(3)
-                + "\n" + database.getFieldName(4) + " : " + currentItem.getField(4));
-        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
-
     private void displayImage() {
-        TextView textView3 = findViewById(R.id.textView2);
+        TextView textView = findViewById(R.id.textView2);
         if (currentItem.getNbImages() == 0) {
-            textView3.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
         } else {
-            textView3.setVisibility(View.VISIBLE);
-            textView3.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
         }
 
         String imagePath = currentItem.getImagePath(imgIdx);

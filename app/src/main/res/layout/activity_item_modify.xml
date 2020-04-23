@@ -106,7 +106,7 @@
             android:layout_height="match_parent"
             android:background="@color/dark_blue"
             android:padding="9dp"
-            android:text="@string/fields"
+            android:text="@string/content"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -129,8 +129,31 @@
             android:autofillHints="@string/to_be_completed"
             android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions"
-            android:text="@string/name"
             android:textColor="@android:color/black"
+            android:textColorHint="@color/dark_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:paddingVertical="5dp"
+            android:text="@string/description"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/textDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:autofillHints="@string/to_be_completed"
+            android:hint="@string/to_be_completed"
+            android:imeOptions="flagNoEnterAction"
+            android:inputType="text|textMultiLine"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/dark_gray"
             android:textSize="14sp" />
 
     </LinearLayout>

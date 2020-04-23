@@ -38,9 +38,10 @@
             android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions"
             android:paddingHorizontal="5dp"
-            android:text="@string/lorem_ipsum"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textColorHint="@color/dark_gray"
+            android:textSize="14sp"
+            tools:text="@string/lorem_ipsum" />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,9 +60,10 @@
             android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions|textMultiLine"
             android:paddingHorizontal="5dp"
-            android:text="@string/lorem_ipsum"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textColorHint="@color/dark_gray"
+            android:textSize="14sp"
+            tools:text="@string/lorem_ipsum" />
 
         <TextView
             android:layout_width="match_parent"
@@ -81,9 +83,10 @@
             android:hint="@string/to_be_completed"
             android:inputType="textNoSuggestions"
             android:paddingHorizontal="5dp"
-            android:text="@string/lorem_ipsum"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textColorHint="@color/dark_gray"
+            android:textSize="14sp"
+            tools:text="@string/lorem_ipsum" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,7 +127,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/no_fields_to_display"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="gone"
             tools:visibility="visible" />
 

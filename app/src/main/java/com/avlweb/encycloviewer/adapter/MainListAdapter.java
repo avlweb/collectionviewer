@@ -28,9 +28,9 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
     private List<DbItem> data;
 
     public interface customButtonListener {
-        void onButtonClickListener(View view, int position, String value);
+        void onButtonClickListener(View view, int position);
 
-        void onTextClickListener(int position, String value);
+        void onTextClickListener(int position);
     }
 
     public void setCustomButtonListener(customButtonListener listener) {
@@ -77,13 +77,13 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final String temp = getItem(position).getName();
-        viewHolder.text.setText(temp);
+        final DbItem temp = getItem(position);
+        viewHolder.text.setText(temp.getName());
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (customListener != null) {
-                    customListener.onTextClickListener(position, temp);
+                    customListener.onTextClickListener(position);
                 }
             }
         });
@@ -92,7 +92,7 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
             @Override
             public void onClick(View v) {
                 if (customListener != null) {
-                    customListener.onButtonClickListener(finalConvertView, position, temp);
+                    customListener.onButtonClickListener(finalConvertView, position);
                 }
             }
         });

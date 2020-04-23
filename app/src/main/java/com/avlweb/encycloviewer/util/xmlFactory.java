@@ -38,29 +38,29 @@ public class xmlFactory {
 
             int eventType = parser.getEventType();
 
-            boolean enterItem = false;
-            boolean enterContent = false;
-            boolean enterFielddesc = false;
+            boolean caseItem = false;
+            boolean caseContent = false;
+            boolean caseFielddesc = false;
             int type = 0;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
-                        enterContent = true;
-                        enterFielddesc = false;
-                        enterItem = false;
+                        caseContent = true;
+                        caseFielddesc = false;
+                        caseItem = false;
                         dbInfos = new DatabaseInfos();
                     } else if (strNode.equals("fielddesc")) {
-                        enterContent = false;
-                        enterFielddesc = true;
-                        enterItem = false;
+                        caseContent = false;
+                        caseFielddesc = true;
+                        caseItem = false;
                         field = new FieldDescription();
                     } else if (strNode.equals("item")) {
-                        enterContent = false;
-                        enterFielddesc = false;
-                        enterItem = true;
+                        caseContent = false;
+                        caseFielddesc = false;
+                        caseItem = true;
                         item = new DbItem();
-                    } else if (enterContent) {
+                    } else if (caseContent) {
                         switch (strNode) {
                             case "name":
                                 type = 1;
@@ -72,7 +72,7 @@ public class xmlFactory {
                                 type = 3;
                                 break;
                         }
-                    } else if (enterFielddesc) {
+                    } else if (caseFielddesc) {
                         switch (strNode) {
                             case "name":
                                 type = 1;
@@ -81,7 +81,7 @@ public class xmlFactory {
                                 type = 2;
                                 break;
                         }
-                    } else if (enterItem) {
+                    } else if (caseItem) {
                         switch (strNode) {
                             case "field":
                                 type = 1;
@@ -92,10 +92,13 @@ public class xmlFactory {
                             case "name":
                                 type = 3;
                                 break;
+                            case "description":
+                                type = 4;
+                                break;
                         }
                     }
                 } else if (eventType == XmlPullParser.TEXT) {
-                    if (enterContent) {
+                    if (caseContent) {
                         switch (type) {
                             case 1:
                                 dbInfos.setName(parser.getText());
@@ -107,7 +110,7 @@ public class xmlFactory {
                                 dbInfos.setVersion(parser.getText());
                                 break;
                         }
-                    } else if (enterFielddesc) {
+                    } else if (caseFielddesc) {
                         switch (type) {
                             case 1:
                                 field.setName(parser.getText());
@@ -117,7 +120,7 @@ public class xmlFactory {
                                 field.setDescription(parser.getText());
                                 break;
                         }
-                    } else if (enterItem) {
+                    } else if (caseItem) {
                         switch (type) {
                             case 1:
                                 item.addField(parser.getText());
@@ -128,6 +131,9 @@ public class xmlFactory {
                             case 3:
                                 item.setName(parser.getText());
                                 break;
+                            case 4:
+                                item.setDescription(parser.getText());
+                                break;
                         }
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
@@ -135,15 +141,15 @@ public class xmlFactory {
                     switch (strNode) {
                         case "content":
                             database.setInfos(dbInfos);
-                            enterContent = false;
+                            caseContent = false;
                             break;
                         case "fielddesc":
                             database.addFieldDescription(field);
-                            enterFielddesc = false;
+                            caseFielddesc = false;
                             break;
                         case "item":
                             database.addItemToList(item);
-                            enterItem = false;
+                            caseItem = false;
                             break;
                     }
                     type = 0;
@@ -180,7 +186,7 @@ public class xmlFactory {
             xmlSerializer.startDocument("UTF-8", true);
             xmlSerializer.startTag(ns, "database");
 
-            insertContent(xmlSerializer, database.getInfos());
+            insertDatabaseInfos(xmlSerializer, database.getInfos());
             insertFields(xmlSerializer, database.getFieldDescriptions());
             insertItems(xmlSerializer, database.getItemsList());
 
@@ -200,7 +206,7 @@ public class xmlFactory {
         return true;
     }
 
-    private static void insertContent(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
+    private static void insertDatabaseInfos(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "content");
 
         xmlSerializer.startTag(ns, "name");
@@ -231,7 +237,7 @@ public class xmlFactory {
                 xmlSerializer.endTag(ns, "name");
 
                 xmlSerializer.startTag(ns, "description");
-                if (desc.getDescription() != null)
+                if ((desc.getDescription() != null) && (desc.getDescription().length() > 0))
                     xmlSerializer.text(desc.getDescription());
                 xmlSerializer.endTag(ns, "description");
 
@@ -250,6 +256,11 @@ public class xmlFactory {
                 xmlSerializer.startTag(ns, "name");
                 xmlSerializer.text(item.getName());
                 xmlSerializer.endTag(ns, "name");
+                // Add description
+                xmlSerializer.startTag(ns, "description");
+                if ((item.getDescription() != null) && (item.getDescription().length() > 0))
+                    xmlSerializer.text(item.getDescription());
+                xmlSerializer.endTag(ns, "description");
                 // Add fields
                 for (int idx = 0; idx < item.getNbFields(); idx++) {
                     xmlSerializer.startTag(ns, "field");

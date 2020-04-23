@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -29,6 +31,11 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.FieldDescription;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.List;
 
 public class ItemModify extends Activity {
     private DisplayMetrics metrics = new DisplayMetrics();
@@ -36,7 +43,7 @@ public class ItemModify extends Activity {
     private DbItem currentItem = null;
     private boolean imageZoomed;
     private EncycloDatabase database = EncycloDatabase.getInstance();
-    private int imgIdx = 0;
+    private int currentImageIndex = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,13 +62,13 @@ public class ItemModify extends Activity {
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
-        EncycloDatabase database = EncycloDatabase.getInstance();
-        if (database.getFieldDescriptions() != null) {
+        List<FieldDescription> descs = database.getFieldDescriptions();
+        if ((descs != null) && (descs.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
-            for (FieldDescription field : database.getFieldDescriptions()) {
+            for (FieldDescription description : descs) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                textView.setText(field.getName());
+                textView.setText(description.getName());
                 textView.setTextColor(getColor(R.color.black));
                 textView.setPadding(20, 20, 20, 20);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -81,7 +88,7 @@ public class ItemModify extends Activity {
                 editText.setSingleLine(false);
                 editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                editText.setId(field.getId());
+                editText.setId(description.getId());
                 linearLayout.addView(editText);
             }
         }
@@ -100,12 +107,80 @@ public class ItemModify extends Activity {
         displayImage();
     }
 
-    public void addImage(View view) {
-        Toast.makeText(getApplicationContext(), "Add image", Toast.LENGTH_SHORT).show();
+    public void deleteImage(View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.warning);
+        alertDialogBuilder.setIcon(R.drawable.ic_warning);
+        alertDialogBuilder.setMessage(R.string.warning_image_deletion);
+        alertDialogBuilder.setNegativeButton(getString(R.string.no),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        currentItem.deleteImage(currentImageIndex);
+                        Toast.makeText(getApplicationContext(), R.string.deletion_successful, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
-    public void deleteImage(View view) {
-        Toast.makeText(getApplicationContext(), "Delete image", Toast.LENGTH_SHORT).show();
+    public void addImage(View view) {
+        // Choose a file using the system's file picker.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        // Provide read access to files and sub-directories in the user-selected directory.
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivityForResult(intent, 10254841);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == 10254841 && resultCode == Activity.RESULT_OK) {
+            // The result data contains a URI for the file that the user selected.
+            if (resultData != null) {
+                Uri uri = resultData.getData();
+                if (uri != null) {
+                    File defaultPath = new File(database.getInfos().getPath());
+                    Log.d("ItemModify", "default path = " + defaultPath.getAbsolutePath());
+                    String finalPath = defaultPath.getAbsolutePath() + File.separator + "images";
+                    Log.d("ItemModify", "images path = " + defaultPath.getAbsolutePath());
+                    String uriPath = uri.getPath();
+                    if ((uriPath != null) && (uriPath.length() > 0)) {
+                        Log.d("SETTINGS", "uri path = " + uriPath);
+                        String[] tmp = uriPath.split("/");
+                        Log.d("SETTINGS", "file name = " + tmp[tmp.length - 1]);
+                        finalPath += File.separator + tmp[tmp.length - 1];
+                    }
+//                        if (uriPath.startsWith("/document/home:")) {
+//                            String[] paths = uriPath.split(":");
+//                            if (paths.length == 2)
+//                                finalPath += "Documents" + File.separator + paths[1];
+//                            else
+//                                finalPath += "Documents";
+//                        } else if (uriPath.startsWith("/document/primary:")) {
+//                            String[] paths = uriPath.split(":");
+//                            if (paths.length == 2)
+//                                finalPath += paths[1];
+//                        }
+//                    }
+                    Log.d("ItemModify", "final path = " + finalPath);
+                    // Copy image to database images folder
+                    copyImage(uri, new File(finalPath));
+                }
+            }
+        }
     }
 
     @Override
@@ -125,18 +200,37 @@ public class ItemModify extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void copyImage(Uri sourceUri, File destination) {
+        try {
+            File source = new File(sourceUri.getPath());
+            FileChannel src = new FileInputStream(source).getChannel();
+            FileChannel dst = new FileOutputStream(destination).getChannel();
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void saveItem() {
         int idx = 0;
         // Save name
         EditText editText = findViewById(R.id.textName);
         currentItem.setName(editText.getText().toString());
+        // Save description
+        editText = findViewById(R.id.textName);
+        currentItem.setDescription(editText.getText().toString());
         // save fields
-        for (FieldDescription field : database.getFieldDescriptions()) {
-            editText = findViewById(field.getId());
-            if ((editText.getText() != null) && (editText.getText().length() > 0)) {
-                currentItem.setField(idx, editText.getText().toString());
+        List<FieldDescription> descs = database.getFieldDescriptions();
+        if ((descs != null) && (descs.size() > 0)) {
+            for (FieldDescription description : descs) {
+                editText = findViewById(description.getId());
+                if ((editText.getText() != null) && (editText.getText().length() > 0)) {
+                    currentItem.setField(idx, editText.getText().toString());
+                }
+                idx++;
             }
-            idx++;
         }
         Toast.makeText(getApplicationContext(), R.string.item_successfully_saved, Toast.LENGTH_SHORT).show();
     }
@@ -145,7 +239,7 @@ public class ItemModify extends Activity {
         currentItem = null;
 
         for (DbItem item : database.getItemsList()) {
-            if ((item.getListPosition() != -1) && (item.getListPosition() == this.position)) {
+            if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
             }
@@ -165,17 +259,23 @@ public class ItemModify extends Activity {
             return;
         }
 
-        if (imgIdx >= currentItem.getNbImages())
-            imgIdx = 0;
+        if (currentImageIndex >= currentItem.getNbImages())
+            currentImageIndex = 0;
 
+        // Display name
         EditText editText = findViewById(R.id.textName);
         editText.setText(currentItem.getName());
-
-        EncycloDatabase database = EncycloDatabase.getInstance();
-        if (database.getFieldDescriptions() != null) {
+        // Display description if exists
+        if ((currentItem.getDescription() != null) && (currentItem.getDescription().length() > 0)) {
+            editText = findViewById(R.id.textDescription);
+            editText.setText(currentItem.getDescription());
+        }
+        // Display fields if exists
+        List<FieldDescription> descs = database.getFieldDescriptions();
+        if ((descs != null) && (descs.size() > 0)) {
             int idx = 0;
-            for (FieldDescription field : database.getFieldDescriptions()) {
-                editText = findViewById(field.getId());
+            for (FieldDescription description : descs) {
+                editText = findViewById(description.getId());
                 editText.setText(currentItem.getField(idx));
                 idx++;
             }
@@ -192,10 +292,10 @@ public class ItemModify extends Activity {
             textView.setVisibility(View.GONE);
         } else {
             textView.setVisibility(View.VISIBLE);
-            textView.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+            textView.setText(String.format(getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));
         }
 
-        String imagePath = currentItem.getImagePath(imgIdx);
+        String imagePath = currentItem.getImagePath(currentImageIndex);
         if (imagePath == null) {
             textView = findViewById(R.id.textView1);
             textView.setVisibility(View.VISIBLE);
@@ -232,10 +332,10 @@ public class ItemModify extends Activity {
     }
 
     public void showNextImage(View view) {
-        if (imgIdx < (currentItem.getNbImages() - 1))
-            imgIdx++;
+        if (currentImageIndex < (currentItem.getNbImages() - 1))
+            currentImageIndex++;
         else
-            imgIdx = 0;
+            currentImageIndex = 0;
 
         displayImage();
     }

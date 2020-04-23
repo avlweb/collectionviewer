@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 public class DbItem {
     private String name;
+    private String description;
     private ArrayList<String> fields;
     private ArrayList<String> imagePaths;
     private boolean selected;
-    private int listPosition;
+    private int positionInSelectedList;
 
     public DbItem() {
         this.selected = true;
-        this.listPosition = -1;
+        this.positionInSelectedList = -1;
         this.fields = new ArrayList<>();
         this.imagePaths = new ArrayList<>();
     }
@@ -22,6 +23,14 @@ public class DbItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setSelected() {
@@ -55,11 +64,16 @@ public class DbItem {
         this.imagePaths.add(path);
     }
 
-    public String getImagePath(int num) {
-        if ((num >= 0) && (num < this.imagePaths.size()))
-            return this.imagePaths.get(num);
+    public String getImagePath(int index) {
+        if ((index >= 0) && (index < this.imagePaths.size()))
+            return this.imagePaths.get(index);
 
         return null;
+    }
+
+    public void deleteImage(int index) {
+        if ((index >= 0) && (index < this.imagePaths.size()))
+            this.imagePaths.remove(index);
     }
 
     public int getNbImages() {
@@ -70,12 +84,12 @@ public class DbItem {
         return this.name;
     }
 
-    public void setListPosition(int listPosition) {
-        this.listPosition = listPosition;
+    public void setPositionInSelectedList(int positionInSelectedList) {
+        this.positionInSelectedList = positionInSelectedList;
     }
 
-    public int getListPosition() {
-        return this.listPosition;
+    public int getPositionInSelectedList() {
+        return this.positionInSelectedList;
     }
 
     public void setField(int idx, String value) {

@@ -29,6 +29,7 @@ import java.util.List;
 
 public class SearchInDatabase extends Activity {
     private static String nameSearch = null;
+    private static String descriptionSearch = null;
     private static String[] fieldSearch = null;
     private static int nbFields = 0;
 
@@ -55,6 +56,7 @@ public class SearchInDatabase extends Activity {
                 fieldSearch = null;
                 fieldSearch = new String[nbFields];
                 nameSearch = null;
+                descriptionSearch = null;
             }
             // Create and fill fields
             for (FieldDescription field : database.getFieldDescriptions()) {
@@ -88,12 +90,18 @@ public class SearchInDatabase extends Activity {
                 EditText name = findViewById(R.id.textName);
                 name.setText(nameSearch);
             }
+            // Fill name if already exists
+            if ((descriptionSearch != null) && (descriptionSearch.length() > 0)) {
+                EditText description = findViewById(R.id.textDescription);
+                description.setText(descriptionSearch);
+            }
         }
     }
 
     public void searchInDatabase(View view) {
         String[][] stringsToSearch = new String[nbFields][];
         String[] namesToSearch = null;
+        String[] descriptionsToSearch = null;
         EncycloDatabase database = EncycloDatabase.getInstance();
         int nbFieldsToMatch = 0;
 
@@ -102,6 +110,14 @@ public class SearchInDatabase extends Activity {
         if ((name.getText() != null) && (name.getText().length() > 0)) {
             nameSearch = name.getText().toString();
             namesToSearch = nameSearch.split(",");
+            nbFieldsToMatch++;
+        }
+
+        // Description
+        EditText description = findViewById(R.id.textDescription);
+        if ((description.getText() != null) && (description.getText().length() > 0)) {
+            descriptionSearch = description.getText().toString();
+            descriptionsToSearch = descriptionSearch.split(",");
             nbFieldsToMatch++;
         }
 
@@ -140,6 +156,19 @@ public class SearchInDatabase extends Activity {
                             break;
                     }
                     if (nbStringsOk == namesToSearch.length)
+                        nbFieldsMatching++;
+                }
+                // Description
+                if (descriptionsToSearch != null) {
+                    String element = item.getDescription().toLowerCase();
+                    int nbStringsOk = 0;
+                    for (String toSearch : descriptionsToSearch) {
+                        if (element.contains(toSearch))
+                            nbStringsOk++;
+                        else
+                            break;
+                    }
+                    if (nbStringsOk == descriptionsToSearch.length)
                         nbFieldsMatching++;
                 }
                 // Field
@@ -197,26 +226,30 @@ public class SearchInDatabase extends Activity {
         for (DbItem item : items)
             item.setSelected();
         // Name
-        EditText name = findViewById(R.id.textName);
-        name.setText("");
+        EditText editText = findViewById(R.id.textName);
+        editText.setText("");
         nameSearch = null;
+        // Description
+        editText = findViewById(R.id.textDescription);
+        editText.setText("");
+        descriptionSearch = null;
         // Fields
         int idx = 0;
         for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
-            EditText editText = findViewById(field.getId());
+            editText = findViewById(field.getId());
             editText.setText("");
             fieldSearch[idx] = null;
             idx++;
         }
+        fieldSearch = null;
         Toast.makeText(getApplicationContext(), R.string.clear_done, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

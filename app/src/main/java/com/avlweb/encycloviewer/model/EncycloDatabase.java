@@ -36,6 +36,14 @@ public class EncycloDatabase {
             return 0;
     }
 
+    public DbItem getItem(int position) {
+        if (this.itemsList != null) {
+            if ((position >= 0) && (position < this.itemsList.size()))
+                return this.itemsList.get(position);
+        }
+        return null;
+    }
+
     public void addItemToList(DbItem item) {
         if (this.itemsList == null)
             this.itemsList = new ArrayList<>();

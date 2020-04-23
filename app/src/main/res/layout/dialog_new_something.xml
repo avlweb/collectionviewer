@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:autofillHints="@string/database_name"
+        android:autofillHints="@string/name"
         android:gravity="top"
-        android:hint="@string/database_name"
+        android:hint="@string/name"
+        android:inputType="textCapWords"
         android:maxLines="1" />
 
 </LinearLayout>

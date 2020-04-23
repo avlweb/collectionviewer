@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,18 +47,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
             actionbar.setDisplayShowHomeEnabled(true);
         }
 
-        // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
-        // Get Scrollbar position
-        int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
-        // Set position according to settings
-        ListView lv = findViewById(R.id.listView1);
-        if (scrollbarPosition == 1)
-            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
-        else
-            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
-
-        loadDatabaseInList();
+        buildMainListContent();
     }
 
     @Override
@@ -87,13 +75,12 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
 
             case R.id.add_btn:
                 LayoutInflater inflater = LayoutInflater.from(this);
-                View dialog = inflater.inflate(R.layout.dialog_new_database, null);
+                View dialog = inflater.inflate(R.layout.dialog_new_something, null);
                 final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle(getString(R.string.new_item));
-                alertDialog.setCancelable(true);
                 alertDialog.setMessage(getString(R.string.message_new_item));
+                alertDialog.setCancelable(false);
                 final EditText fieldName = dialog.findViewById(R.id.fieldName);
-                fieldName.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
@@ -105,6 +92,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                         }
                     }
                 });
+
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -180,8 +168,6 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 this.position = resultData.getIntExtra("position", 0);
                 ListView lv = findViewById(R.id.listView1);
                 lv.setSelectionFromTop(this.position, 30);
-                // Reload list
-                loadDatabaseInList();
             }
         } else if (((requestCode == 48484848) || (requestCode == 846516548)) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
@@ -192,47 +178,68 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         }
     }
 
-    public void loadDatabaseInList() {
+    public void buildMainListContent() {
         ArrayList<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        ArrayList<DbItem> selectedItems = new ArrayList<>();
+
         if (items != null) {
-            ArrayList<DbItem> selectedItems = new ArrayList<>();
             int idx = 0;
             for (DbItem item : items) {
                 if (item.isSelected()) {
                     selectedItems.add(item);
-                    item.setListPosition(idx);
+                    item.setPositionInSelectedList(idx);
                     idx++;
                 } else
-                    item.setListPosition(-1);
+                    item.setPositionInSelectedList(-1);
             }
 
             if (selectedItems.size() > 0) {
                 this.maxPosition = selectedItems.size() - 1;
-
-                adapter = null;     // For desallocation !
-                adapter = new MainListAdapter(this, selectedItems);
-                adapter.setCustomButtonListener(this);
-                ListView lv = findViewById(R.id.listView1);
-                lv.setAdapter(adapter);
-                lv.setSelectionFromTop(this.position, 30);
-                registerForContextMenu(lv);
             }
-        } else {
+        }
+
+        // Set scrollbar position according to settings
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
+        int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
+        ListView lv = findViewById(R.id.listView1);
+        if (scrollbarPosition == 1)
+            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
+        else
+            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
+
+        // Create listview adapter
+        adapter = null;     // For desallocation !
+        adapter = new MainListAdapter(this, selectedItems);
+        adapter.setCustomButtonListener(this);
+        lv.setAdapter(adapter);
+        lv.setSelectionFromTop(this.position, 30);
+        registerForContextMenu(lv);
+
+        hideOrNotListView();
+    }
+
+    private void hideOrNotListView() {
+        if (adapter.getCount() == 0) {
             ListView lv = findViewById(R.id.listView1);
             lv.setVisibility(View.GONE);
             TextView textView = findViewById(R.id.textView);
             textView.setVisibility(View.VISIBLE);
+        } else {
+            ListView lv = findViewById(R.id.listView1);
+            lv.setVisibility(View.VISIBLE);
+            TextView textView = findViewById(R.id.textView);
+            textView.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void onButtonClickListener(View view, int position, String value) {
+    public void onButtonClickListener(View view, int position) {
         this.position = position;
         openContextMenu(view);
     }
 
     @Override
-    public void onTextClickListener(int position, String value) {
+    public void onTextClickListener(int position) {
         this.position = position;
         Intent intent = new Intent(this, ItemDisplay.class);
         intent.putExtra("position", position);
@@ -245,9 +252,14 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         // Create new item
         DbItem item = new DbItem();
         item.setName(name);
-        item.setListPosition(database.getNbItems());
+        item.setPositionInSelectedList(database.getNbItems());
+        // Add item to database
         database.addItemToList(item);
         databaseModified = true;
+        // Add item to adapter
+        adapter.add(item);
+        // Hide or not listView
+        hideOrNotListView();
         // Call modification page
         this.position = database.getNbItems() - 1;
         Intent intent = new Intent(this, ItemModify.class);
@@ -256,9 +268,12 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     }
 
     private void deleteItem() {
-        // Delete item
         List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        // Delete item from adapter
         adapter.remove(items.get(this.position));
+        // Hide or not listView
+        hideOrNotListView();
+        // Delete item from database
         items.remove(this.position);
         databaseModified = true;
     }

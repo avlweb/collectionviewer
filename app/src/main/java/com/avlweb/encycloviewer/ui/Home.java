@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -128,13 +127,12 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
 
             case R.id.menu_add:
                 LayoutInflater inflater = LayoutInflater.from(this);
-                View dialog = inflater.inflate(R.layout.dialog_new_database, null);
+                View dialog = inflater.inflate(R.layout.dialog_new_something, null);
                 final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle(getString(R.string.new_database));
-                alertDialog.setCancelable(true);
                 alertDialog.setMessage(getString(R.string.message_new_database));
+                alertDialog.setCancelable(false);
                 final EditText fieldName = dialog.findViewById(R.id.fieldName);
-                fieldName.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
@@ -146,6 +144,7 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                         }
                     }
                 });
+
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

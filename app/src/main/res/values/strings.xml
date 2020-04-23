@@ -79,7 +79,7 @@
     <string name="database_name">Database name</string>
     <string name="new_database">New Database</string>
     <string name="new_field">New Field</string>
-    <string name="message_new_database">A new database will be created with the given name. You will have to fill its description and add items !</string>
+    <string name="message_new_database">A new database will be created with the given name. You will have to fill its description, create fields and add items !</string>
     <string name="database_successfully_created">Database successfully created.</string>
     <string name="menu_database">Database Menu</string>
     <string name="delete">Delete</string>
@@ -103,4 +103,7 @@
     <string name="to_be_completed">To be completed</string>
     <string name="new_item">New item</string>
     <string name="message_new_item">A new item will be created with the given name. You will have to fill its fields and add images !</string>
+    <string name="message_new_field">A new field will be created with the given name. You will have to fill its description and optionally complete this field for existing items !</string>
+    <string name="content">Content</string>
+    <string name="warning_image_deletion">Do you really want to delete this image ?</string>
 </resources>

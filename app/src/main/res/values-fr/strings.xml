@@ -79,7 +79,7 @@
     <string name="database_name">Nom de la base</string>
     <string name="new_database">Nouvelle base de données</string>
     <string name="new_field">Nouveau champ</string>
-    <string name="message_new_database">Une nouvelle base de donnée va être crée. Il faudra remplir sa description et y ajouter des éléments !</string>
+    <string name="message_new_database">Une nouvelle base de donnée va être crée avec le nom saisi. Il faudra remplir sa description, ajouter des champs et ensuite des éléments !</string>
     <string name="database_successfully_created">Base créée avec succès.</string>
     <string name="menu_database">Menu Base de données</string>
     <string name="delete">Supprimer</string>
@@ -102,5 +102,8 @@
     <string name="no_fields_to_display">Pas de champs à afficher !</string>
     <string name="to_be_completed">A compléter</string>
     <string name="new_item">Nouvel élément</string>
-    <string name="message_new_item">Un nouvel élément va être créé. Il faudra remplir ses champs et ajouter des photos !</string>
+    <string name="message_new_item">Un nouvel élément va être créé avec le nom saisi. Il faudra remplir ses champs et ajouter des photos !</string>
+    <string name="message_new_field">Un nouveau champ va être créé avec le nom saisi. Il faudra remplir sa description et optionnellement remplir ce champ pour les éléments existants !</string>
+    <string name="content">Contenu</string>
+    <string name="warning_image_deletion">Voulez-vous réellement supprimer cette image ?</string>
 </resources>

@@ -100,9 +100,11 @@ public class DatabaseModify extends Activity {
         dbInfos.setVersion(textView.getText().toString());
 
         List<FieldDescription> descs = EncycloDatabase.getInstance().getFieldDescriptions();
-        for (FieldDescription desc : descs) {
-            EditText editText = findViewById(desc.getId());
-            desc.setDescription(editText.getText().toString());
+        if ((descs != null) && (descs.size() > 0)) {
+            for (FieldDescription desc : descs) {
+                EditText editText = findViewById(desc.getId());
+                desc.setDescription(editText.getText().toString());
+            }
         }
 
         // Finally write datas to XML file
@@ -114,12 +116,12 @@ public class DatabaseModify extends Activity {
 
     public void addField(View view) {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View dialog = inflater.inflate(R.layout.dialog_new_field, null);
+        View dialog = inflater.inflate(R.layout.dialog_new_something, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getString(R.string.new_field));
-        alertDialog.setCancelable(true);
+        alertDialog.setMessage(getString(R.string.message_new_field));
+        alertDialog.setCancelable(false);
         final EditText fieldName = dialog.findViewById(R.id.fieldName);
-        fieldName.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
@@ -127,7 +129,7 @@ public class DatabaseModify extends Activity {
                 hideKeyboard();
                 String name = fieldName.getText().toString();
                 if (name.length() > 0) {
-                    addNewField(name);
+                    createNewField(name);
                 }
             }
         });
@@ -149,7 +151,7 @@ public class DatabaseModify extends Activity {
         if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    private void addNewField(String name) {
+    private void createNewField(String name) {
         FieldDescription field = new FieldDescription();
         field.setName(name);
         field.setId(View.generateViewId());
