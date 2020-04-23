@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -131,58 +132,6 @@ public class ItemModify extends Activity {
         alertDialog.show();
     }
 
-    public void addImage(View view) {
-        // Choose a file using the system's file picker.
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-        // Provide read access to files and sub-directories in the user-selected directory.
-//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        startActivityForResult(intent, 10254841);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == 10254841 && resultCode == Activity.RESULT_OK) {
-            // The result data contains a URI for the file that the user selected.
-            if (resultData != null) {
-                Uri uri = resultData.getData();
-                if (uri != null) {
-                    File defaultPath = new File(database.getInfos().getPath());
-                    Log.d("ItemModify", "default path = " + defaultPath.getAbsolutePath());
-                    String finalPath = defaultPath.getAbsolutePath() + File.separator + "images";
-                    Log.d("ItemModify", "images path = " + defaultPath.getAbsolutePath());
-                    String uriPath = uri.getPath();
-                    if ((uriPath != null) && (uriPath.length() > 0)) {
-                        Log.d("SETTINGS", "uri path = " + uriPath);
-                        String[] tmp = uriPath.split("/");
-                        Log.d("SETTINGS", "file name = " + tmp[tmp.length - 1]);
-                        finalPath += File.separator + tmp[tmp.length - 1];
-                    }
-//                        if (uriPath.startsWith("/document/home:")) {
-//                            String[] paths = uriPath.split(":");
-//                            if (paths.length == 2)
-//                                finalPath += "Documents" + File.separator + paths[1];
-//                            else
-//                                finalPath += "Documents";
-//                        } else if (uriPath.startsWith("/document/primary:")) {
-//                            String[] paths = uriPath.split(":");
-//                            if (paths.length == 2)
-//                                finalPath += paths[1];
-//                        }
-//                    }
-                    Log.d("ItemModify", "final path = " + finalPath);
-                    // Copy image to database images folder
-                    copyImage(uri, new File(finalPath));
-                }
-            }
-        }
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -200,11 +149,67 @@ public class ItemModify extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void copyImage(Uri sourceUri, File destination) {
+    public void addImage(View view) {
+        // Choose a file using the system's file picker.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        startActivityForResult(intent, 10254841);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == 10254841 && resultCode == Activity.RESULT_OK) {
+            // The result data contains a URI for the file that the user selected.
+            if (resultData != null) {
+                Uri uri = resultData.getData();
+                if (uri != null) {
+                    File databasePath = new File(database.getInfos().getPath());
+                    Log.d("ItemModify", "database path = " + databasePath.getAbsolutePath());
+                    String finalPath = databasePath.getAbsolutePath() + File.separator + "images";
+                    Log.d("ItemModify", "images path = " + databasePath.getAbsolutePath());
+                    String uriPath = uri.getPath();
+                    File externalPath = Environment.getExternalStorageDirectory();
+                    if ((uriPath != null) && (uriPath.length() > 0) && (externalPath != null)) {
+                        Log.d("SETTINGS", "default path = " + databasePath.getAbsolutePath());
+                        Log.d("SETTINGS", "uri path = " + uriPath);
+                        String[] tmp = uriPath.split("/");
+                        String imageName = tmp[tmp.length - 1];
+                        Log.d("SETTINGS", "file name = " + imageName);
+                        finalPath += File.separator + tmp[tmp.length - 1];
+                        String sourcePath = externalPath.getAbsolutePath() + File.separator;
+                        if (uriPath.startsWith("/document/home:")) {
+                            String[] paths = uriPath.split(":");
+                            if (paths.length == 2)
+                                sourcePath += "Documents" + File.separator + paths[1];
+                            else
+                                sourcePath += "Documents";
+                        } else if (uriPath.startsWith("/document/primary:")) {
+                            String[] paths = uriPath.split(":");
+                            if (paths.length == 2)
+                                sourcePath += paths[1];
+                        }
+                        Log.d("ItemModify", "source path = " + sourcePath);
+                        Log.d("ItemModify", "final path = " + finalPath);
+                        // Copy image to database images folder
+                        copyImage(sourcePath, finalPath);
+                        // Save path of image into item
+                        currentItem.addImagePath("images" + File.separator + imageName);
+                    }
+                }
+            }
+        }
+    }
+
+    private void copyImage(String sourcePath, String destPath) {
         try {
-            File source = new File(sourceUri.getPath());
+            File source = new File(sourcePath);
+            File dest = new File(destPath);
             FileChannel src = new FileInputStream(source).getChannel();
-            FileChannel dst = new FileOutputStream(destination).getChannel();
+            FileChannel dst = new FileOutputStream(dest).getChannel();
             dst.transferFrom(src, 0, src.size());
             src.close();
             dst.close();
