@@ -12,11 +12,6 @@
     <string name="menu_open_database">Ouvrir Base de données</string>
     <string name="title_activity_search">Rechercher</string>
     <string name="title_activity_settings">Réglages</string>
-    <string name="field1_">Field1 :</string>
-    <string name="field2_">Field2 :</string>
-    <string name="field3_">Field3 :</string>
-    <string name="field4_">Field4 :</string>
-    <string name="field5_">Field5 :</string>
     <string name="search">Rechercher</string>
     <string name="clear_search">Effacer la recherche</string>
     <string name="_1_1">1/1</string>
@@ -49,12 +44,12 @@
     <string name="words_to_search">Mots à chercher séparés par des virgules</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>
-    <string name="no_element_found">Aucun élément n\'a été trouvé avec ces critères de recherche.</string>
+    <string name="no_item_found">Aucun élément n\'a été trouvé avec ces critères de recherche.</string>
     <string-array name="scrollbar_position_array">
         <item>Droite</item>
         <item>Gauche</item>
     </string-array>
-    <string name="found_elements">%1$d éléments trouvés</string>
+    <string name="found_items">%1$d éléments trouvés</string>
     <string name="search_in_database">Recherche dans la base</string>
     <string name="choose_font_size">Taille des caractères pour les descriptions</string>
     <string name="small">petit</string>
@@ -65,26 +60,26 @@
     <string name="title_activity_database_details">Détails de la base</string>
     <string name="name">Nom</string>
     <string name="description">Description</string>
-    <string name="fields_list">Liste des champs</string>
+    <string name="properties_list">Liste des propriétés</string>
     <string name="open_folder">Open folder</string>
     <string name="zoom">Zoom</string>
     <string name="modify">Modifier</string>
     <string name="informations">Informations</string>
     <string name="successfully_saved">Base sauvegardée !</string>
     <string name="problem_during_save">Il y a eu un problème lors de la sauvegarde !</string>
-    <string name="field_name">Saisir le nom du champ</string>
+    <string name="property_name">Saisir le nom de la propriété</string>
     <string name="cancel">Annuler</string>
-    <string name="field_description">Description du champ</string>
+    <string name="property_description">Description de la propriété</string>
     <string name="add">Ajouter</string>
     <string name="database_name">Nom de la base</string>
     <string name="new_database">Nouvelle base de données</string>
-    <string name="new_field">Nouveau champ</string>
-    <string name="message_new_database">Une nouvelle base de donnée va être crée avec le nom saisi. Il faudra remplir sa description, ajouter des champs et ensuite des éléments !</string>
+    <string name="new_property">Nouvelle propriété</string>
+    <string name="message_new_database">Une nouvelle base de donnée va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
     <string name="database_successfully_created">Base créée avec succès.</string>
     <string name="menu_database">Menu Base de données</string>
     <string name="delete">Supprimer</string>
     <string name="title_activity_database_modify">Modifier la base</string>
-    <string name="deletion_successful">Base supprimée avec succès.</string>
+    <string name="database_deletion_successful">Base supprimée avec succès.</string>
     <string name="deletion_error">Une erreur s\'est produite durant la suppression !</string>
     <string name="database_creation_error">Une erreur s\'est produite durant la création !</string>
     <string name="warning_database_deletion">Voulez-vous réellement supprimer cette base ?</string>
@@ -93,17 +88,20 @@
     <string name="item_successfully_saved">Les changements ont été sauvegardés.</string>
     <string name="item_error_save">Une erreur s\'est produite durant la sauvegarde !</string>
     <string name="images">Images</string>
-    <string name="fields">Champs</string>
+    <string name="properties">Propriétés</string>
     <string name="add_item">Ajouter un élément</string>
-    <string name="warning_item_deletion">Voulez-vous réellement supprimer cette élément ?</string>
+    <string name="warning_item_deletion">Voulez-vous réellement supprimer cet élément ?</string>
     <string name="database_is_empty">La base de données est vide !</string>
     <string name="no_image_to_display">Pas d\'image à afficher !</string>
     <string name="database_modify">Modification de la base</string>
-    <string name="no_fields_to_display">Pas de champs à afficher !</string>
+    <string name="no_properties_to_display">Pas de propriétés à afficher !</string>
     <string name="to_be_completed">A compléter</string>
     <string name="new_item">Nouvel élément</string>
-    <string name="message_new_item">Un nouvel élément va être créé avec le nom saisi. Il faudra remplir ses champs et ajouter des photos !</string>
-    <string name="message_new_field">Un nouveau champ va être créé avec le nom saisi. Il faudra remplir sa description et optionnellement remplir ce champ pour les éléments existants !</string>
+    <string name="message_new_item">Un nouvel élément va être créé avec le nom saisi. Il faudra remplir ses propriétés et ajouter des photos !</string>
+    <string name="message_new_property">Une nouvelle propriété va être créé avec le nom saisi. Il faudra remplir sa description et optionnellement remplir cette propriété pour les éléments existants !</string>
     <string name="content">Contenu</string>
     <string name="warning_image_deletion">Voulez-vous réellement supprimer cette image ?</string>
+    <string name="must_not_be_empty">Must not be empty !</string>
+    <string name="image_deletion_successful">Image supprimée avec succès.</string>
+    <string name="item_deletion_successful">Elément supprimé avec succès.</string>
 </resources>

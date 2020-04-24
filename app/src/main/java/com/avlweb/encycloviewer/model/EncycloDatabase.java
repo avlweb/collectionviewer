@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class EncycloDatabase {
 
     private DatabaseInfos infos;
-    private ArrayList<DbItem> itemsList;
-    private ArrayList<FieldDescription> fieldDescriptions;
+    private ArrayList<DbItem> items;
+    private ArrayList<Property> properties;
 
     private static final EncycloDatabase instance = new EncycloDatabase();
 
@@ -25,66 +25,66 @@ public class EncycloDatabase {
         this.infos = infos;
     }
 
-    public ArrayList<DbItem> getItemsList() {
-        return itemsList;
+    public ArrayList<DbItem> getItems() {
+        return items;
     }
 
     public int getNbItems() {
-        if (this.itemsList != null)
-            return this.itemsList.size();
+        if (this.items != null)
+            return this.items.size();
         else
             return 0;
     }
 
     public DbItem getItem(int position) {
-        if (this.itemsList != null) {
-            if ((position >= 0) && (position < this.itemsList.size()))
-                return this.itemsList.get(position);
+        if (this.items != null) {
+            if ((position >= 0) && (position < this.items.size()))
+                return this.items.get(position);
         }
         return null;
     }
 
-    public void addItemToList(DbItem item) {
-        if (this.itemsList == null)
-            this.itemsList = new ArrayList<>();
-        this.itemsList.add(item);
+    public void addItem(DbItem item) {
+        if (this.items == null)
+            this.items = new ArrayList<>();
+        this.items.add(item);
     }
 
-    public ArrayList<FieldDescription> getFieldDescriptions() {
-        return this.fieldDescriptions;
+    public ArrayList<Property> getProperties() {
+        return this.properties;
     }
 
-    public int getNbFields() {
-        if (this.fieldDescriptions != null)
-            return this.fieldDescriptions.size();
+    public int getNbProperties() {
+        if (this.properties != null)
+            return this.properties.size();
         else
             return 0;
     }
 
-    public String getFieldName(int num) {
-        if (this.fieldDescriptions != null) {
-            if ((num >= 0) && (num < this.fieldDescriptions.size()))
-                return this.fieldDescriptions.get(num).getName();
+    public String getPropertyName(int num) {
+        if (this.properties != null) {
+            if ((num >= 0) && (num < this.properties.size()))
+                return this.properties.get(num).getName();
             else
-                return this.fieldDescriptions.get(0).getName();
+                return this.properties.get(0).getName();
         }
         return null;
     }
 
-    public void addFieldDescription(FieldDescription field) {
-        if (this.fieldDescriptions == null)
-            this.fieldDescriptions = new ArrayList<>();
-        this.fieldDescriptions.add(field);
+    public void addProperty(Property property) {
+        if (this.properties == null)
+            this.properties = new ArrayList<>();
+        this.properties.add(property);
     }
 
     public void clear() {
-        if (this.itemsList != null) {
-            this.itemsList.clear();
-            this.itemsList = null;
+        if (this.items != null) {
+            this.items.clear();
+            this.items = null;
         }
-        if (this.fieldDescriptions != null) {
-            this.fieldDescriptions.clear();
-            this.fieldDescriptions = null;
+        if (this.properties != null) {
+            this.properties.clear();
+            this.properties = null;
         }
     }
 }

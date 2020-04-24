@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainList extends Activity implements MainListAdapter.customButtonListener {
+    private final int ACTIVITY_ITEM_MODIFY = 486758485;
+    private final int ACTIVITY_ITEM_DISPLAY = 846516548;
     private int position = 0;
     private int maxPosition = 0;
     private MainListAdapter adapter;
@@ -39,12 +41,14 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_list);
+
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
             actionbar.setDisplayShowTitleEnabled(false);
-            actionbar.setDisplayHomeAsUpEnabled(false);
-            actionbar.setDisplayShowHomeEnabled(true);
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setDisplayShowHomeEnabled(false);
         }
 
         buildMainListContent();
@@ -59,9 +63,8 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-
         switch (item.getItemId()) {
-            case R.id.close_btn:
+            case android.R.id.home:
                 // Save all changes to XML file if needed
                 if (databaseModified) {
                     if (xmlFactory.writeXml())
@@ -80,13 +83,13 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 alertDialog.setTitle(getString(R.string.new_item));
                 alertDialog.setMessage(getString(R.string.message_new_item));
                 alertDialog.setCancelable(false);
-                final EditText fieldName = dialog.findViewById(R.id.fieldName);
+                final EditText propertyName = dialog.findViewById(R.id.propertyName);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hideKeyboard();
-                        String name = fieldName.getText().toString();
+                        String name = propertyName.getText().toString();
                         if (name.length() > 0) {
                             createNewItem(name);
                         }
@@ -132,7 +135,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
                 databaseModified = true;
                 Intent intent = new Intent(this, ItemModify.class);
                 intent.putExtra("position", position);
-                startActivityForResult(intent, 48484848);
+                startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
                 return true;
             case R.id.menu_delete:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -163,23 +166,24 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if ((requestCode == 48675848) && (resultCode == Activity.RESULT_OK)) {
+        if ((requestCode == ACTIVITY_ITEM_DISPLAY) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
                 this.position = resultData.getIntExtra("position", 0);
                 ListView lv = findViewById(R.id.listView1);
                 lv.setSelectionFromTop(this.position, 30);
             }
-        } else if (((requestCode == 48484848) || (requestCode == 846516548)) && (resultCode == Activity.RESULT_OK)) {
+        } else if ((requestCode == ACTIVITY_ITEM_MODIFY) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
                 this.position = resultData.getIntExtra("position", 0);
                 ListView lv = findViewById(R.id.listView1);
                 lv.setSelectionFromTop(this.position, 30);
+                adapter.notifyDataSetChanged();
             }
         }
     }
 
     public void buildMainListContent() {
-        ArrayList<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        ArrayList<DbItem> items = EncycloDatabase.getInstance().getItems();
         ArrayList<DbItem> selectedItems = new ArrayList<>();
 
         if (items != null) {
@@ -244,7 +248,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         Intent intent = new Intent(this, ItemDisplay.class);
         intent.putExtra("position", position);
         intent.putExtra("maxPosition", this.maxPosition);
-        startActivityForResult(intent, 846516548);
+        startActivityForResult(intent, ACTIVITY_ITEM_DISPLAY);
     }
 
     private void createNewItem(String name) {
@@ -254,7 +258,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         item.setName(name);
         item.setPositionInSelectedList(database.getNbItems());
         // Add item to database
-        database.addItemToList(item);
+        database.addItem(item);
         databaseModified = true;
         // Add item to adapter
         adapter.add(item);
@@ -264,11 +268,11 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         this.position = database.getNbItems() - 1;
         Intent intent = new Intent(this, ItemModify.class);
         intent.putExtra("position", position);
-        startActivityForResult(intent, 48675848);
+        startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
     }
 
     private void deleteItem() {
-        List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        List<DbItem> items = EncycloDatabase.getInstance().getItems();
         // Delete item from adapter
         adapter.remove(items.get(this.position));
         // Hide or not listView
@@ -276,6 +280,7 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
         // Delete item from database
         items.remove(this.position);
         databaseModified = true;
+        Toast.makeText(getApplicationContext(), R.string.item_deletion_successful, Toast.LENGTH_SHORT).show();
     }
 
     private void hideKeyboard() {

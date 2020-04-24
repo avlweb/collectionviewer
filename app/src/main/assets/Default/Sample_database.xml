@@ -5,57 +5,57 @@
         <description>Sample database to show how EncycloViewer works ! This database is a collection of shapes.</description>
         <version>1.0</version>
     </content>
-    <fielddescs>
-        <fielddesc>
+    <properties>
+        <property>
             <name>Description</name>
             <description>Description of the item.</description>
-        </fielddesc>
-        <fielddesc>
+        </property>
+        <property>
             <name>Color</name>
             <description>Colors of the shapes in this item, comma separated.</description>
-        </fielddesc>
-        <fielddesc>
+        </property>
+        <property>
             <name>Number of elements</name>
             <description>Number of shapes in this item.</description>
-        </fielddesc>
-        <fielddesc>
+        </property>
+        <property>
             <name>List of shapes</name>
             <description>List of shapes in this item, comma separated.</description>
-        </fielddesc>
-    </fielddescs>
+        </property>
+    </properties>
     <items>
         <item>
             <name>Item 1</name>
             <description>One red diamond.</description>
-            <field>red</field>
-            <field>1</field>
-            <field>diamond</field>
+            <property>red</property>
+            <property>1</property>
+            <property>diamond</property>
             <img>images\content1_1.jpg</img>
             <img>images\content1_2.jpg</img>
         </item>
         <item>
             <name>Item 2</name>
             <description>One brown square.</description>
-            <field>brown</field>
-            <field>1</field>
-            <field>square</field>
+            <property>brown</property>
+            <property>1</property>
+            <property>square</property>
             <img>images\content2_1.jpg</img>
         </item>
         <item>
             <name>Item 3</name>
             <description>One yellow rectangle.</description>
-            <field>yellow</field>
-            <field>1</field>
-            <field>rectangle</field>
+            <property>yellow</property>
+            <property>1</property>
+            <property>rectangle</property>
             <img>images\content3_1.jpg</img>
             <img>images\content3_2.jpg</img>
         </item>
         <item>
             <name>Item 4</name>
             <description>A square and a rectangle in grey.</description>
-            <field>grey</field>
-            <field>2</field>
-            <field>square,rectangle</field>
+            <property>grey</property>
+            <property>2</property>
+            <property>square,rectangle</property>
             <img>images\content4_1.jpg</img>
             <img>images\content4_2.jpg</img>
             <img>images\content4_3.jpg</img>
@@ -63,78 +63,78 @@
         <item>
             <name>Item 5</name>
             <description>One purple circle.</description>
-            <field>purple</field>
-            <field>1</field>
-            <field>circle</field>
+            <property>purple</property>
+            <property>1</property>
+            <property>circle</property>
             <img>images\content5_1.jpg</img>
         </item>
         <item>
             <name>Item 6</name>
             <description>Two blue circles.</description>
-            <field>blue</field>
-            <field>2</field>
-            <field>circle</field>
+            <property>blue</property>
+            <property>2</property>
+            <property>circle</property>
             <img>images\content6_1.jpg</img>
             <img>images\content6_2.jpg</img>
         </item>
         <item>
             <name>Item 7</name>
             <description>One orange hexagon.</description>
-            <field>orange</field>
-            <field>1</field>
-            <field>hexagon</field>
+            <property>orange</property>
+            <property>1</property>
+            <property>hexagon</property>
             <img>images\content7_1.jpg</img>
             <img>images\content7_2.jpg</img>
         </item>
         <item>
             <name>Item 8</name>
             <description>One red triangle.</description>
-            <field>red</field>
-            <field>1</field>
-            <field>triangle</field>
+            <property>red</property>
+            <property>1</property>
+            <property>triangle</property>
             <img>images\content8_1.jpg</img>
             <img>images\content8_2.jpg</img>
         </item>
         <item>
             <name>Item 9</name>
             <description>Two blue squares.</description>
-            <field>blue</field>
-            <field>2</field>
-            <field>square</field>
+            <property>blue</property>
+            <property>2</property>
+            <property>square</property>
             <img>images\content9_1.jpg</img>
             <img>images\content9_2.jpg</img>
         </item>
         <item>
             <name>Item 10</name>
             <description>One orange square.</description>
-            <field>orange</field>
-            <field>1</field>
-            <field>square</field>
+            <property>orange</property>
+            <property>1</property>
+            <property>square</property>
             <img>images\content10_1.jpg</img>
         </item>
         <item>
             <name>Item 11</name>
             <description>Three purple rectangles.</description>
-            <field>purple</field>
-            <field>3</field>
-            <field>rectangle</field>
+            <property>purple</property>
+            <property>3</property>
+            <property>rectangle</property>
             <img>images\content11_1.jpg</img>
             <img>images\content11_2.jpg</img>
         </item>
         <item>
             <name>Item 12</name>
             <description>One brown circle.</description>
-            <field>brown</field>
-            <field>1</field>
-            <field>circle</field>
+            <property>brown</property>
+            <property>1</property>
+            <property>circle</property>
             <img>images\content12_1.jpg</img>
         </item>
         <item>
             <name>Item 13</name>
             <description>Two triangles. One red and one green.</description>
-            <field>red,green</field>
-            <field>2</field>
-            <field>triangle</field>
+            <property>red,green</property>
+            <property>2</property>
+            <property>triangle</property>
             <img>images\content13_1.jpg</img>
             <img>images\content13_2.jpg</img>
         </item>

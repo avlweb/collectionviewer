@@ -132,13 +132,13 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 alertDialog.setTitle(getString(R.string.new_database));
                 alertDialog.setMessage(getString(R.string.message_new_database));
                 alertDialog.setCancelable(false);
-                final EditText fieldName = dialog.findViewById(R.id.fieldName);
+                final EditText propertyName = dialog.findViewById(R.id.propertyName);
 
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         hideKeyboard();
-                        String name = fieldName.getText().toString();
+                        String name = propertyName.getText().toString();
                         if (name.length() > 0) {
                             createNewDatabase(name);
                         }
@@ -311,7 +311,7 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                                 File databaseDir = new File(selectedDatabase);
                                 if (deleteRecursive(databaseDir.getParentFile())) {
                                     removeDatabaseFromList(selectedDatabase);
-                                    Toast.makeText(getApplicationContext(), R.string.deletion_successful, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.database_deletion_successful, Toast.LENGTH_SHORT).show();
                                 } else
                                     Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
                             }

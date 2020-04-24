@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class DbItem {
     private String name;
     private String description;
-    private ArrayList<String> fields;
-    private ArrayList<String> imagePaths;
+    private ArrayList<String> properties;
+    private ArrayList<String> images;
     private boolean selected;
     private int positionInSelectedList;
 
     public DbItem() {
         this.selected = true;
         this.positionInSelectedList = -1;
-        this.fields = new ArrayList<>();
-        this.imagePaths = new ArrayList<>();
+        this.properties = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     public String getName() {
@@ -45,39 +45,46 @@ public class DbItem {
         return this.selected;
     }
 
-    public void addField(String field) {
-        this.fields.add(field);
+    public void addProperty(String property) {
+        this.properties.add(property);
     }
 
-    public int getNbFields() {
-        return this.fields.size();
+    public int getNbProperties() {
+        return this.properties.size();
     }
 
-    public String getField(int num) {
-        if ((num >= 0) && (num < this.fields.size()))
-            return this.fields.get(num);
+    public void setProperty(int idx, String value) {
+        if (idx >= this.properties.size())
+            this.properties.add(value);
+        else
+            this.properties.set(idx, value);
+    }
+
+    public String getProperty(int num) {
+        if ((num >= 0) && (num < this.properties.size()))
+            return this.properties.get(num);
 
         return null;
     }
 
     public void addImagePath(String path) {
-        this.imagePaths.add(path);
+        this.images.add(path);
     }
 
     public String getImagePath(int index) {
-        if ((index >= 0) && (index < this.imagePaths.size()))
-            return this.imagePaths.get(index);
+        if ((index >= 0) && (index < this.images.size()))
+            return this.images.get(index);
 
         return null;
     }
 
     public void deleteImage(int index) {
-        if ((index >= 0) && (index < this.imagePaths.size()))
-            this.imagePaths.remove(index);
+        if ((index >= 0) && (index < this.images.size()))
+            this.images.remove(index);
     }
 
     public int getNbImages() {
-        return this.imagePaths.size();
+        return this.images.size();
     }
 
     public String toString() {
@@ -90,12 +97,5 @@ public class DbItem {
 
     public int getPositionInSelectedList() {
         return this.positionInSelectedList;
-    }
-
-    public void setField(int idx, String value) {
-        if (idx >= this.fields.size())
-            this.fields.add(value);
-        else
-            this.fields.set(idx, value);
     }
 }

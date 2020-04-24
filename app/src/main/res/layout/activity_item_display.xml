@@ -81,12 +81,13 @@
         android:layout_marginStart="10dp"
         android:paddingHorizontal="4dp"
         android:paddingVertical="2dp"
-        android:text="@string/lorem_ipsum"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDetails" />
+        app:layout_constraintTop_toBottomOf="@id/textViewDetails"
+        tools:text="@string/lorem_ipsum"
+        tools:visibility="visible" />
 
     <ImageButton
         android:id="@+id/buttonBottom"
@@ -146,9 +147,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="@string/lorem_ipsum"
+            android:text="@string/to_be_completed"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/lorem_ipsum" />
 
     </ScrollView>
 

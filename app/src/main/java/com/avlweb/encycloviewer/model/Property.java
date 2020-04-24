@@ -1,11 +1,11 @@
 package com.avlweb.encycloviewer.model;
 
-public class FieldDescription {
+public class Property {
     private int id;
     private String name;
     private String description;
 
-    public FieldDescription() {
+    public Property() {
         this.name = null;
         this.description = null;
     }

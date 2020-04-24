@@ -14,7 +14,7 @@ import androidx.core.app.NavUtils;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,8 +50,8 @@ public class DatabaseDetails extends Activity {
         textView = findViewById(R.id.textNbItems);
         textView.setText(String.format(Locale.getDefault(), "%d", EncycloDatabase.getInstance().getNbItems()));
 
-        ListView lv = findViewById(R.id.fieldsList);
-        if (EncycloDatabase.getInstance().getNbFields() > 0) {
+        ListView lv = findViewById(R.id.propertiesList);
+        if (EncycloDatabase.getInstance().getNbProperties() > 0) {
             ArrayList<Map<String, String>> list = buildData();
             String[] from = {"name", "description"};
             int[] to = {android.R.id.text1, android.R.id.text2};
@@ -66,16 +66,16 @@ public class DatabaseDetails extends Activity {
 
     private ArrayList<Map<String, String>> buildData() {
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
-            list.add(putData(field));
+        for (Property property : EncycloDatabase.getInstance().getProperties()) {
+            list.add(putData(property));
         }
         return list;
     }
 
-    private HashMap<String, String> putData(FieldDescription field) {
+    private HashMap<String, String> putData(Property property) {
         HashMap<String, String> item = new HashMap<>();
-        item.put("name", field.getName());
-        item.put("description", field.getDescription());
+        item.put("name", property.getName());
+        item.put("description", property.getDescription());
         return item;
     }
 

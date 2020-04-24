@@ -23,15 +23,15 @@ import androidx.core.app.NavUtils;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 
 import java.util.List;
 
 public class SearchInDatabase extends Activity {
-    private static String nameSearch = null;
-    private static String descriptionSearch = null;
-    private static String[] fieldSearch = null;
-    private static int nbFields = 0;
+    private static String originalNameToSearch = null;
+    private static String originalDescriptionToSearch = null;
+    private static String[] originalPropertiesToSearch = null;
+    private static int nbProperties = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,22 +47,22 @@ public class SearchInDatabase extends Activity {
         }
 
         EncycloDatabase database = EncycloDatabase.getInstance();
-        if (database.getFieldDescriptions() != null) {
+        if (database.getProperties() != null) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
             // Check if it is not the first time we reach the search view
-            if ((nbFields == 0) || (nbFields != database.getNbFields())) {
-                nbFields = database.getNbFields();
-                fieldSearch = null;
-                fieldSearch = new String[nbFields];
-                nameSearch = null;
-                descriptionSearch = null;
+            if ((nbProperties == 0) || (nbProperties != database.getNbProperties())) {
+                nbProperties = database.getNbProperties();
+                originalPropertiesToSearch = null;
+                originalPropertiesToSearch = new String[nbProperties];
+                originalNameToSearch = null;
+                originalDescriptionToSearch = null;
             }
-            // Create and fill fields
-            for (FieldDescription field : database.getFieldDescriptions()) {
+            // Create and fill properties
+            for (Property property : database.getProperties()) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                textView.setText(field.getName());
+                textView.setText(property.getName());
                 textView.setTextColor(getColor(R.color.black));
                 textView.setPadding(20, 20, 20, 20);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -79,72 +79,72 @@ public class SearchInDatabase extends Activity {
                 editText.setMinHeight(48);
                 editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                 editText.setSingleLine();
-                editText.setId(field.getId());
+                editText.setId(property.getId());
                 linearLayout.addView(editText);
 
-                if (fieldSearch[idx] != null) editText.setText(fieldSearch[idx]);
+                if (originalPropertiesToSearch[idx] != null) editText.setText(originalPropertiesToSearch[idx]);
                 idx++;
             }
             // Fill name if already exists
-            if ((nameSearch != null) && (nameSearch.length() > 0)) {
+            if ((originalNameToSearch != null) && (originalNameToSearch.length() > 0)) {
                 EditText name = findViewById(R.id.textName);
-                name.setText(nameSearch);
+                name.setText(originalNameToSearch);
             }
             // Fill name if already exists
-            if ((descriptionSearch != null) && (descriptionSearch.length() > 0)) {
+            if ((originalDescriptionToSearch != null) && (originalDescriptionToSearch.length() > 0)) {
                 EditText description = findViewById(R.id.textDescription);
-                description.setText(descriptionSearch);
+                description.setText(originalDescriptionToSearch);
             }
         }
     }
 
     public void searchInDatabase(View view) {
-        String[][] stringsToSearch = new String[nbFields][];
+        String[][] stringsToSearch = new String[nbProperties][];
         String[] namesToSearch = null;
         String[] descriptionsToSearch = null;
         EncycloDatabase database = EncycloDatabase.getInstance();
-        int nbFieldsToMatch = 0;
+        int nbStringsToMatch = 0;
 
         // Name
         EditText name = findViewById(R.id.textName);
         if ((name.getText() != null) && (name.getText().length() > 0)) {
-            nameSearch = name.getText().toString();
-            namesToSearch = nameSearch.split(",");
-            nbFieldsToMatch++;
+            originalNameToSearch = name.getText().toString();
+            namesToSearch = originalNameToSearch.split(",");
+            nbStringsToMatch++;
         }
 
         // Description
         EditText description = findViewById(R.id.textDescription);
         if ((description.getText() != null) && (description.getText().length() > 0)) {
-            descriptionSearch = description.getText().toString();
-            descriptionsToSearch = descriptionSearch.split(",");
-            nbFieldsToMatch++;
+            originalDescriptionToSearch = description.getText().toString();
+            descriptionsToSearch = originalDescriptionToSearch.split(",");
+            nbStringsToMatch++;
         }
 
-        // Fields
+        // Properties
         int idx = 0;
-        for (FieldDescription field : database.getFieldDescriptions()) {
-            EditText editText = findViewById(field.getId());
+        for (Property property : database.getProperties()) {
+            EditText editText = findViewById(property.getId());
             if ((editText.getText() != null) && (editText.getText().length() > 0)) {
-                fieldSearch[idx] = editText.getText().toString();
-                stringsToSearch[idx] = fieldSearch[idx].split(",");
-                nbFieldsToMatch++;
+                originalPropertiesToSearch[idx] = editText.getText().toString();
+                stringsToSearch[idx] = originalPropertiesToSearch[idx].split(",");
+                nbStringsToMatch++;
             }
             idx++;
         }
 
-        if (nbFieldsToMatch == 0)
+        if (nbStringsToMatch == 0)
             return;
 
-        List<DbItem> items = database.getItemsList();
+        List<DbItem> items = database.getItems();
         if (items != null) {
             for (DbItem item : items)
                 item.setNotSelected();
 
             int nbElementsFound = 0;
             for (DbItem item : items) {
+                int nbStringsMatching = 0;
 
-                int nbFieldsMatching = 0;
                 // Name
                 if (namesToSearch != null) {
                     String element = item.getName().toLowerCase();
@@ -156,7 +156,7 @@ public class SearchInDatabase extends Activity {
                             break;
                     }
                     if (nbStringsOk == namesToSearch.length)
-                        nbFieldsMatching++;
+                        nbStringsMatching++;
                 }
                 // Description
                 if (descriptionsToSearch != null) {
@@ -169,14 +169,14 @@ public class SearchInDatabase extends Activity {
                             break;
                     }
                     if (nbStringsOk == descriptionsToSearch.length)
-                        nbFieldsMatching++;
+                        nbStringsMatching++;
                 }
-                // Field
-                for (idx = 0; idx < nbFields; idx++) {
+                // Properties
+                for (idx = 0; idx < nbProperties; idx++) {
                     if (stringsToSearch[idx] == null)
                         continue;
 
-                    String element = item.getField(idx);
+                    String element = item.getProperty(idx);
                     if ((element == null) || (element.length() == 0))
                         continue;
 
@@ -190,12 +190,12 @@ public class SearchInDatabase extends Activity {
                     }
 
                     if (nbStringsOk == stringsToSearch[idx].length)
-                        nbFieldsMatching++;
+                        nbStringsMatching++;
                     else
                         break;
                 }
 
-                if (nbFieldsMatching == nbFieldsToMatch) {
+                if (nbStringsMatching == nbStringsToMatch) {
                     item.setSelected();
                     nbElementsFound++;
                 }
@@ -205,7 +205,7 @@ public class SearchInDatabase extends Activity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.search);
                 builder.setIcon(R.drawable.ic_launcher);
-                builder.setMessage(getString(R.string.no_element_found));
+                builder.setMessage(getString(R.string.no_item_found));
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -216,32 +216,32 @@ public class SearchInDatabase extends Activity {
                 for (DbItem item : items)
                     item.setSelected();
             } else
-                Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_elements), nbElementsFound), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_items), nbElementsFound), Toast.LENGTH_SHORT).show();
         }
     }
 
     public void clearSearch(View view) {
         // It's time to clean
-        List<DbItem> items = EncycloDatabase.getInstance().getItemsList();
+        List<DbItem> items = EncycloDatabase.getInstance().getItems();
         for (DbItem item : items)
             item.setSelected();
         // Name
         EditText editText = findViewById(R.id.textName);
         editText.setText("");
-        nameSearch = null;
+        originalNameToSearch = null;
         // Description
         editText = findViewById(R.id.textDescription);
         editText.setText("");
-        descriptionSearch = null;
-        // Fields
+        originalDescriptionToSearch = null;
+        // Properties
         int idx = 0;
-        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
-            editText = findViewById(field.getId());
+        for (Property property : EncycloDatabase.getInstance().getProperties()) {
+            editText = findViewById(property.getId());
             editText.setText("");
-            fieldSearch[idx] = null;
+            originalPropertiesToSearch[idx] = null;
             idx++;
         }
-        fieldSearch = null;
+        originalPropertiesToSearch = null;
         Toast.makeText(getApplicationContext(), R.string.clear_done, Toast.LENGTH_SHORT).show();
     }
 

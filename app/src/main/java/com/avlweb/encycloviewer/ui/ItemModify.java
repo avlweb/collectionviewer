@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,10 +63,10 @@ public class ItemModify extends Activity {
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
-        List<FieldDescription> descs = database.getFieldDescriptions();
-        if ((descs != null) && (descs.size() > 0)) {
+        List<Property> properties = database.getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
-            for (FieldDescription description : descs) {
+            for (Property description : properties) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 textView.setText(description.getName());
@@ -99,7 +99,7 @@ public class ItemModify extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_modify_item, menu);
+        getMenuInflater().inflate(R.menu.activity_item_modify, menu);
         return true;
     }
 
@@ -125,7 +125,9 @@ public class ItemModify extends Activity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         currentItem.deleteImage(currentImageIndex);
-                        Toast.makeText(getApplicationContext(), R.string.deletion_successful, Toast.LENGTH_SHORT).show();
+                        currentImageIndex = 0;
+                        displayImage();
+                        Toast.makeText(getApplicationContext(), R.string.image_deletion_successful, Toast.LENGTH_SHORT).show();
                     }
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -198,6 +200,8 @@ public class ItemModify extends Activity {
                         copyImage(sourcePath, finalPath);
                         // Save path of image into item
                         currentItem.addImagePath("images" + File.separator + imageName);
+                        currentImageIndex++;
+                        displayImage();
                     }
                 }
             }
@@ -222,17 +226,21 @@ public class ItemModify extends Activity {
         int idx = 0;
         // Save name
         EditText editText = findViewById(R.id.textName);
+        if (editText.getText().length() == 0) {
+            editText.setError(getString(R.string.must_not_be_empty));
+            return;
+        }
         currentItem.setName(editText.getText().toString());
         // Save description
-        editText = findViewById(R.id.textName);
+        editText = findViewById(R.id.textDescription);
         currentItem.setDescription(editText.getText().toString());
-        // save fields
-        List<FieldDescription> descs = database.getFieldDescriptions();
-        if ((descs != null) && (descs.size() > 0)) {
-            for (FieldDescription description : descs) {
+        // Save properties
+        List<Property> properties = database.getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property description : properties) {
                 editText = findViewById(description.getId());
                 if ((editText.getText() != null) && (editText.getText().length() > 0)) {
-                    currentItem.setField(idx, editText.getText().toString());
+                    currentItem.setProperty(idx, editText.getText().toString());
                 }
                 idx++;
             }
@@ -243,7 +251,7 @@ public class ItemModify extends Activity {
     private void displayItem() {
         currentItem = null;
 
-        for (DbItem item : database.getItemsList()) {
+        for (DbItem item : database.getItems()) {
             if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
@@ -275,13 +283,13 @@ public class ItemModify extends Activity {
             editText = findViewById(R.id.textDescription);
             editText.setText(currentItem.getDescription());
         }
-        // Display fields if exists
-        List<FieldDescription> descs = database.getFieldDescriptions();
-        if ((descs != null) && (descs.size() > 0)) {
+        // Display properties if exists
+        List<Property> properties = database.getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
             int idx = 0;
-            for (FieldDescription description : descs) {
+            for (Property description : properties) {
                 editText = findViewById(description.getId());
-                editText.setText(currentItem.getField(idx));
+                editText.setText(currentItem.getProperty(idx));
                 idx++;
             }
         }
@@ -295,6 +303,7 @@ public class ItemModify extends Activity {
 
         if (currentItem.getNbImages() == 0) {
             textView.setVisibility(View.GONE);
+            currentImageIndex = 0;
         } else {
             textView.setVisibility(View.VISIBLE);
             textView.setText(String.format(getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));

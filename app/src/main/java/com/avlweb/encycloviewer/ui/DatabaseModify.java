@@ -27,7 +27,7 @@ import androidx.core.app.NavUtils;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.List;
@@ -58,10 +58,10 @@ public class DatabaseModify extends Activity {
         textView = findViewById(R.id.textVersion);
         textView.setText(dbInfos.getVersion());
 
-        if (EncycloDatabase.getInstance().getNbFields() > 0) {
-            createFieldList();
+        if (EncycloDatabase.getInstance().getNbProperties() > 0) {
+            createPropertiesList();
         } else {
-            textView = findViewById(R.id.textNoFields);
+            textView = findViewById(R.id.textNoProperties);
             textView.setVisibility(View.VISIBLE);
         }
     }
@@ -90,19 +90,31 @@ public class DatabaseModify extends Activity {
     private void saveDatas() {
         // Get new datas
         DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
-        TextView textView = findViewById(R.id.textName);
-        dbInfos.setName(textView.getText().toString());
+        EditText editText = findViewById(R.id.textName);
+        if (editText.getText().length() == 0) {
+            editText.setError(getString(R.string.must_not_be_empty));
+            return;
+        }
+        dbInfos.setName(editText.getText().toString());
 
-        textView = findViewById(R.id.textDescription);
-        dbInfos.setDescription(textView.getText().toString());
+        editText = findViewById(R.id.textDescription);
+        if (editText.getText().length() == 0) {
+            editText.setError(getString(R.string.must_not_be_empty));
+            return;
+        }
+        dbInfos.setDescription(editText.getText().toString());
 
-        textView = findViewById(R.id.textVersion);
-        dbInfos.setVersion(textView.getText().toString());
+        editText = findViewById(R.id.textVersion);
+        if (editText.getText().length() == 0) {
+            editText.setError(getString(R.string.must_not_be_empty));
+            return;
+        }
+        dbInfos.setVersion(editText.getText().toString());
 
-        List<FieldDescription> descs = EncycloDatabase.getInstance().getFieldDescriptions();
-        if ((descs != null) && (descs.size() > 0)) {
-            for (FieldDescription desc : descs) {
-                EditText editText = findViewById(desc.getId());
+        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property desc : properties) {
+                editText = findViewById(desc.getId());
                 desc.setDescription(editText.getText().toString());
             }
         }
@@ -114,22 +126,22 @@ public class DatabaseModify extends Activity {
             Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
     }
 
-    public void addField(View view) {
+    public void addProperty(View view) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialog = inflater.inflate(R.layout.dialog_new_something, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.new_field));
-        alertDialog.setMessage(getString(R.string.message_new_field));
+        alertDialog.setTitle(getString(R.string.new_property));
+        alertDialog.setMessage(getString(R.string.message_new_property));
         alertDialog.setCancelable(false);
-        final EditText fieldName = dialog.findViewById(R.id.fieldName);
+        final EditText propertyName = dialog.findViewById(R.id.propertyName);
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 hideKeyboard();
-                String name = fieldName.getText().toString();
+                String name = propertyName.getText().toString();
                 if (name.length() > 0) {
-                    createNewField(name);
+                    createNewProperty(name);
                 }
             }
         });
@@ -151,16 +163,16 @@ public class DatabaseModify extends Activity {
         if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    private void createNewField(String name) {
-        FieldDescription field = new FieldDescription();
-        field.setName(name);
-        field.setId(View.generateViewId());
-        field.setDescription(null);
-        EncycloDatabase.getInstance().addFieldDescription(field);
+    private void createNewProperty(String name) {
+        Property property = new Property();
+        property.setName(name);
+        property.setId(View.generateViewId());
+        property.setDescription(null);
+        EncycloDatabase.getInstance().addProperty(property);
 
-        addField(field);
+        addProperty(property);
 
-        TextView textView = findViewById(R.id.textNoFields);
+        TextView textView = findViewById(R.id.textNoProperties);
         textView.setVisibility(View.GONE);
 
         final ScrollView scrollView = findViewById(R.id.detailsScrollview);
@@ -175,12 +187,12 @@ public class DatabaseModify extends Activity {
         });
     }
 
-    private void addField(FieldDescription field) {
+    private void addProperty(Property property) {
         LinearLayout linearLayout = findViewById(R.id.linearlayout);
 
         TextView textView = new TextView(this);
         textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText(field.getName());
+        textView.setText(property.getName());
         textView.setTextColor(getColor(R.color.black));
         textView.setPadding(20, 20, 20, 20);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -195,20 +207,20 @@ public class DatabaseModify extends Activity {
         editText.setHint(R.string.to_be_completed);
         editText.setHintTextColor(getColor(R.color.dark_gray));
         editText.setGravity(Gravity.TOP);
-        if (field.getDescription() != null)
-            editText.setText(field.getDescription());
+        if (property.getDescription() != null)
+            editText.setText(property.getDescription());
         editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         editText.setSingleLine(false);
         editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        editText.setId(field.getId());
+        editText.setId(property.getId());
         linearLayout.addView(editText);
     }
 
-    private void createFieldList() {
-        for (FieldDescription field : EncycloDatabase.getInstance().getFieldDescriptions()) {
-            addField(field);
+    private void createPropertiesList() {
+        for (Property property : EncycloDatabase.getInstance().getProperties()) {
+            addProperty(property);
         }
     }
 }

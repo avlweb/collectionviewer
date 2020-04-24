@@ -6,7 +6,7 @@ import android.view.View;
 import com.avlweb.encycloviewer.model.DatabaseInfos;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -27,7 +27,7 @@ public class xmlFactory {
         FileInputStream fin = null;
         InputStreamReader isr = null;
         DbItem item = null;
-        FieldDescription field = null;
+        Property property = null;
         DatabaseInfos dbInfos = null;
 
         XmlPullParser parser = Xml.newPullParser();
@@ -39,25 +39,25 @@ public class xmlFactory {
             int eventType = parser.getEventType();
 
             boolean caseItem = false;
+            boolean caseItems = false;
             boolean caseContent = false;
-            boolean caseFielddesc = false;
+            boolean caseProperty = false;
+            boolean caseProperties = false;
             int type = 0;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
                         caseContent = true;
-                        caseFielddesc = false;
-                        caseItem = false;
                         dbInfos = new DatabaseInfos();
-                    } else if (strNode.equals("fielddesc")) {
-                        caseContent = false;
-                        caseFielddesc = true;
-                        caseItem = false;
-                        field = new FieldDescription();
-                    } else if (strNode.equals("item")) {
-                        caseContent = false;
-                        caseFielddesc = false;
+                    } else if (strNode.equals("properties")) {
+                        caseProperties = true;
+                    } else if (caseProperties && (strNode.equals("property"))) {
+                        caseProperty = true;
+                        property = new Property();
+                    } else if (strNode.equals("items")) {
+                        caseItems = true;
+                    } else if (caseItems && (strNode.equals("item"))) {
                         caseItem = true;
                         item = new DbItem();
                     } else if (caseContent) {
@@ -72,7 +72,7 @@ public class xmlFactory {
                                 type = 3;
                                 break;
                         }
-                    } else if (caseFielddesc) {
+                    } else if (caseProperty) {
                         switch (strNode) {
                             case "name":
                                 type = 1;
@@ -83,7 +83,7 @@ public class xmlFactory {
                         }
                     } else if (caseItem) {
                         switch (strNode) {
-                            case "field":
+                            case "property":
                                 type = 1;
                                 break;
                             case "img":
@@ -110,20 +110,20 @@ public class xmlFactory {
                                 dbInfos.setVersion(parser.getText());
                                 break;
                         }
-                    } else if (caseFielddesc) {
+                    } else if (caseProperty) {
                         switch (type) {
                             case 1:
-                                field.setName(parser.getText());
-                                field.setId(View.generateViewId());
+                                property.setName(parser.getText());
+                                property.setId(View.generateViewId());
                                 break;
                             case 2:
-                                field.setDescription(parser.getText());
+                                property.setDescription(parser.getText());
                                 break;
                         }
                     } else if (caseItem) {
                         switch (type) {
                             case 1:
-                                item.addField(parser.getText());
+                                item.addProperty(parser.getText());
                                 break;
                             case 2:
                                 item.addImagePath(parser.getText());
@@ -138,19 +138,19 @@ public class xmlFactory {
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String strNode = parser.getName();
-                    switch (strNode) {
-                        case "content":
-                            database.setInfos(dbInfos);
-                            caseContent = false;
-                            break;
-                        case "fielddesc":
-                            database.addFieldDescription(field);
-                            caseFielddesc = false;
-                            break;
-                        case "item":
-                            database.addItemToList(item);
-                            caseItem = false;
-                            break;
+                    if (strNode.equals("content")) {
+                        database.setInfos(dbInfos);
+                        caseContent = false;
+                    } else if (strNode.equals("properties")) {
+                        caseProperties = false;
+                    } else if (caseProperties && (strNode.equals("property"))) {
+                        database.addProperty(property);
+                        caseProperty = false;
+                    } else if (strNode.equals("items")) {
+                        caseItems = false;
+                    } else if (caseItems && (strNode.equals("item"))) {
+                        database.addItem(item);
+                        caseItem = false;
                     }
                     type = 0;
                 }
@@ -187,8 +187,8 @@ public class xmlFactory {
             xmlSerializer.startTag(ns, "database");
 
             insertDatabaseInfos(xmlSerializer, database.getInfos());
-            insertFields(xmlSerializer, database.getFieldDescriptions());
-            insertItems(xmlSerializer, database.getItemsList());
+            insertProperties(xmlSerializer, database.getProperties());
+            insertItems(xmlSerializer, database.getItems());
 
             xmlSerializer.endTag(ns, "database");
             xmlSerializer.endDocument();
@@ -226,25 +226,25 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "content");
     }
 
-    private static void insertFields(XmlSerializer xmlSerializer, List<FieldDescription> dbInfos) throws IOException {
-        xmlSerializer.startTag(ns, "fielddescs");
-        if ((dbInfos != null) && (dbInfos.size() > 0)) {
-            for (FieldDescription desc : dbInfos) {
-                xmlSerializer.startTag(ns, "fielddesc");
+    private static void insertProperties(XmlSerializer xmlSerializer, List<Property> properties) throws IOException {
+        xmlSerializer.startTag(ns, "properties");
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property property : properties) {
+                xmlSerializer.startTag(ns, "property");
 
                 xmlSerializer.startTag(ns, "name");
-                xmlSerializer.text(desc.getName());
+                xmlSerializer.text(property.getName());
                 xmlSerializer.endTag(ns, "name");
 
                 xmlSerializer.startTag(ns, "description");
-                if ((desc.getDescription() != null) && (desc.getDescription().length() > 0))
-                    xmlSerializer.text(desc.getDescription());
+                if ((property.getDescription() != null) && (property.getDescription().length() > 0))
+                    xmlSerializer.text(property.getDescription());
                 xmlSerializer.endTag(ns, "description");
 
-                xmlSerializer.endTag(ns, "fielddesc");
+                xmlSerializer.endTag(ns, "property");
             }
         }
-        xmlSerializer.endTag(ns, "fielddescs");
+        xmlSerializer.endTag(ns, "properties");
     }
 
     private static void insertItems(XmlSerializer xmlSerializer, List<DbItem> items) throws IOException {
@@ -261,11 +261,11 @@ public class xmlFactory {
                 if ((item.getDescription() != null) && (item.getDescription().length() > 0))
                     xmlSerializer.text(item.getDescription());
                 xmlSerializer.endTag(ns, "description");
-                // Add fields
-                for (int idx = 0; idx < item.getNbFields(); idx++) {
-                    xmlSerializer.startTag(ns, "field");
-                    xmlSerializer.text(item.getField(idx));
-                    xmlSerializer.endTag(ns, "field");
+                // Add properties
+                for (int idx = 0; idx < item.getNbProperties(); idx++) {
+                    xmlSerializer.startTag(ns, "property");
+                    xmlSerializer.text(item.getProperty(idx));
+                    xmlSerializer.endTag(ns, "property");
                 }
                 // Add images
                 for (int idx = 0; idx < item.getNbImages(); idx++) {

@@ -12,11 +12,6 @@
     <string name="menu_open_database">Open Database</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="field1_">Field1 :</string>
-    <string name="field2_">Field2 :</string>
-    <string name="field3_">Field3 :</string>
-    <string name="field4_">Field4 :</string>
-    <string name="field5_">Field5 :</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
     <string name="_1_1">1/1</string>
@@ -51,12 +46,12 @@
     <string name="words_to_search">Words to search comma separated</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="no_element_found">No element was found with those criteria.</string>
+    <string name="no_item_found">No item was found with those criteria.</string>
     <string-array name="scrollbar_position_array">
         <item>Right</item>
         <item>Left</item>
     </string-array>
-    <string name="found_elements">Found %1$d items</string>
+    <string name="found_items">Found %1$d items</string>
     <string name="search_in_database">Search in database</string>
     <string name="choose_font_size">Font size for item description</string>
     <string name="small">small</string>
@@ -65,26 +60,26 @@
     <string name="very_big">very big</string>
     <string name="number_slash_number">%1$d/%2$d</string>
     <string name="title_activity_database_details">Database details</string>
-    <string name="fields_list">Fields list</string>
+    <string name="properties_list">Properties list</string>
     <string name="open_folder">Open folder</string>
     <string name="zoom">Zoom</string>
     <string name="modify">Modify</string>
     <string name="informations">Informations</string>
     <string name="successfully_saved">Database saved !</string>
     <string name="problem_during_save">There was a problem during save !</string>
-    <string name="field_name">Enter field name</string>
+    <string name="property_name">Property name</string>
     <string name="cancel">Cancel</string>
-    <string name="field_description">Field description</string>
+    <string name="property_description">Property description</string>
     <string name="add">Add</string>
     <string name="database_name">Database name</string>
     <string name="new_database">New Database</string>
-    <string name="new_field">New Field</string>
-    <string name="message_new_database">A new database will be created with the given name. You will have to fill its description, create fields and add items !</string>
+    <string name="new_property">New Property</string>
+    <string name="message_new_database">A new database will be created with the given name. You will have to fill its description, create properties and add items !</string>
     <string name="database_successfully_created">Database successfully created.</string>
     <string name="menu_database">Database Menu</string>
     <string name="delete">Delete</string>
     <string name="title_activity_database_modify">Modify database</string>
-    <string name="deletion_successful">Database successfully deleted.</string>
+    <string name="database_deletion_successful">Database successfully deleted.</string>
     <string name="deletion_error">An error occurred during deletion !</string>
     <string name="database_creation_error">An error occurred during creation !</string>
     <string name="warning_database_deletion">Do you really want to delete this database ?</string>
@@ -93,17 +88,20 @@
     <string name="item_successfully_saved">Changes successfully saved.</string>
     <string name="item_error_save">An error occurred during save !</string>
     <string name="images">Images</string>
-    <string name="fields">Fields</string>
+    <string name="properties">Properties</string>
     <string name="add_item">Add item</string>
     <string name="warning_item_deletion">Do you really want to delete this item ?</string>
     <string name="database_is_empty">Database is empty !</string>
     <string name="no_image_to_display">No image to display !</string>
     <string name="database_modify">Database modify</string>
-    <string name="no_fields_to_display">No fields to display !</string>
+    <string name="no_properties_to_display">No properties to display !</string>
     <string name="to_be_completed">To be completed</string>
     <string name="new_item">New item</string>
-    <string name="message_new_item">A new item will be created with the given name. You will have to fill its fields and add images !</string>
-    <string name="message_new_field">A new field will be created with the given name. You will have to fill its description and optionally complete this field for existing items !</string>
+    <string name="message_new_item">A new item will be created with the given name. You will have to fill its properties and add images !</string>
+    <string name="message_new_property">A new property will be created with the given name. You will have to fill its description and optionally complete this property for existing items !</string>
     <string name="content">Content</string>
     <string name="warning_image_deletion">Do you really want to delete this image ?</string>
+    <string name="must_not_be_empty">Must not be empty !</string>
+    <string name="image_deletion_successful">Image successfully deleted.</string>
+    <string name="item_deletion_successful">Item successfully deleted.</string>
 </resources>

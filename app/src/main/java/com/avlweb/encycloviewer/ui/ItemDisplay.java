@@ -23,7 +23,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.avlweb.encycloviewer.R;
 import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.FieldDescription;
+import com.avlweb.encycloviewer.model.Property;
 
 import java.io.File;
 import java.util.List;
@@ -175,7 +175,7 @@ public class ItemDisplay extends Activity {
     private void displayElement() {
         currentItem = database.getItem(this.position);
 
-        for (DbItem item : database.getItemsList()) {
+        for (DbItem item : database.getItems()) {
             if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
@@ -204,16 +204,17 @@ public class ItemDisplay extends Activity {
         }
 
         // Format details string
-        List<FieldDescription> descs = database.getFieldDescriptions();
-        if ((descs != null) && (descs.size() > 0)) {
+        List<Property> properties = database.getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            int size = properties.size();
             StringBuilder tmp = new StringBuilder();
-            for (int idx = 0; idx < descs.size(); idx++) {
-                String value = currentItem.getField(idx);
+            for (int idx = 0; idx < size; idx++) {
+                String value = currentItem.getProperty(idx);
                 if ((value != null) && (value.length() > 0)) {
-                    tmp.append(descs.get(idx).getName());
+                    tmp.append(properties.get(idx).getName());
                     tmp.append(" : ");
-                    tmp.append(currentItem.getField(idx));
-                    if (idx < (descs.size() - 1))
+                    tmp.append(currentItem.getProperty(idx));
+                    if (idx < (size - 1))
                         tmp.append("\n");
                 }
             }
