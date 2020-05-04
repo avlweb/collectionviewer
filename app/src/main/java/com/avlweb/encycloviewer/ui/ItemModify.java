@@ -37,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemModify extends BaseActivity {
     private DisplayMetrics metrics = new DisplayMetrics();
@@ -312,7 +313,7 @@ public class ItemModify extends BaseActivity {
         } else {
             TextView textView = findViewById(R.id.textView2);
             textView.setVisibility(View.VISIBLE);
-            textView.setText(String.format(getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));
+            textView.setText(String.format(Locale.getDefault(), getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));
             textView = findViewById(R.id.textView1);
             textView.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);

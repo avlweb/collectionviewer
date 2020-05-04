@@ -26,6 +26,7 @@ import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.Property;
 
 import java.util.List;
+import java.util.Locale;
 
 public class SearchInDatabase extends Activity {
     private static String originalNameToSearch = null;
@@ -82,7 +83,8 @@ public class SearchInDatabase extends Activity {
                 editText.setId(property.getId());
                 linearLayout.addView(editText);
 
-                if (originalPropertiesToSearch[idx] != null) editText.setText(originalPropertiesToSearch[idx]);
+                if (originalPropertiesToSearch[idx] != null)
+                    editText.setText(originalPropertiesToSearch[idx]);
                 idx++;
             }
             // Fill name if already exists
@@ -216,7 +218,7 @@ public class SearchInDatabase extends Activity {
                 for (DbItem item : items)
                     item.setSelected();
             } else
-                Toast.makeText(getApplicationContext(), String.format(getString(R.string.found_items), nbElementsFound), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), String.format(Locale.getDefault(), getString(R.string.found_items), nbElementsFound), Toast.LENGTH_SHORT).show();
         }
     }
 

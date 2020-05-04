@@ -135,7 +135,6 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 alertDialog.setMessage(getString(R.string.message_new_database));
                 alertDialog.setCancelable(false);
                 final EditText propertyName = dialog.findViewById(R.id.propertyName);
-
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -146,14 +145,12 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                         }
                     }
                 });
-
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         alertDialog.dismiss();
                     }
                 });
-
                 alertDialog.setView(dialog);
                 alertDialog.show();
                 return true;
@@ -173,7 +170,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.version));
                 builder.setIcon(R.drawable.ic_launcher);
-                builder.setMessage(String.format(getString(R.string.appli_version),
+                builder.setMessage(String.format(Locale.getDefault(), getString(R.string.appli_version),
                         context.getString(R.string.app_name), packageName, versionName, buildDate));
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -252,10 +249,8 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE) {
             // If request is cancelled, the result arrays are empty.
-            if ((grantResults.length >= 2) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                // permission was granted, yay!
-            } else {
+            if (!((grantResults.length >= 2) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    && (grantResults[1] == PackageManager.PERMISSION_GRANTED))) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning_points);
                 alertDialogBuilder.setIcon(R.drawable.ic_launcher);

@@ -3,10 +3,9 @@ package com.avlweb.encycloviewer.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,17 +14,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.app.NavUtils;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.avlweb.encycloviewer.R;
 
-public class Help extends Activity {
+import java.util.Locale;
 
+public class Help extends Activity {
     private static final int MAX_VIEWS = 5;
     private TextView[] dots = new TextView[5];
-    private ViewPager mViewPager;
+    public static final int HELP_HOME = 0;
+    public static final int HELP_MAINLIST = 1;
+    public static final int HELP_DATABASE_MODIFY = 2;
+    public static final int HELP_ITEM_DISPLAY = 3;
+    public static final int HELP_ITEM_MODIFY = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,10 @@ public class Help extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        mViewPager = findViewById(R.id.view_pager);
+        Intent intent = getIntent();
+        int origin = intent.getIntExtra("origin", HELP_HOME);
+
+        ViewPager mViewPager = findViewById(R.id.view_pager);
         PagerAdapter adapter = new HelpPagerAdapter();
         mViewPager.setAdapter(adapter);
         mViewPager.addOnPageChangeListener(new HelpPageChangeListener());
@@ -48,15 +54,17 @@ public class Help extends Activity {
         LinearLayout bottomLayout = findViewById(R.id.bottomLayout);
         for (int i = 0; i < dots.length; i++) {
             dots[i] = new TextView(this);
-            dots[i].setText(String.format("%d", i + 1));
+            dots[i].setText(String.format(Locale.getDefault(), "%d", i + 1));
             dots[i].setPadding(0, 0, 0, 10);
             dots[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
             if (i == 0)
                 dots[i].setTextColor(getColor(R.color.dark_blue));
             else
-                dots[i].setTextColor(getColor(R.color.light_gray));
+                dots[i].setTextColor(getColor(R.color.dark_gray));
             bottomLayout.addView(dots[i]);
         }
+
+        mViewPager.setCurrentItem(origin, true);
     }
 
     private void activateDot(int position) {
@@ -64,7 +72,7 @@ public class Help extends Activity {
             if (position == i) {
                 dots[i].setTextColor(getColor(R.color.dark_blue));
             } else {
-                dots[i].setTextColor(getColor(R.color.light_gray));
+                dots[i].setTextColor(getColor(R.color.dark_gray));
             }
         }
     }
@@ -72,7 +80,9 @@ public class Help extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            Intent resultIntent = new Intent();
+            setResult(Activity.RESULT_OK, resultIntent);
+            this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -92,25 +102,24 @@ public class Help extends Activity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Log.e("Help", "instantiateItem(" + position + ");");
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View imageViewContainer = inflater.inflate(R.layout.walkthrough_simple_view, null);
             ImageView imageView = imageViewContainer.findViewById(R.id.image_view);
 
             switch (position) {
-                case 0:
+                case HELP_HOME:
                     imageView.setImageResource(R.drawable.help_home);
                     break;
-                case 1:
+                case HELP_MAINLIST:
                     imageView.setImageResource(R.drawable.help_mainlist);
                     break;
-                case 2:
+                case HELP_DATABASE_MODIFY:
                     imageView.setImageResource(R.drawable.help_database_modify);
                     break;
-                case 3:
+                case HELP_ITEM_DISPLAY:
                     imageView.setImageResource(R.drawable.help_item_display);
                     break;
-                case 4:
+                case HELP_ITEM_MODIFY:
                     imageView.setImageResource(R.drawable.help_item_modify);
                     break;
             }
@@ -121,7 +130,7 @@ public class Help extends Activity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView((View) object);
+            container.removeView((View) object);
         }
     }
 

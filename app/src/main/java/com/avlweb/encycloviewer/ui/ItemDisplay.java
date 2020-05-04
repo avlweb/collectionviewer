@@ -27,6 +27,7 @@ import com.avlweb.encycloviewer.model.Property;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemDisplay extends BaseActivity {
     private static final int SWIPE_MIN_DISTANCE = 100;
@@ -236,7 +237,7 @@ public class ItemDisplay extends BaseActivity {
             textView.setVisibility(View.GONE);
         } else {
             textView.setVisibility(View.VISIBLE);
-            textView.setText(String.format(getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+            textView.setText(String.format(Locale.getDefault(), getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
         }
 
         String imagePath = currentItem.getImagePath(imgIdx);
