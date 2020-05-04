@@ -71,6 +71,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.avlweb.encycloviewer.ui.Home" />
         </activity>
+        <activity
+            android:name=".ui.Help"
+            android:label="@string/help">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.avlweb.encycloviewer.ui.Home" />
+        </activity>
     </application>
 
 </manifest>

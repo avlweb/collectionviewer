@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -27,6 +28,8 @@ import com.avlweb.encycloviewer.model.Property;
 
 import java.io.File;
 import java.util.List;
+
+import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
 
 public class ItemDisplay extends Activity {
     private static final int SWIPE_MIN_DISTANCE = 100;
@@ -62,6 +65,10 @@ public class ItemDisplay extends Activity {
         int fontSize = pref.getInt(Settings.KEY_FONT_SIZE, 0);
         TextView textDescription = findViewById(R.id.textView3);
         textDescription.setTextSize(Settings.getFontSizeFromPref(fontSize));
+        // Get flag "Hide help button"
+        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
+        ImageButton helpButton = findViewById(R.id.fab);
+        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
 
         // Gesture detection
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
@@ -110,7 +117,7 @@ public class ItemDisplay extends Activity {
             ScrollView scrollView = findViewById(R.id.scrollview);
             scrollView.setVisibility(View.VISIBLE);
             detailsOpen = true;
-            OpenDetails(null);
+            openDetails(null);
             imageZoomed = false;
         }
         mConstrainLayout.setLayoutParams(lp);
@@ -271,7 +278,7 @@ public class ItemDisplay extends Activity {
         displayImage();
     }
 
-    public void OpenDetails(View v) {
+    public void openDetails(View v) {
         ImageButton buttonBottom = findViewById(R.id.buttonBottom);
         ImageButton buttonPrevious = findViewById(R.id.buttonPrevious);
         TextView textView = findViewById(R.id.textViewDetails2);
@@ -286,5 +293,9 @@ public class ItemDisplay extends Activity {
             textView.setVisibility(View.VISIBLE);
             detailsOpen = true;
         }
+    }
+
+    public void openHelp(View view) {
+        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

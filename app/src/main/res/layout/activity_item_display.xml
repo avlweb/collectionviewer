@@ -44,9 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/circle"
-        android:padding="3dp"
+        android:padding="5dp"
         android:text="@string/_1_1"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +98,7 @@
         android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/open_folder"
-        android:onClick="OpenDetails"
+        android:onClick="openDetails"
         android:src="@drawable/navigation_bottom_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view2" />
@@ -112,7 +112,7 @@
         android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/open_folder"
-        android:onClick="OpenDetails"
+        android:onClick="openDetails"
         android:src="@drawable/navigation_previous_black"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -153,5 +153,16 @@
             tools:text="@string/lorem_ipsum" />
 
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/fab"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/circle"
+        android:onClick="openHelp"
+        android:src="@drawable/action_help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

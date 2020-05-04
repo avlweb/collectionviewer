@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +39,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.List;
+
+import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
+import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 
 public class ItemModify extends Activity {
     private DisplayMetrics metrics = new DisplayMetrics();
@@ -93,6 +98,13 @@ public class ItemModify extends Activity {
                 linearLayout.addView(editText);
             }
         }
+
+        // Get preferences
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        // Get flag "Hide help button"
+        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
+        ImageButton helpButton = findViewById(R.id.fab);
+        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
 
         displayItem();
     }
@@ -200,7 +212,7 @@ public class ItemModify extends Activity {
                         copyImage(sourcePath, finalPath);
                         // Save path of image into item
                         currentItem.addImagePath("images" + File.separator + imageName);
-                        currentImageIndex++;
+                        currentImageIndex = currentItem.getNbImages() - 1;
                         displayImage();
                     }
                 }
@@ -298,24 +310,27 @@ public class ItemModify extends Activity {
     }
 
     private void displayImage() {
+
         ImageView imageView = findViewById(R.id.imageView1);
-        TextView textView = findViewById(R.id.textView2);
-
         if (currentItem.getNbImages() == 0) {
+            TextView textView = findViewById(R.id.textView2);
             textView.setVisibility(View.GONE);
-            currentImageIndex = 0;
-        } else {
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(String.format(getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));
-        }
-
-        String imagePath = currentItem.getImagePath(currentImageIndex);
-        if (imagePath == null) {
             textView = findViewById(R.id.textView1);
             textView.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
             return;
+        } else {
+            TextView textView = findViewById(R.id.textView2);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(String.format(getString(R.string.number_slash_number), currentImageIndex + 1, currentItem.getNbImages()));
+            textView = findViewById(R.id.textView1);
+            textView.setVisibility(View.GONE);
+            imageView.setVisibility(View.VISIBLE);
         }
+
+        String imagePath = currentItem.getImagePath(currentImageIndex);
+        if (imagePath == null)
+            return;
 
         String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
@@ -352,5 +367,9 @@ public class ItemModify extends Activity {
             currentImageIndex = 0;
 
         displayImage();
+    }
+
+    public void openHelp(View view) {
+        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

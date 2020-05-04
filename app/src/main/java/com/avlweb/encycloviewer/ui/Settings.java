@@ -32,6 +32,7 @@ public class Settings extends Activity {
     public static final String KEY_PREFS = "EncycloViewerPreferences";
     public static final String KEY_DATABASES_ROOT_LOCATION = "key_language";
     public static final String KEY_HIDE_SAMPLE_DATABASE = "key_hide_sample";
+    public static final String KEY_HIDE_HELP_BUTTON = "key_hide_help";
     public static final String KEY_SCROLLBAR = "key_scrollbar";
     public static final String KEY_FONT_SIZE = "key_font_size";
 
@@ -56,6 +57,10 @@ public class Settings extends Activity {
         boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
         Switch hide = findViewById(R.id.switch_hide);
         hide.setChecked(hideSampledatabase);
+        // Get flag "Hide help button"
+        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
+        Switch help = findViewById(R.id.switch_help);
+        help.setChecked(hideHelpButton);
         // Get Databases Root location
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
@@ -150,6 +155,9 @@ public class Settings extends Activity {
         // Hide sample database
         Switch hide = findViewById(R.id.switch_hide);
         editor.putBoolean(KEY_HIDE_SAMPLE_DATABASE, hide.isChecked());
+        // Hide help button
+        Switch help = findViewById(R.id.switch_help);
+        editor.putBoolean(KEY_HIDE_HELP_BUTTON, help.isChecked());
         // Save preferences
         editor.apply();
         Toast.makeText(getApplicationContext(), R.string.settings_saved, Toast.LENGTH_SHORT).show();

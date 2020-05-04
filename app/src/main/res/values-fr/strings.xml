@@ -104,4 +104,6 @@
     <string name="must_not_be_empty">Must not be empty !</string>
     <string name="image_deletion_successful">Image supprimée avec succès.</string>
     <string name="item_deletion_successful">Elément supprimé avec succès.</string>
+    <string name="help">Help</string>
+    <string name="hide_help_button">Hide help button</string>
 </resources>

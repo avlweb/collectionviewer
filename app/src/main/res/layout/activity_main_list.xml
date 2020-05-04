@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,6 +16,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
     <ListView
@@ -26,9 +28,20 @@
         android:fadeScrollbars="false"
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
-        android:paddingHorizontal="5dp"
+        android:paddingHorizontal="10dp"
         android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="right" />
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/fab"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/circle"
+        android:onClick="openHelp"
+        android:src="@drawable/action_help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+</androidx.constraintlayout.widget.ConstraintLayout>

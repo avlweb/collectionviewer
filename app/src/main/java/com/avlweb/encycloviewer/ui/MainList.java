@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
 
 public class MainList extends Activity implements MainListAdapter.customButtonListener {
     private final int ACTIVITY_ITEM_MODIFY = 486758485;
@@ -210,6 +213,10 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
         else
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
+        // Get flag "Hide help button"
+        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
+        ImageButton helpButton = findViewById(R.id.fab);
+        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
 
         // Create listview adapter
         adapter = null;     // For desallocation !
@@ -286,5 +293,9 @@ public class MainList extends Activity implements MainListAdapter.customButtonLi
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+    }
+
+    public void openHelp(View view) {
+        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

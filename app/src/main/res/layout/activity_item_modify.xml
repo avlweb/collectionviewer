@@ -1,161 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.ItemModify">
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark_blue"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_blue"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="2"
+                    android:padding="5dp"
+                    android:text="@string/images"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:padding="5dp"
+                    android:text="@string/_1_1"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:padding="5dp"
-                android:text="@string/images"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/no_image_to_display"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="5dp"
+                android:contentDescription="@string/image_content"
+                android:onClick="showNextImage" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dark_blue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonZoom"
+                    android:layout_width="48dp"
+                    android:layout_height="36dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/zoom"
+                    android:onClick="zoomImage"
+                    android:src="@drawable/action_zoom_black" />
+
+                <ImageButton
+                    android:id="@+id/buttonAdd"
+                    android:layout_width="48dp"
+                    android:layout_height="36dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/open_folder"
+                    android:onClick="addImage"
+                    android:src="@drawable/action_add_black_square" />
+
+                <ImageButton
+                    android:id="@+id/buttonDelete"
+                    android:layout_width="48dp"
+                    android:layout_height="36dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/open_folder"
+                    android:onClick="deleteImage"
+                    android:src="@drawable/action_delete_black" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dark_blue"
+                android:padding="9dp"
+                android:text="@string/content"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:padding="5dp"
-                android:text="@string/_1_1"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:layout_marginHorizontal="6dp"
+                android:paddingVertical="5dp"
+                android:text="@string/name"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/textName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:autofillHints="@string/to_be_completed"
+                android:hint="@string/to_be_completed"
+                android:inputType="textNoSuggestions"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:paddingVertical="5dp"
+                android:text="@string/description"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/textDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:autofillHints="@string/to_be_completed"
+                android:hint="@string/to_be_completed"
+                android:imeOptions="flagNoEnterAction"
+                android:inputType="text|textMultiLine"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/dark_gray"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_horizontal"
-            android:text="@string/no_image_to_display"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
+    </ScrollView>
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="5dp"
-            android:contentDescription="@string/image_content"
-            android:onClick="showNextImage" />
+    <ImageButton
+        android:id="@+id/fab"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/circle"
+        android:onClick="openHelp"
+        android:src="@drawable/action_help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_blue" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/buttonZoom"
-                android:layout_width="48dp"
-                android:layout_height="36dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/zoom"
-                android:onClick="zoomImage"
-                android:src="@drawable/action_zoom_black" />
-
-            <ImageButton
-                android:id="@+id/buttonAdd"
-                android:layout_width="48dp"
-                android:layout_height="36dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/open_folder"
-                android:onClick="addImage"
-                android:src="@drawable/action_add_black_square" />
-
-            <ImageButton
-                android:id="@+id/buttonDelete"
-                android:layout_width="48dp"
-                android:layout_height="36dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/open_folder"
-                android:onClick="deleteImage"
-                android:src="@drawable/action_delete_black" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_blue"
-            android:padding="9dp"
-            android:text="@string/content"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="6dp"
-            android:paddingVertical="5dp"
-            android:text="@string/name"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/textName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:autofillHints="@string/to_be_completed"
-            android:hint="@string/to_be_completed"
-            android:inputType="textNoSuggestions"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/dark_gray"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="6dp"
-            android:paddingVertical="5dp"
-            android:text="@string/description"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/textDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:autofillHints="@string/to_be_completed"
-            android:hint="@string/to_be_completed"
-            android:imeOptions="flagNoEnterAction"
-            android:inputType="text|textMultiLine"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/dark_gray"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
