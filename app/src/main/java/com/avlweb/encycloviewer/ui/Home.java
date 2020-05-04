@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -46,11 +45,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import static com.avlweb.encycloviewer.ui.Settings.KEY_DATABASES_ROOT_LOCATION;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
 import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_SAMPLE_DATABASE;
 import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 
-public class Home extends Activity implements HomeListAdapter.customButtonListener {
+public class Home extends BaseActivity implements HomeListAdapter.customButtonListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
     private ArrayList<String> xmlfiles = new ArrayList<>();
     private String selectedDatabase;
@@ -78,6 +76,8 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                     MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE);
         }
 
+        displayHelpButton();
+
         // Build list of available databases
         // Check that default database is present otherwise we copy it to default storage
         File defaultPath = this.getExternalFilesDir(null);
@@ -90,10 +90,6 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
             SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
             // Get flag "Hide sample database"
             boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
-            // Get flag "Hide help button"
-            boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
-            ImageButton helpButton = findViewById(R.id.fab);
-            helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
             // Get Databases Root location
             databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
 
@@ -428,9 +424,5 @@ public class Home extends Activity implements HomeListAdapter.customButtonListen
                 }
             }
         }
-    }
-
-    public void openHelp(View view) {
-        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

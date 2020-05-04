@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -34,10 +32,7 @@ import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.List;
 
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
-
-public class DatabaseModify extends Activity {
+public class DatabaseModify extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,12 +65,7 @@ public class DatabaseModify extends Activity {
             textView.setVisibility(View.VISIBLE);
         }
 
-        // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Hide help button"
-        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
-        ImageButton helpButton = findViewById(R.id.fab);
-        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
+        displayHelpButton();
     }
 
     @Override
@@ -234,9 +224,5 @@ public class DatabaseModify extends Activity {
         for (Property property : EncycloDatabase.getInstance().getProperties()) {
             addProperty(property);
         }
-    }
-
-    public void openHelp(View view) {
-        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

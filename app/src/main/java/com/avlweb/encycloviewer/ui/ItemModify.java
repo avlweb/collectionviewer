@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,10 +38,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
-
-public class ItemModify extends Activity {
+public class ItemModify extends BaseActivity {
     private DisplayMetrics metrics = new DisplayMetrics();
     private int position;
     private DbItem currentItem = null;
@@ -99,12 +94,7 @@ public class ItemModify extends Activity {
             }
         }
 
-        // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Hide help button"
-        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
-        ImageButton helpButton = findViewById(R.id.fab);
-        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
+        displayHelpButton();
 
         displayItem();
     }
@@ -367,9 +357,5 @@ public class ItemModify extends Activity {
             currentImageIndex = 0;
 
         displayImage();
-    }
-
-    public void openHelp(View view) {
-        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }

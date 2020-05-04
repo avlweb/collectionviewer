@@ -17,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -29,9 +28,7 @@ import com.avlweb.encycloviewer.model.Property;
 import java.io.File;
 import java.util.List;
 
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
-
-public class ItemDisplay extends Activity {
+public class ItemDisplay extends BaseActivity {
     private static final int SWIPE_MIN_DISTANCE = 100;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
@@ -60,15 +57,13 @@ public class ItemDisplay extends Activity {
         this.position = intent.getIntExtra("position", 0);
         this.maxPosition = intent.getIntExtra("maxPosition", 0);
 
+        displayHelpButton();
+
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int fontSize = pref.getInt(Settings.KEY_FONT_SIZE, 0);
         TextView textDescription = findViewById(R.id.textView3);
         textDescription.setTextSize(Settings.getFontSizeFromPref(fontSize));
-        // Get flag "Hide help button"
-        boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
-        ImageButton helpButton = findViewById(R.id.fab);
-        helpButton.setVisibility(hideHelpButton ? View.INVISIBLE : View.VISIBLE);
 
         // Gesture detection
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
@@ -293,9 +288,5 @@ public class ItemDisplay extends Activity {
             textView.setVisibility(View.VISIBLE);
             detailsOpen = true;
         }
-    }
-
-    public void openHelp(View view) {
-        Toast.makeText(getApplicationContext(), "openHelp !", Toast.LENGTH_SHORT).show();
     }
 }
