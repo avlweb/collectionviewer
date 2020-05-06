@@ -63,8 +63,12 @@ public class ItemDisplay extends BaseActivity {
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int fontSize = pref.getInt(Settings.KEY_FONT_SIZE, 0);
-        TextView textDescription = findViewById(R.id.textView3);
-        textDescription.setTextSize(Settings.getFontSizeFromPref(fontSize));
+        TextView textView = findViewById(R.id.textView3);
+        textView.setTextSize(Settings.getFontSizeFromPref(fontSize));
+        textView = findViewById(R.id.textViewDetails);
+        textView.setTextSize(Settings.getFontSizeFromPref(fontSize));
+        textView = findViewById(R.id.textViewDetails2);
+        textView.setTextSize(Settings.getFontSizeFromPref(fontSize));
 
         // Gesture detection
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
@@ -80,7 +84,7 @@ public class ItemDisplay extends BaseActivity {
         displayElement();
     }
 
-    public void ZoomImage(View v) {
+    public void zoomImage(View v) {
         ConstraintLayout mConstrainLayout = findViewById(R.id.myclayout);
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mConstrainLayout.getLayoutParams();
         if (!imageZoomed) {
@@ -124,7 +128,7 @@ public class ItemDisplay extends BaseActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
                 if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
-                    ZoomImage(null);
+                    zoomImage(null);
                 } else if ((e1.getX() - e2.getX()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     displayNextElement();
                 } else if ((e2.getX() - e1.getX()) > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {

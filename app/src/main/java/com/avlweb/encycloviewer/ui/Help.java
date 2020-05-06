@@ -60,7 +60,7 @@ public class Help extends Activity {
             if (i == 0)
                 dots[i].setTextColor(getColor(R.color.dark_blue));
             else
-                dots[i].setTextColor(getColor(R.color.dark_gray));
+                dots[i].setTextColor(getColor(R.color.middle_gray));
             bottomLayout.addView(dots[i]);
         }
 
@@ -72,7 +72,7 @@ public class Help extends Activity {
             if (position == i) {
                 dots[i].setTextColor(getColor(R.color.dark_blue));
             } else {
-                dots[i].setTextColor(getColor(R.color.dark_gray));
+                dots[i].setTextColor(getColor(R.color.middle_gray));
             }
         }
     }

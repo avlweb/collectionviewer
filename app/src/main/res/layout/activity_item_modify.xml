@@ -67,12 +67,6 @@
                 android:contentDescription="@string/image_content"
                 android:onClick="showNextImage" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/dark_blue" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/dark_blue"
                 android:padding="9dp"
-                android:text="@string/content"
+                android:text="@string/properties"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
