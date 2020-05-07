@@ -106,22 +106,45 @@ public class Help extends Activity {
             View imageViewContainer = inflater.inflate(R.layout.walkthrough_simple_view, null);
             ImageView imageView = imageViewContainer.findViewById(R.id.image_view);
 
-            switch (position) {
-                case HELP_HOME:
-                    imageView.setImageResource(R.drawable.help_home);
-                    break;
-                case HELP_MAINLIST:
-                    imageView.setImageResource(R.drawable.help_mainlist);
-                    break;
-                case HELP_DATABASE_MODIFY:
-                    imageView.setImageResource(R.drawable.help_database_modify);
-                    break;
-                case HELP_ITEM_DISPLAY:
-                    imageView.setImageResource(R.drawable.help_item_display);
-                    break;
-                case HELP_ITEM_MODIFY:
-                    imageView.setImageResource(R.drawable.help_item_modify);
-                    break;
+            // Get current language
+            String currentLang = Locale.getDefault().getLanguage();
+            // Set image according to position and language
+            if ("fr".equals(currentLang)) {
+                switch (position) {
+                    case HELP_HOME:
+                        imageView.setImageResource(R.drawable.help_fr_home);
+                        break;
+                    case HELP_MAINLIST:
+                        imageView.setImageResource(R.drawable.help_fr_mainlist);
+                        break;
+                    case HELP_DATABASE_MODIFY:
+                        imageView.setImageResource(R.drawable.help_fr_database_modify);
+                        break;
+                    case HELP_ITEM_DISPLAY:
+                        imageView.setImageResource(R.drawable.help_fr_item_display);
+                        break;
+                    case HELP_ITEM_MODIFY:
+                        imageView.setImageResource(R.drawable.help_fr_item_modify);
+                        break;
+                }
+            } else {
+                switch (position) {
+                    case HELP_HOME:
+                        imageView.setImageResource(R.drawable.help_en_home);
+                        break;
+                    case HELP_MAINLIST:
+                        imageView.setImageResource(R.drawable.help_en_mainlist);
+                        break;
+                    case HELP_DATABASE_MODIFY:
+                        imageView.setImageResource(R.drawable.help_en_database_modify);
+                        break;
+                    case HELP_ITEM_DISPLAY:
+                        imageView.setImageResource(R.drawable.help_en_item_display);
+                        break;
+                    case HELP_ITEM_MODIFY:
+                        imageView.setImageResource(R.drawable.help_en_item_modify);
+                        break;
+                }
             }
 
             container.addView(imageViewContainer, 0);
