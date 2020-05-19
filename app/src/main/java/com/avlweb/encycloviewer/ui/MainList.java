@@ -93,7 +93,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                         hideKeyboard();
                         String name = propertyName.getText().toString();
                         if (name.length() > 0) {
-                            createNewItem(name);
+                            addItem(name);
                         }
                     }
                 });
@@ -253,7 +253,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         startActivityForResult(intent, ACTIVITY_ITEM_DISPLAY);
     }
 
-    private void createNewItem(String name) {
+    private void addItem(String name) {
         EncycloDatabase database = EncycloDatabase.getInstance();
         // Create new item
         DbItem item = new DbItem();
@@ -268,6 +268,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         hideOrNotListView();
         // Call modification page
         this.position = database.getNbItems() - 1;
+        this.maxPosition++;
         Intent intent = new Intent(this, ItemModify.class);
         intent.putExtra("position", position);
         startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
