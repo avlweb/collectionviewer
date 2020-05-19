@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ import com.avlweb.encycloviewer.model.DbItem;
 import com.avlweb.encycloviewer.model.EncycloDatabase;
 import com.avlweb.encycloviewer.model.Property;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -216,58 +219,71 @@ public class ItemModify extends BaseActivity {
     }
 
     private void copyImage(String sourcePath, String destPath) {
-        // First copy image
-        File dest = null;
-        try {
-            File source = new File(sourcePath);
-            dest = new File(destPath);
-            FileChannel src = new FileInputStream(source).getChannel();
-            FileChannel dst = new FileOutputStream(dest).getChannel();
-            dst.transferFrom(src, 0, src.size());
-            src.close();
-            dst.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        // Second reduce image size if option set in settings
+        File source = new File(sourcePath);
+        File dest = new File(destPath);
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         // Get flag "Original images size button"
         boolean reduceImagesSizeButton = pref.getBoolean(KEY_REDUCE_SIZE_OF_IMAGES, false);
-
-        if (reduceImagesSizeButton)
-            reduceImageSize(dest);
+        if (reduceImagesSizeButton) {
+            reduceImageSize(source, dest);
+        } else {
+            try {
+                FileChannel src = new FileInputStream(source).getChannel();
+                FileChannel dst = new FileOutputStream(dest).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
-    private void reduceImageSize(File image) {
-/*
-        Bitmap myBitmap = BitmapFactory.decodeFile(new File(path).getAbsolutePath());
-        int width = myBitmap.getWidth();
-        int height = myBitmap.getHeight();
-        Matrix matrix = new Matrix();
-        float scaleWidth = ((float) MAX_WIDTH) / width;
-        float scaleHeight = ((float) MAX_HEIGHT) / height;
+    private void reduceImageSize(File source, File dest) {
+        int screenWidth = 0;
+        int screenHeight = 0;
+        Point size = new Point();
+        WindowManager w = getWindowManager();
+        w.getDefaultDisplay().getSize(size);
+        screenWidth = size.x;
+        screenHeight = size.y;
 
+        Log.d("reduceImageSize", "Screen : width = " + screenWidth + ", height = " + screenHeight);
 
-        matrix.postScale(scaleWidth, scaleHeight);
-        myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, matrix, true);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
+        int imageWidth = myBitmap.getWidth();
+        int imageHeight = myBitmap.getHeight();
 
-        File Image = new File("path");
+        Log.d("reduceImageSize", "Image : width = " + imageWidth + ", height = " + imageHeight);
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        //compress bmp
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        options.inSampleSize = (int) (imageWidth / screenWidth);
+        options.inJustDecodeBounds = false;
 
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        Log.d("reduceImageSize", "inSampleSize = " + options.inSampleSize);
 
-        imgViewStd.setImageBitmap(myBitmap);
-        Log.d("resizedBitmap", myBitmap.toString());
+        myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+        byte[] bitmapped = bos.toByteArray();
 
-        width = myBitmap.getWidth();
-        height = myBitmap.getHeight();
-        System.out.println("imgWidth" + width);
-        System.out.println("imgHeight" + height);
-*/
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(dest);
+            fos.write(bitmapped);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void saveItem() {
