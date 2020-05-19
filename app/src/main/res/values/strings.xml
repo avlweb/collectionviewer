@@ -106,4 +106,5 @@
     <string name="item_deletion_successful">Item successfully deleted.</string>
     <string name="help">Help</string>
     <string name="hide_help_button">Hide help button</string>
+    <string name="database_loaded">Database %1$s loaded.</string>
 </resources>

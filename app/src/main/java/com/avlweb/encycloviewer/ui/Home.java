@@ -194,7 +194,8 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         EncycloDatabase database = EncycloDatabase.getInstance();
         database.clear();
         xmlFactory.readXMLFile(path);
-        Toast.makeText(getApplicationContext(), "Database '" + path + "' has been loaded.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),
+                String.format(Locale.getDefault(), getString(R.string.database_loaded), path), Toast.LENGTH_SHORT).show();
         database.getInfos().setPath(new File(path).getParent());
         database.getInfos().setXmlPath(path);
 

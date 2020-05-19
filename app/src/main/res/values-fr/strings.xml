@@ -85,7 +85,7 @@
     <string name="warning_database_deletion">Voulez-vous réellement supprimer cette base ?</string>
     <string name="warning">Attention</string>
     <string name="title_activity_modify_item">Modifier</string>
-    <string name="item_successfully_saved">Les changements ont été sauvegardés.</string>
+    <string name="item_successfully_saved">Elément sauvegardé.</string>
     <string name="item_error_save">Une erreur s\'est produite durant la sauvegarde !</string>
     <string name="images">Images</string>
     <string name="properties">Propriétés</string>
@@ -101,9 +101,10 @@
     <string name="message_new_property">Une nouvelle propriété va être créé avec le nom saisi. Il faudra remplir sa description et optionnellement remplir cette propriété pour les éléments existants !</string>
     <string name="content">Contenu</string>
     <string name="warning_image_deletion">Voulez-vous réellement supprimer cette image ?</string>
-    <string name="must_not_be_empty">Must not be empty !</string>
+    <string name="must_not_be_empty">Ne peut pas être vide !</string>
     <string name="image_deletion_successful">Image supprimée avec succès.</string>
     <string name="item_deletion_successful">Elément supprimé avec succès.</string>
-    <string name="help">Help</string>
-    <string name="hide_help_button">Hide help button</string>
+    <string name="help">Aide</string>
+    <string name="hide_help_button">Cacher le bouton d\'aide</string>
+    <string name="database_loaded">Base de données %1$s chargée.</string>
 </resources>
