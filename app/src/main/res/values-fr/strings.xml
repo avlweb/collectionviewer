@@ -85,7 +85,7 @@
     <string name="warning_database_deletion">Voulez-vous réellement supprimer cette base ?</string>
     <string name="warning">Attention</string>
     <string name="title_activity_modify_item">Modifier</string>
-    <string name="item_successfully_saved">Elément sauvegardé.</string>
+    <string name="item_successfully_saved">Les changements ont été sauvegardés.</string>
     <string name="item_error_save">Une erreur s\'est produite durant la sauvegarde !</string>
     <string name="images">Images</string>
     <string name="properties">Propriétés</string>
@@ -106,5 +106,6 @@
     <string name="item_deletion_successful">Elément supprimé avec succès.</string>
     <string name="help">Aide</string>
     <string name="hide_help_button">Cacher le bouton d\'aide</string>
+    <string name="reduce_images_button">Réduire la taille des images</string>
     <string name="database_loaded">Base de données %1$s chargée.</string>
 </resources>
