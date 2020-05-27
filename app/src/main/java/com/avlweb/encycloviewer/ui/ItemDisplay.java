@@ -244,16 +244,18 @@ public class ItemDisplay extends BaseActivity {
             textView.setText(String.format(Locale.getDefault(), getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
         }
 
+        ImageView imageView = findViewById(R.id.imageView1);
         String imagePath = currentItem.getImagePath(imgIdx);
-        if (imagePath == null)
+        if (imagePath == null) {
+            imageView.setImageBitmap(null);
             return;
+        }
 
         String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            ImageView imageView = findViewById(R.id.imageView1);
             imageView.setImageBitmap(myBitmap);
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);

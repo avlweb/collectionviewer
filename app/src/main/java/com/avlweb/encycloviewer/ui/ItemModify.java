@@ -8,8 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,7 +22,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,10 +36,8 @@ import com.avlweb.encycloviewer.model.Property;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,6 +45,7 @@ import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 import static com.avlweb.encycloviewer.ui.Settings.KEY_REDUCE_SIZE_OF_IMAGES;
 
 public class ItemModify extends BaseActivity {
+    private final int ACTIVITY_ADD_IMAGE = 10254841;
     private DisplayMetrics metrics = new DisplayMetrics();
     private int position;
     private DbItem currentItem = null;
@@ -67,6 +66,7 @@ public class ItemModify extends BaseActivity {
         }
 
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        Log.d("ItemModify", "Metrics : width = " + metrics.widthPixels + ", height = " + metrics.heightPixels);
 
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
@@ -169,12 +169,12 @@ public class ItemModify extends BaseActivity {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-        startActivityForResult(intent, 10254841);
+        startActivityForResult(intent, ACTIVITY_ADD_IMAGE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == 10254841 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ACTIVITY_ADD_IMAGE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the file that the user selected.
             if (resultData != null) {
                 Uri uri = resultData.getData();
@@ -219,60 +219,46 @@ public class ItemModify extends BaseActivity {
     }
 
     private void copyImage(String sourcePath, String destPath) {
-        File source = new File(sourcePath);
-        File dest = new File(destPath);
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Original images size button"
+        // Get flag "Reduce size of images button"
         boolean reduceImagesSizeButton = pref.getBoolean(KEY_REDUCE_SIZE_OF_IMAGES, false);
-        if (reduceImagesSizeButton) {
-            reduceImageSize(source, dest);
-        } else {
-            try {
-                FileChannel src = new FileInputStream(source).getChannel();
-                FileChannel dst = new FileOutputStream(dest).getChannel();
-                dst.transferFrom(src, 0, src.size());
-                src.close();
-                dst.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 
-    private void reduceImageSize(File source, File dest) {
-        int screenWidth = 0;
-        int screenHeight = 0;
-        Point size = new Point();
-        WindowManager w = getWindowManager();
-        w.getDefaultDisplay().getSize(size);
-        screenWidth = size.x;
-        screenHeight = size.y;
-
-        Log.d("reduceImageSize", "Screen : width = " + screenWidth + ", height = " + screenHeight);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
+        File source = new File(sourcePath);
         Bitmap myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
-        int imageWidth = myBitmap.getWidth();
-        int imageHeight = myBitmap.getHeight();
-
-        Log.d("reduceImageSize", "Image : width = " + imageWidth + ", height = " + imageHeight);
-
-        options.inSampleSize = (int) (imageWidth / screenWidth);
-        options.inJustDecodeBounds = false;
-
-        Log.d("reduceImageSize", "inSampleSize = " + options.inSampleSize);
-
-        myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        myBitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-        byte[] bitmapped = bos.toByteArray();
 
         FileOutputStream fos = null;
         try {
-            fos = new FileOutputStream(dest);
+            ExifInterface exif = new ExifInterface(source.getAbsolutePath());
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int rotate = 0;
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotate = 270;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotate = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotate = 90;
+                    break;
+            }
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotate);
+            Bitmap finalBitmap = Bitmap.createBitmap(myBitmap, 0, 0,
+                    myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
+
+            if (reduceImagesSizeButton)
+                finalBitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+            else
+                finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
+            byte[] bitmapped = bos.toByteArray();
+            fos = new FileOutputStream(new File(destPath));
             fos.write(bitmapped);
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -280,6 +266,7 @@ public class ItemModify extends BaseActivity {
                 if (fos != null) {
                     fos.close();
                 }
+                bos.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -388,7 +375,16 @@ public class ItemModify extends BaseActivity {
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+            int scale = (int) (myBitmap.getWidth() / metrics.widthPixels);
+            if (scale > 0)
+                options.inSampleSize = scale;
+            options.inJustDecodeBounds = false;
+
+            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             LinearLayout.LayoutParams llp;
             if (imageZoomed) {
                 llp = new LinearLayout.LayoutParams(metrics.widthPixels - 20, (int) (metrics.heightPixels * 0.6));

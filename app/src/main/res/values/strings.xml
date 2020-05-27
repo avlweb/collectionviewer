@@ -102,6 +102,7 @@
     <string name="content">Content</string>
     <string name="warning_image_deletion">Do you really want to delete this image ?</string>
     <string name="must_not_be_empty">Must not be empty !</string>
+    <string name="must_contains_alphabet">Can only contains alphabet characters and dashes</string>
     <string name="image_deletion_successful">Image successfully deleted.</string>
     <string name="item_deletion_successful">Item successfully deleted.</string>
     <string name="help">Help</string>

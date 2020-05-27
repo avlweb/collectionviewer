@@ -3,17 +3,18 @@ package com.avlweb.encycloviewer.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -79,34 +80,38 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                 return true;
 
             case R.id.add_btn:
-                LayoutInflater inflater = LayoutInflater.from(this);
-                View dialog = inflater.inflate(R.layout.dialog_new_something, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle(getString(R.string.new_item));
-                alertDialog.setMessage(getString(R.string.message_new_item));
-                alertDialog.setCancelable(false);
-                final EditText propertyName = dialog.findViewById(R.id.propertyName);
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog_new_something);
+                dialog.setTitle(getString(R.string.new_item));
 
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
+                TextView textView = dialog.findViewById(R.id.message);
+                textView.setText(R.string.message_new_item);
+
+                Button btnOK = dialog.findViewById(R.id.btn_ok);
+                Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+                btnOK.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        hideKeyboard();
+                    public void onClick(View view) {
+                        EditText propertyName = dialog.findViewById(R.id.propertyName);
                         String name = propertyName.getText().toString();
-                        if (name.length() > 0) {
-                            addItem(name);
+                        if (name.isEmpty()) {
+                            propertyName.setError(getString(R.string.must_not_be_empty));
+                            return;
                         }
+                        dialog.dismiss();
+                        addItem(name);
                     }
                 });
-
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
+                    public void onClick(View view) {
+                        hideKeyboard();
+                        dialog.cancel();
                     }
                 });
 
-                alertDialog.setView(dialog);
-                alertDialog.show();
+                dialog.setCancelable(false);
+                dialog.show();
                 return true;
 
             case R.id.search_btn:

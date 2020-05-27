@@ -2,20 +2,19 @@ package com.avlweb.encycloviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -129,35 +128,38 @@ public class DatabaseModify extends BaseActivity {
     }
 
     public void addProperty(View view) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View dialog = inflater.inflate(R.layout.dialog_new_something, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.new_property));
-        alertDialog.setMessage(getString(R.string.message_new_property));
-        alertDialog.setCancelable(false);
-        final EditText propertyName = dialog.findViewById(R.id.propertyName);
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_new_something);
+        dialog.setTitle(getString(R.string.new_property));
 
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
+        TextView textView = dialog.findViewById(R.id.message);
+        textView.setText(R.string.message_new_property);
+
+        Button btnOK = dialog.findViewById(R.id.btn_ok);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                hideKeyboard();
+            public void onClick(View view) {
+                EditText propertyName = dialog.findViewById(R.id.propertyName);
                 String name = propertyName.getText().toString();
-                if (name.length() > 0) {
-                    createNewProperty(name);
+                if (name.isEmpty()) {
+                    propertyName.setError(getString(R.string.must_not_be_empty));
+                    return;
                 }
+                dialog.dismiss();
+                createNewProperty(name);
             }
         });
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View view) {
                 hideKeyboard();
-                alertDialog.dismiss();
+                dialog.cancel();
             }
         });
 
-        alertDialog.setView(dialog);
-        alertDialog.show();
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private void hideKeyboard() {

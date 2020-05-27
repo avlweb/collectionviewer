@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,14 +15,15 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -128,31 +130,42 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 return true;
 
             case R.id.menu_add:
-                LayoutInflater inflater = LayoutInflater.from(this);
-                View dialog = inflater.inflate(R.layout.dialog_new_something, null);
-                final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle(getString(R.string.new_database));
-                alertDialog.setMessage(getString(R.string.message_new_database));
-                alertDialog.setCancelable(false);
-                final EditText propertyName = dialog.findViewById(R.id.propertyName);
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok), new DialogInterface.OnClickListener() {
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.dialog_new_something);
+                dialog.setTitle(getString(R.string.new_database));
+
+                TextView textView = dialog.findViewById(R.id.message);
+                textView.setText(R.string.message_new_database);
+
+                Button btnOK = dialog.findViewById(R.id.btn_ok);
+                Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+                btnOK.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        hideKeyboard();
+                    public void onClick(View view) {
+                        EditText propertyName = dialog.findViewById(R.id.propertyName);
                         String name = propertyName.getText().toString();
-                        if (name.length() > 0) {
-                            createNewDatabase(name);
+                        if (name.isEmpty()) {
+                            propertyName.setError(getString(R.string.must_not_be_empty));
+                            return;
                         }
+                        if (!name.matches("([A-Za-z0-9]|-)+")) {
+                            propertyName.setError(getString(R.string.must_contains_alphabet));
+                            return;
+                        }
+                        dialog.dismiss();
+                        addDatabase(name);
                     }
                 });
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
+                    public void onClick(View view) {
+                        hideKeyboard();
+                        dialog.cancel();
                     }
                 });
-                alertDialog.setView(dialog);
-                alertDialog.show();
+
+                dialog.setCancelable(false);
+                dialog.show();
                 return true;
 
             case R.id.menu_version:
@@ -203,7 +216,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         startActivity(intent);
     }
 
-    private void createNewDatabase(String name) {
+    private void addDatabase(String name) {
         // Initialize new database
         EncycloDatabase database = EncycloDatabase.getInstance();
         database.clear();
