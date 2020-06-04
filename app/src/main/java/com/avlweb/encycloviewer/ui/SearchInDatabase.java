@@ -33,6 +33,7 @@ public class SearchInDatabase extends Activity {
     private static String originalDescriptionToSearch = null;
     private static String[] originalPropertiesToSearch = null;
     private static int nbProperties = 0;
+    private static String dbName = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,10 @@ public class SearchInDatabase extends Activity {
         if (database.getProperties() != null) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
-            // Check if it is not the first time we reach the search view
-            if ((nbProperties == 0) || (nbProperties != database.getNbProperties())) {
+            // Check if it is not the first time we reach the search view for this database
+            if ((nbProperties == 0) || (nbProperties != database.getNbProperties()) || (!dbName.equals(database.getInfos().getName()))) {
+                // Save data about current database
+                dbName = database.getInfos().getName();
                 nbProperties = database.getNbProperties();
                 originalPropertiesToSearch = null;
                 originalPropertiesToSearch = new String[nbProperties];
@@ -244,6 +247,7 @@ public class SearchInDatabase extends Activity {
             idx++;
         }
         originalPropertiesToSearch = null;
+        nbProperties = 0;
         Toast.makeText(getApplicationContext(), R.string.clear_done, Toast.LENGTH_SHORT).show();
     }
 

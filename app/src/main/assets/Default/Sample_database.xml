@@ -7,10 +7,6 @@
     </content>
     <properties>
         <property>
-            <name>Description</name>
-            <description>Description of the item.</description>
-        </property>
-        <property>
             <name>Color</name>
             <description>Colors of the shapes in this item, comma separated.</description>
         </property>
@@ -137,6 +133,10 @@
             <property>triangle</property>
             <img>images\content13_1.jpg</img>
             <img>images\content13_2.jpg</img>
+        </item>
+        <item>
+            <name>Item 14</name>
+            <description>Empty item.</description>
         </item>
     </items>
 </database>
