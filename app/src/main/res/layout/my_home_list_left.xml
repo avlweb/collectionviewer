@@ -3,6 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageButton
+        android:id="@+id/thebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/menu_database"
+        android:padding="8dp"
+        android:src="@drawable/action_three_points" />
+
     <TextView
         android:id="@+id/thetext"
         android:layout_width="0dp"
@@ -14,15 +24,5 @@
         android:text="@string/lorem_ipsum"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
-
-    <ImageButton
-        android:id="@+id/thebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/menu_database"
-        android:padding="10dp"
-        android:src="@drawable/action_three_points" />
 
 </LinearLayout>

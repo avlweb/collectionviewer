@@ -17,6 +17,7 @@ public class HomeListAdapter extends ArrayAdapter<String> {
     private Context context;
     private ArrayList<String> data;
     private String databasesRootLocation;
+    private final int scrollbarPosition;
 
     public interface customButtonListener {
         void onButtonClickListener(View view, int position, String value);
@@ -28,11 +29,12 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         this.customListener = listener;
     }
 
-    public HomeListAdapter(Context context, ArrayList<String> dataItem, String location) {
-        super(context, R.layout.my_home_list, dataItem);
+    public HomeListAdapter(Context context, ArrayList<String> dataItem, String location, int scrollbarPosition) {
+        super(context, R.layout.my_main_list, dataItem);
         this.data = dataItem;
         this.context = context;
         this.databasesRootLocation = location;
+        this.scrollbarPosition = scrollbarPosition;
     }
 
     @Override
@@ -40,7 +42,10 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(this.context);
-            convertView = inflater.inflate(R.layout.my_home_list, null);
+            if (this.scrollbarPosition == 0)
+                convertView = inflater.inflate(R.layout.my_home_list_left, null);
+            else
+                convertView = inflater.inflate(R.layout.my_home_list_right, null);
             viewHolder = new ViewHolder();
             viewHolder.text = convertView.findViewById(R.id.thetext);
             viewHolder.button = convertView.findViewById(R.id.thebutton);
@@ -50,12 +55,16 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         }
         final String temp = getItem(position);
         if (temp.endsWith("Sample_database.xml")) {
+            // Line menu is disabled because sample database is read only
+            viewHolder.button.setEnabled(false);
             viewHolder.text.setText("Sample_database.xml");
-            viewHolder.button.setVisibility(View.GONE);
-        } else if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
-            viewHolder.text.setText(temp.substring(this.databasesRootLocation.length()));
-        else
-            viewHolder.text.setText(temp);
+        } else {
+            viewHolder.button.setEnabled(true);
+            if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
+                viewHolder.text.setText(temp.substring(this.databasesRootLocation.length()));
+            else
+                viewHolder.text.setText(temp);
+        }
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

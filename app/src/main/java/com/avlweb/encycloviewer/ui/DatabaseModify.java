@@ -223,8 +223,11 @@ public class DatabaseModify extends BaseActivity {
     }
 
     private void createPropertiesList() {
-        for (Property property : EncycloDatabase.getInstance().getProperties()) {
-            addProperty(property);
+        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property property : properties) {
+                addProperty(property);
+            }
         }
     }
 }

@@ -28,7 +28,6 @@
         android:fadeScrollbars="false"
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
-        android:paddingHorizontal="10dp"
         android:scrollbarStyle="outsideInset"
         android:verticalScrollbarPosition="right"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +36,7 @@
         android:id="@+id/fab"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:background="@drawable/circle"
         android:onClick="openHelp"
         android:src="@drawable/action_help"

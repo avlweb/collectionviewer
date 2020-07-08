@@ -193,7 +193,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         ArrayList<DbItem> items = EncycloDatabase.getInstance().getItems();
         ArrayList<DbItem> selectedItems = new ArrayList<>();
 
-        if (items != null) {
+        if ((items != null) && (items.size() > 0)) {
             int idx = 0;
             for (DbItem item : items) {
                 if (item.isSelected()) {
@@ -220,7 +220,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
 
         // Create listview adapter
         adapter = null;     // For desallocation !
-        adapter = new MainListAdapter(this, selectedItems);
+        adapter = new MainListAdapter(this, selectedItems, scrollbarPosition);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
         lv.setSelectionFromTop(this.position, 30);

@@ -18,6 +18,7 @@ import com.avlweb.encycloviewer.model.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -66,8 +67,11 @@ public class DatabaseDetails extends Activity {
 
     private ArrayList<Map<String, String>> buildData() {
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        for (Property property : EncycloDatabase.getInstance().getProperties()) {
-            list.add(putData(property));
+        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property property : properties) {
+                list.add(putData(property));
+            }
         }
         return list;
     }

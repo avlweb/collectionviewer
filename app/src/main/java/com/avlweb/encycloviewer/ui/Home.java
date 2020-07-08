@@ -102,9 +102,13 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 getFilesRec(xmlfiles, defaultDir.getAbsolutePath(), false);
         }
 
+        // Get scrollbar position from settings
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
+        int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
+
         // Populate list of databases
         ListView lv = findViewById(R.id.listView);
-        adapter = new HomeListAdapter(this, xmlfiles, databasesRootLocation);
+        adapter = new HomeListAdapter(this, xmlfiles, databasesRootLocation, scrollbarPosition);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
         registerForContextMenu(lv);

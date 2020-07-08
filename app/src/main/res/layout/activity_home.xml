@@ -35,7 +35,6 @@
         android:layout_height="0dp"
         android:divider="@color/dark_blue"
         android:dividerHeight="1dp"
-        android:paddingHorizontal="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
 
@@ -43,7 +42,7 @@
         android:id="@+id/fab"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         android:background="@drawable/circle"
         android:onClick="openHelp"
         android:src="@drawable/action_help"

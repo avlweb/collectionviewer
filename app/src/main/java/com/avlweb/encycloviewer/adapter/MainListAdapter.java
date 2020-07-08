@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionIndexer {
+    private final int scrollbarPosition;
     private HashMap<String, Integer> mapIndex;
     private String[] sections;
     private customButtonListener customListener;
@@ -37,7 +38,7 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         this.customListener = listener;
     }
 
-    public MainListAdapter(Context context, List<DbItem> list) {
+    public MainListAdapter(Context context, List<DbItem> list, int scrollbarPosition) {
         super(context, R.layout.my_main_list, list);
         this.data = list;
         this.context = context;
@@ -62,6 +63,8 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         Collections.sort(sectionList);
         sections = new String[sectionList.size()];
         sectionList.toArray(sections);
+
+        this.scrollbarPosition = scrollbarPosition;
     }
 
     @Override
@@ -69,7 +72,10 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(this.context);
-            convertView = inflater.inflate(R.layout.my_home_list, null);
+            if (this.scrollbarPosition == 0)
+                convertView = inflater.inflate(R.layout.my_home_list_left, null);
+            else
+                convertView = inflater.inflate(R.layout.my_home_list_right, null);
             viewHolder = new ViewHolder();
             viewHolder.text = convertView.findViewById(R.id.thetext);
             viewHolder.button = convertView.findViewById(R.id.thebutton);

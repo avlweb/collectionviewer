@@ -302,10 +302,13 @@ public class ItemModify extends BaseActivity {
     private void displayItem() {
         currentItem = null;
 
-        for (DbItem item : database.getItems()) {
-            if (item.getPositionInSelectedList() == this.position) {
-                currentItem = item;
-                break;
+        List<DbItem> items = database.getItems();
+        if ((items != null) && (items.size() > 0)) {
+            for (DbItem item : items) {
+                if (item.getPositionInSelectedList() == this.position) {
+                    currentItem = item;
+                    break;
+                }
             }
         }
 

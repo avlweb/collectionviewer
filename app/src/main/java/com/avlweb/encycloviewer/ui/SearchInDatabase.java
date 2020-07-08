@@ -49,7 +49,8 @@ public class SearchInDatabase extends Activity {
         }
 
         EncycloDatabase database = EncycloDatabase.getInstance();
-        if (database.getProperties() != null) {
+        List<Property> properties = database.getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
             // Check if it is not the first time we reach the search view for this database
@@ -63,7 +64,7 @@ public class SearchInDatabase extends Activity {
                 originalDescriptionToSearch = null;
             }
             // Create and fill properties
-            for (Property property : database.getProperties()) {
+            for (Property property : properties) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textView.setText(property.getName());
@@ -128,21 +129,24 @@ public class SearchInDatabase extends Activity {
 
         // Properties
         int idx = 0;
-        for (Property property : database.getProperties()) {
-            EditText editText = findViewById(property.getId());
-            if ((editText.getText() != null) && (editText.getText().length() > 0)) {
-                originalPropertiesToSearch[idx] = editText.getText().toString();
-                stringsToSearch[idx] = originalPropertiesToSearch[idx].split(",");
-                nbStringsToMatch++;
+        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property property : properties) {
+                EditText editText = findViewById(property.getId());
+                if ((editText.getText() != null) && (editText.getText().length() > 0)) {
+                    originalPropertiesToSearch[idx] = editText.getText().toString();
+                    stringsToSearch[idx] = originalPropertiesToSearch[idx].split(",");
+                    nbStringsToMatch++;
+                }
+                idx++;
             }
-            idx++;
         }
 
         if (nbStringsToMatch == 0)
             return;
 
         List<DbItem> items = database.getItems();
-        if (items != null) {
+        if ((items != null) && (items.size() > 0)) {
             for (DbItem item : items)
                 item.setNotSelected();
 
@@ -152,29 +156,33 @@ public class SearchInDatabase extends Activity {
 
                 // Name
                 if (namesToSearch != null) {
-                    String element = item.getName().toLowerCase();
-                    int nbStringsOk = 0;
-                    for (String toSearch : namesToSearch) {
-                        if (element.contains(toSearch))
-                            nbStringsOk++;
-                        else
-                            break;
+                    if (item.getName() != null) {
+                        String element = item.getName().toLowerCase();
+                        int nbStringsOk = 0;
+                        for (String toSearch : namesToSearch) {
+                            if (element.contains(toSearch))
+                                nbStringsOk++;
+                            else
+                                break;
+                        }
+                        if (nbStringsOk == namesToSearch.length)
+                            nbStringsMatching++;
                     }
-                    if (nbStringsOk == namesToSearch.length)
-                        nbStringsMatching++;
                 }
                 // Description
                 if (descriptionsToSearch != null) {
-                    String element = item.getDescription().toLowerCase();
-                    int nbStringsOk = 0;
-                    for (String toSearch : descriptionsToSearch) {
-                        if (element.contains(toSearch))
-                            nbStringsOk++;
-                        else
-                            break;
+                    if (item.getDescription() != null) {
+                        String element = item.getDescription().toLowerCase();
+                        int nbStringsOk = 0;
+                        for (String toSearch : descriptionsToSearch) {
+                            if (element.contains(toSearch))
+                                nbStringsOk++;
+                            else
+                                break;
+                        }
+                        if (nbStringsOk == descriptionsToSearch.length)
+                            nbStringsMatching++;
                     }
-                    if (nbStringsOk == descriptionsToSearch.length)
-                        nbStringsMatching++;
                 }
                 // Properties
                 for (idx = 0; idx < nbProperties; idx++) {
@@ -228,8 +236,10 @@ public class SearchInDatabase extends Activity {
     public void clearSearch(View view) {
         // It's time to clean
         List<DbItem> items = EncycloDatabase.getInstance().getItems();
-        for (DbItem item : items)
-            item.setSelected();
+        if ((items != null) && (items.size() > 0)) {
+            for (DbItem item : items)
+                item.setSelected();
+        }
         // Name
         EditText editText = findViewById(R.id.textName);
         editText.setText("");
@@ -240,11 +250,15 @@ public class SearchInDatabase extends Activity {
         originalDescriptionToSearch = null;
         // Properties
         int idx = 0;
-        for (Property property : EncycloDatabase.getInstance().getProperties()) {
-            editText = findViewById(property.getId());
-            editText.setText("");
-            originalPropertiesToSearch[idx] = null;
-            idx++;
+        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        if ((properties != null) && (properties.size() > 0)) {
+            for (Property property : properties) {
+                editText = findViewById(property.getId());
+                editText.setText("");
+                if (originalPropertiesToSearch != null)
+                    originalPropertiesToSearch[idx] = null;
+                idx++;
+            }
         }
         originalPropertiesToSearch = null;
         nbProperties = 0;
