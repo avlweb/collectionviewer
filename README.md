@@ -1,14 +1,14 @@
-# EncycloViewer
+# CollectionViewer
 
-## Carry offline your own data with you !
+## Carry offline your collection with you !
 
 ## Description
 
-Simple application to manage your own data which could be data about flags, butterflies, birds, plants, cars, trees,... . Anything you want.
+Simple application to manage your collection of ... what you want.
 
-For instance, I like to go for walks and often I see butterflies but I can't find their names. With this application, I always have with me photos of butterflies and I can easily find the one I am looking thanks to the search criteria.
+For instance, you have a collection of Pokemon cards and you want to show it to your friends. With CollectionViewer, you can show it to us. You can also list all the cards you have and check those you are missing. This can be very convenient if you want to trade cards !
 
-A sample of database is provided with this application. You have to create your own.
+A sample of collection is provided with this application. You have to create your own.
 
 ## System Requirements
 
