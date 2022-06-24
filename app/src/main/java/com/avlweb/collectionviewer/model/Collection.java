@@ -1,31 +1,31 @@
-package com.avlweb.encycloviewer.model;
+package com.avlweb.collectionviewer.model;
 
 import java.util.ArrayList;
 
-public class EncycloDatabase {
+public class Collection {
 
-    private DatabaseInfos infos;
-    private ArrayList<DbItem> items;
+    private CollectionInfos infos;
+    private ArrayList<Item> items;
     private ArrayList<Property> properties;
 
-    private static final EncycloDatabase instance = new EncycloDatabase();
+    private static final Collection instance = new Collection();
 
-    public EncycloDatabase() {
+    public Collection() {
     }
 
-    public static EncycloDatabase getInstance() {
+    public static Collection getInstance() {
         return instance;
     }
 
-    public DatabaseInfos getInfos() {
+    public CollectionInfos getInfos() {
         return infos;
     }
 
-    public void setInfos(DatabaseInfos infos) {
+    public void setInfos(CollectionInfos infos) {
         this.infos = infos;
     }
 
-    public ArrayList<DbItem> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 
@@ -36,7 +36,7 @@ public class EncycloDatabase {
             return 0;
     }
 
-    public DbItem getItem(int position) {
+    public Item getItem(int position) {
         if (this.items != null) {
             if ((position >= 0) && (position < this.items.size()))
                 return this.items.get(position);
@@ -44,7 +44,7 @@ public class EncycloDatabase {
         return null;
     }
 
-    public void addItem(DbItem item) {
+    public void addItem(Item item) {
         if (this.items == null)
             this.items = new ArrayList<>();
         this.items.add(item);

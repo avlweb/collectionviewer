@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,18 +20,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.NavUtils;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.model.Property;
+import com.avlweb.collectionviewer.util.xmlFactory;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DatabaseInfos;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
-import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.List;
 
-public class DatabaseModify extends BaseActivity {
+public class CollectionModify extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class DatabaseModify extends BaseActivity {
 
         setContentView(R.layout.activity_database_modify);
 
-        setTitle(getString(R.string.database_modify));
+        setTitle(getString(R.string.collection_modify));
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -47,7 +45,7 @@ public class DatabaseModify extends BaseActivity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
+        CollectionInfos dbInfos = Collection.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
         textView.setText(dbInfos.getName());
 
@@ -57,7 +55,7 @@ public class DatabaseModify extends BaseActivity {
         textView = findViewById(R.id.textVersion);
         textView.setText(dbInfos.getVersion());
 
-        if (EncycloDatabase.getInstance().getNbProperties() > 0) {
+        if (Collection.getInstance().getNbProperties() > 0) {
             createPropertiesList();
         } else {
             textView = findViewById(R.id.textNoProperties);
@@ -90,7 +88,7 @@ public class DatabaseModify extends BaseActivity {
 
     private void saveDatas() {
         // Get new datas
-        DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
+        CollectionInfos dbInfos = Collection.getInstance().getInfos();
         EditText editText = findViewById(R.id.textName);
         if (editText.getText().length() == 0) {
             editText.setError(getString(R.string.must_not_be_empty));
@@ -112,7 +110,7 @@ public class DatabaseModify extends BaseActivity {
         }
         dbInfos.setVersion(editText.getText().toString());
 
-        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        List<Property> properties = Collection.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property desc : properties) {
                 editText = findViewById(desc.getId());
@@ -172,7 +170,7 @@ public class DatabaseModify extends BaseActivity {
         property.setName(name);
         property.setId(View.generateViewId());
         property.setDescription(null);
-        EncycloDatabase.getInstance().addProperty(property);
+        Collection.getInstance().addProperty(property);
 
         addProperty(property);
 
@@ -223,7 +221,7 @@ public class DatabaseModify extends BaseActivity {
     }
 
     private void createPropertiesList() {
-        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        List<Property> properties = Collection.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property property : properties) {
                 addProperty(property);

@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.adapter;
+package com.avlweb.collectionviewer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,10 +13,10 @@ import com.avlweb.encycloviewer.R;
 import java.util.ArrayList;
 
 public class HomeListAdapter extends ArrayAdapter<String> {
+    public static final String SAMPLE_COLLECTION_XML = "Sample_collection.xml";
     private customButtonListener customListener;
-    private Context context;
-    private ArrayList<String> data;
-    private String databasesRootLocation;
+    private final Context context;
+    private final String databasesRootLocation;
     private final int scrollbarPosition;
 
     public interface customButtonListener {
@@ -31,7 +31,6 @@ public class HomeListAdapter extends ArrayAdapter<String> {
 
     public HomeListAdapter(Context context, ArrayList<String> dataItem, String location, int scrollbarPosition) {
         super(context, R.layout.my_main_list, dataItem);
-        this.data = dataItem;
         this.context = context;
         this.databasesRootLocation = location;
         this.scrollbarPosition = scrollbarPosition;
@@ -54,10 +53,10 @@ public class HomeListAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final String temp = getItem(position);
-        if (temp.endsWith("Sample_database.xml")) {
+        if (temp.endsWith(SAMPLE_COLLECTION_XML)) {
             // Line menu is disabled because sample database is read only
             viewHolder.button.setEnabled(false);
-            viewHolder.text.setText("Sample_database.xml");
+            viewHolder.text.setText(SAMPLE_COLLECTION_XML);
         } else {
             viewHolder.button.setEnabled(true);
             if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
@@ -86,7 +85,7 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         return convertView;
     }
 
-    public class ViewHolder {
+    public static class ViewHolder {
         TextView text;
         ImageButton button;
     }

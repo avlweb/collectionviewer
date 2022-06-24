@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Settings">
+    tools:context="com.avlweb.collectionviewer.ui.Settings">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:text="@string/hide_sample_database"
+            android:text="@string/hide_sample_collection"
             android:textColor="@android:color/black"
             android:textOff="@string/no"
             android:textOn="@string/yes"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:paddingTop="10dp"
-            android:text="@string/databases_root_location"
+            android:text="@string/collections_root_location"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />

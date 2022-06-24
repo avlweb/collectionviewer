@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -28,11 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.model.Property;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DbItem;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,16 +40,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_REDUCE_SIZE_OF_IMAGES;
-
 public class ItemModify extends BaseActivity {
     private final int ACTIVITY_ADD_IMAGE = 10254841;
-    private DisplayMetrics metrics = new DisplayMetrics();
+    private final DisplayMetrics metrics = new DisplayMetrics();
     private int position;
-    private DbItem currentItem = null;
+    private Item currentItem = null;
     private boolean imageZoomed;
-    private EncycloDatabase database = EncycloDatabase.getInstance();
+    private final Collection collection = Collection.getInstance();
     private int currentImageIndex = 0;
 
     @Override
@@ -71,7 +67,7 @@ public class ItemModify extends BaseActivity {
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
-        List<Property> properties = database.getProperties();
+        List<Property> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             for (Property description : properties) {
@@ -179,7 +175,7 @@ public class ItemModify extends BaseActivity {
             if (resultData != null) {
                 Uri uri = resultData.getData();
                 if (uri != null) {
-                    File databasePath = new File(database.getInfos().getPath());
+                    File databasePath = new File(collection.getInfos().getPath());
                     Log.d("ItemModify", "database path = " + databasePath.getAbsolutePath());
                     String finalPath = databasePath.getAbsolutePath() + File.separator + "images";
                     Log.d("ItemModify", "images path = " + databasePath.getAbsolutePath());
@@ -220,9 +216,9 @@ public class ItemModify extends BaseActivity {
 
     private void copyImage(String sourcePath, String destPath) {
         // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         // Get flag "Reduce size of images button"
-        boolean reduceImagesSizeButton = pref.getBoolean(KEY_REDUCE_SIZE_OF_IMAGES, false);
+        boolean reduceImagesSizeButton = pref.getBoolean(Settings.KEY_REDUCE_SIZE_OF_IMAGES, false);
 
         File source = new File(sourcePath);
         Bitmap myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
@@ -286,7 +282,7 @@ public class ItemModify extends BaseActivity {
         editText = findViewById(R.id.textDescription);
         currentItem.setDescription(editText.getText().toString());
         // Save properties
-        List<Property> properties = database.getProperties();
+        List<Property> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property description : properties) {
                 editText = findViewById(description.getId());
@@ -302,9 +298,9 @@ public class ItemModify extends BaseActivity {
     private void displayItem() {
         currentItem = null;
 
-        List<DbItem> items = database.getItems();
+        List<Item> items = collection.getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (DbItem item : items) {
+            for (Item item : items) {
                 if (item.getPositionInSelectedList() == this.position) {
                     currentItem = item;
                     break;
@@ -338,7 +334,7 @@ public class ItemModify extends BaseActivity {
             editText.setText(currentItem.getDescription());
         }
         // Display properties if exists
-        List<Property> properties = database.getProperties();
+        List<Property> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int idx = 0;
             for (Property description : properties) {
@@ -374,7 +370,7 @@ public class ItemModify extends BaseActivity {
         if (imagePath == null)
             return;
 
-        String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
+        String absolutePath = collection.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {

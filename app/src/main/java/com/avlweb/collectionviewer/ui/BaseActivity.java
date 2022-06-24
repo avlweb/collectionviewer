@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,11 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
 import com.avlweb.encycloviewer.R;
 
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
+import static com.avlweb.collectionviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
+import static com.avlweb.collectionviewer.ui.Settings.KEY_PREFS;
 
 public abstract class BaseActivity extends Activity {
     private final int ACTIVITY_DISPLAY_HELP = 864316548;
@@ -42,7 +41,7 @@ public abstract class BaseActivity extends Activity {
         Intent intent = new Intent(this, Help.class);
         if (this instanceof Home) {
             intent.putExtra("origin", Help.HELP_HOME);
-        } else if (this instanceof DatabaseModify) {
+        } else if (this instanceof CollectionModify) {
             intent.putExtra("origin", Help.HELP_DATABASE_MODIFY);
         } else if (this instanceof ItemDisplay) {
             intent.putExtra("origin", Help.HELP_ITEM_DISPLAY);

@@ -1,13 +1,11 @@
-package com.avlweb.encycloviewer.util;
+package com.avlweb.collectionviewer.util;
 
 import android.util.Xml;
 import android.view.View;
-
-import com.avlweb.encycloviewer.model.DatabaseInfos;
-import com.avlweb.encycloviewer.model.DbItem;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.model.Property;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -23,12 +21,12 @@ public class xmlFactory {
     private static final String ns = null;
 
     public static void readXMLFile(String path) {
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection collection = Collection.getInstance();
         FileInputStream fin = null;
         InputStreamReader isr = null;
-        DbItem item = null;
+        Item item = null;
         Property property = null;
-        DatabaseInfos dbInfos = null;
+        CollectionInfos dbInfos = null;
 
         XmlPullParser parser = Xml.newPullParser();
         try {
@@ -49,7 +47,7 @@ public class xmlFactory {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
                         caseContent = true;
-                        dbInfos = new DatabaseInfos();
+                        dbInfos = new CollectionInfos();
                     } else if (strNode.equals("properties")) {
                         caseProperties = true;
                     } else if (caseProperties && (strNode.equals("property"))) {
@@ -59,7 +57,7 @@ public class xmlFactory {
                         caseItems = true;
                     } else if (caseItems && (strNode.equals("item"))) {
                         caseItem = true;
-                        item = new DbItem();
+                        item = new Item();
                     } else if (caseContent) {
                         switch (strNode) {
                             case "name":
@@ -139,17 +137,17 @@ public class xmlFactory {
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
-                        database.setInfos(dbInfos);
+                        collection.setInfos(dbInfos);
                         caseContent = false;
                     } else if (strNode.equals("properties")) {
                         caseProperties = false;
                     } else if (caseProperties && (strNode.equals("property"))) {
-                        database.addProperty(property);
+                        collection.addProperty(property);
                         caseProperty = false;
                     } else if (strNode.equals("items")) {
                         caseItems = false;
                     } else if (caseItems && (strNode.equals("item"))) {
-                        database.addItem(item);
+                        collection.addItem(item);
                         caseItem = false;
                     }
                     type = 0;
@@ -175,7 +173,7 @@ public class xmlFactory {
 
     public static boolean writeXml() {
 
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getXmlPath());
             XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -184,13 +182,13 @@ public class xmlFactory {
 
             xmlSerializer.setOutput(writer);
             xmlSerializer.startDocument("UTF-8", true);
-            xmlSerializer.startTag(ns, "database");
+            xmlSerializer.startTag(ns, "collection");
 
             insertDatabaseInfos(xmlSerializer, database.getInfos());
             insertProperties(xmlSerializer, database.getProperties());
             insertItems(xmlSerializer, database.getItems());
 
-            xmlSerializer.endTag(ns, "database");
+            xmlSerializer.endTag(ns, "collection");
             xmlSerializer.endDocument();
             xmlSerializer.flush();
 
@@ -206,7 +204,7 @@ public class xmlFactory {
         return true;
     }
 
-    private static void insertDatabaseInfos(XmlSerializer xmlSerializer, DatabaseInfos dbInfos) throws IOException {
+    private static void insertDatabaseInfos(XmlSerializer xmlSerializer, CollectionInfos dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "content");
 
         xmlSerializer.startTag(ns, "name");
@@ -247,10 +245,10 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "properties");
     }
 
-    private static void insertItems(XmlSerializer xmlSerializer, List<DbItem> items) throws IOException {
+    private static void insertItems(XmlSerializer xmlSerializer, List<Item> items) throws IOException {
         xmlSerializer.startTag(ns, "items");
         if ((items != null) && (items.size() > 0)) {
-            for (DbItem item : items) {
+            for (Item item : items) {
                 xmlSerializer.startTag(ns, "item");
                 // Add name
                 xmlSerializer.startTag(ns, "name");

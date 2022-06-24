@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,13 +17,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.model.Property;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DbItem;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
 
 import java.io.File;
 import java.util.List;
@@ -36,9 +34,9 @@ public class ItemDisplay extends BaseActivity {
     private GestureDetector gestureDetector;
     private int position;
     private boolean detailsOpen = false;
-    private DbItem currentItem = null;
+    private Item currentItem = null;
     private boolean imageZoomed;
-    private EncycloDatabase database = EncycloDatabase.getInstance();
+    private final Collection collection = Collection.getInstance();
     private int imgIdx = 0;
     private int maxPosition;
 
@@ -180,9 +178,9 @@ public class ItemDisplay extends BaseActivity {
     }
 
     private void displayElement() {
-        currentItem = database.getItem(this.position);
+        currentItem = collection.getItem(this.position);
 
-        for (DbItem item : database.getItems()) {
+        for (Item item : collection.getItems()) {
             if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
@@ -211,7 +209,7 @@ public class ItemDisplay extends BaseActivity {
         }
 
         // Format details string
-        List<Property> properties = database.getProperties();
+        List<Property> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int size = properties.size();
             StringBuilder tmp = new StringBuilder();
@@ -251,7 +249,7 @@ public class ItemDisplay extends BaseActivity {
             return;
         }
 
-        String absolutePath = database.getInfos().getPath() + File.separatorChar + imagePath;
+        String absolutePath = collection.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {

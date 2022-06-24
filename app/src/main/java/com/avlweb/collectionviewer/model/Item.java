@@ -1,8 +1,8 @@
-package com.avlweb.encycloviewer.model;
+package com.avlweb.collectionviewer.model;
 
 import java.util.ArrayList;
 
-public class DbItem {
+public class Item {
     private String name;
     private String description;
     private ArrayList<String> properties;
@@ -10,7 +10,7 @@ public class DbItem {
     private boolean selected;
     private int positionInSelectedList;
 
-    public DbItem() {
+    public Item() {
         this.selected = true;
         this.positionInSelectedList = -1;
         this.properties = new ArrayList<>();

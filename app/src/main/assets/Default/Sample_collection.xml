@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database>
     <content>
-        <name>Sample database</name>
-        <description>Sample database to show how EncycloViewer works ! This database is a collection of shapes.</description>
+        <name>Sample collection</name>
+        <description>Sample collection to show how CollectionViewer works ! This collection is a collection of shapes.</description>
         <version>1.0</version>
     </content>
     <properties>

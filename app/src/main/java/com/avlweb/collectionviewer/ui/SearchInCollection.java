@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,18 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.NavUtils;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.model.Property;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DbItem;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
 
 import java.util.List;
 import java.util.Locale;
 
-public class SearchInDatabase extends Activity {
+public class SearchInCollection extends Activity {
     private static String originalNameToSearch = null;
     private static String originalDescriptionToSearch = null;
     private static String[] originalPropertiesToSearch = null;
@@ -40,7 +38,7 @@ public class SearchInDatabase extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        setTitle(getString(R.string.search_in_database));
+        setTitle(getString(R.string.search_in_collection));
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -48,7 +46,7 @@ public class SearchInDatabase extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         List<Property> properties = database.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
@@ -108,7 +106,7 @@ public class SearchInDatabase extends Activity {
         String[][] stringsToSearch = new String[nbProperties][];
         String[] namesToSearch = null;
         String[] descriptionsToSearch = null;
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         int nbStringsToMatch = 0;
 
         // Name
@@ -129,7 +127,7 @@ public class SearchInDatabase extends Activity {
 
         // Properties
         int idx = 0;
-        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        List<Property> properties = Collection.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property property : properties) {
                 EditText editText = findViewById(property.getId());
@@ -145,13 +143,13 @@ public class SearchInDatabase extends Activity {
         if (nbStringsToMatch == 0)
             return;
 
-        List<DbItem> items = database.getItems();
+        List<Item> items = database.getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (DbItem item : items)
+            for (Item item : items)
                 item.setNotSelected();
 
             int nbElementsFound = 0;
-            for (DbItem item : items) {
+            for (Item item : items) {
                 int nbStringsMatching = 0;
 
                 // Name
@@ -226,7 +224,7 @@ public class SearchInDatabase extends Activity {
                 });
                 builder.create().show();
 
-                for (DbItem item : items)
+                for (Item item : items)
                     item.setSelected();
             } else
                 Toast.makeText(getApplicationContext(), String.format(Locale.getDefault(), getString(R.string.found_items), nbElementsFound), Toast.LENGTH_SHORT).show();
@@ -235,9 +233,9 @@ public class SearchInDatabase extends Activity {
 
     public void clearSearch(View view) {
         // It's time to clean
-        List<DbItem> items = EncycloDatabase.getInstance().getItems();
+        List<Item> items = Collection.getInstance().getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (DbItem item : items)
+            for (Item item : items)
                 item.setSelected();
         }
         // Name
@@ -250,7 +248,7 @@ public class SearchInDatabase extends Activity {
         originalDescriptionToSearch = null;
         // Properties
         int idx = 0;
-        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        List<Property> properties = Collection.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property property : properties) {
                 editText = findViewById(property.getId());

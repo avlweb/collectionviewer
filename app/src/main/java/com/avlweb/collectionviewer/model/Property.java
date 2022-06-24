@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.model;
+package com.avlweb.collectionviewer.model;
 
 public class Property {
     private int id;

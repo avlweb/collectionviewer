@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.Home"
+            android:name="com.avlweb.collectionviewer.ui.Home"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,64 +20,64 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainList"
+            android:name="com.avlweb.collectionviewer.ui.MainList"
             android:label="@string/title_activity_main">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.Home" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.Home" />
         </activity>
         <activity
-            android:name=".ui.ItemDisplay"
+            android:name="com.avlweb.collectionviewer.ui.ItemDisplay"
             android:label="@string/title_activity_display_item">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.MainList" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.MainList" />
         </activity>
         <activity
-            android:name=".ui.ItemModify"
+            android:name="com.avlweb.collectionviewer.ui.ItemModify"
             android:label="@string/title_activity_modify_item"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.MainList" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.MainList" />
         </activity>
         <activity
-            android:name=".ui.SearchInDatabase"
+            android:name="com.avlweb.collectionviewer.ui.SearchInCollection"
             android:label="@string/title_activity_search"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.MainList" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.MainList" />
         </activity>
         <activity
-            android:name=".ui.Settings"
+            android:name="com.avlweb.collectionviewer.ui.Settings"
             android:label="@string/title_activity_settings"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.Home" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.Home" />
         </activity>
         <activity
-            android:name=".ui.DatabaseDetails"
-            android:label="@string/title_activity_database_details">
+            android:name="com.avlweb.collectionviewer.ui.CollectionDetails"
+            android:label="@string/title_activity_collection_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.MainList" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.MainList" />
         </activity>
         <activity
-            android:name=".ui.DatabaseModify"
-            android:label="@string/title_activity_database_modify"
+            android:name="com.avlweb.collectionviewer.ui.CollectionModify"
+            android:label="@string/title_activity_collection_modify"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.Home" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.Home" />
         </activity>
         <activity
-            android:name=".ui.Help"
+            android:name="com.avlweb.collectionviewer.ui.Help"
             android:label="@string/help">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.avlweb.encycloviewer.ui.Home" />
+                android:value="com.avlweb.encycloviewer.com.avlweb.collectionviewer.ui.Home" />
         </activity>
     </application>
 

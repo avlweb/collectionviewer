@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    tools:context=".ui.Help">
+    tools:context="com.avlweb.collectionviewer.ui.Help">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

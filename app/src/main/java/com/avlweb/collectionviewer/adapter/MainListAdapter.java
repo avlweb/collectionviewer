@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.adapter;
+package com.avlweb.collectionviewer.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,9 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-
+import com.avlweb.collectionviewer.model.Item;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DbItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +19,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionIndexer {
+public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexer {
     private final int scrollbarPosition;
-    private HashMap<String, Integer> mapIndex;
-    private String[] sections;
+    private final HashMap<String, Integer> mapIndex;
+    private final String[] sections;
     private customButtonListener customListener;
-    private Context context;
-    private List<DbItem> data;
+    private final Context context;
 
     public interface customButtonListener {
         void onButtonClickListener(View view, int position);
@@ -38,9 +36,8 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         this.customListener = listener;
     }
 
-    public MainListAdapter(Context context, List<DbItem> list, int scrollbarPosition) {
+    public MainListAdapter(Context context, List<Item> list, int scrollbarPosition) {
         super(context, R.layout.my_main_list, list);
-        this.data = list;
         this.context = context;
 
         mapIndex = new LinkedHashMap<>();
@@ -83,7 +80,7 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final DbItem temp = getItem(position);
+        final Item temp = getItem(position);
         viewHolder.text.setText(temp.getName());
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +103,7 @@ public class MainListAdapter extends ArrayAdapter<DbItem> implements SectionInde
         return convertView;
     }
 
-    public class ViewHolder {
+    public static class ViewHolder {
         TextView text;
         ImageButton button;
     }

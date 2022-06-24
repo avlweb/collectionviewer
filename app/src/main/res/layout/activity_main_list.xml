@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.MainList">
+    tools:context="com.avlweb.collectionviewer.ui.MainList">
 
     <TextView
         android:id="@+id/textView"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:text="@string/database_is_empty"
+        android:text="@string/collection_is_empty"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:visibility="gone"

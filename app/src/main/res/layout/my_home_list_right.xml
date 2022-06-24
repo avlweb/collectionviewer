@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/menu_database"
+        android:contentDescription="@string/menu_collection"
         android:padding="8dp"
         android:src="@drawable/action_three_points" />
 

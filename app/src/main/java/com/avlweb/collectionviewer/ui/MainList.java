@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,14 +19,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.NavUtils;
-
+import com.avlweb.collectionviewer.adapter.MainListAdapter;
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.util.xmlFactory;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.adapter.MainListAdapter;
-import com.avlweb.encycloviewer.model.DbItem;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.util.xmlFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,12 +113,12 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                 return true;
 
             case R.id.search_btn:
-                intent = new Intent(this, SearchInDatabase.class);
+                intent = new Intent(this, SearchInCollection.class);
                 startActivity(intent);
                 return true;
 
             case R.id.menu_about:
-                intent = new Intent(this, DatabaseDetails.class);
+                intent = new Intent(this, CollectionDetails.class);
                 startActivity(intent);
                 return true;
         }
@@ -190,12 +188,12 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     public void buildMainListContent() {
-        ArrayList<DbItem> items = EncycloDatabase.getInstance().getItems();
-        ArrayList<DbItem> selectedItems = new ArrayList<>();
+        ArrayList<Item> items = Collection.getInstance().getItems();
+        ArrayList<Item> selectedItems = new ArrayList<>();
 
         if ((items != null) && (items.size() > 0)) {
             int idx = 0;
-            for (DbItem item : items) {
+            for (Item item : items) {
                 if (item.isSelected()) {
                     selectedItems.add(item);
                     item.setPositionInSelectedList(idx);
@@ -259,9 +257,9 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     private void addItem(String name) {
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         // Create new item
-        DbItem item = new DbItem();
+        Item item = new Item();
         item.setName(name);
         item.setPositionInSelectedList(database.getNbItems());
         // Add item to database
@@ -280,7 +278,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     private void deleteItem() {
-        List<DbItem> items = EncycloDatabase.getInstance().getItems();
+        List<Item> items = Collection.getInstance().getItems();
         // Delete item from adapter
         adapter.remove(items.get(this.position));
         // Hide or not listView

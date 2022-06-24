@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,13 +8,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import androidx.core.app.NavUtils;
-
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.model.Property;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.model.DatabaseInfos;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.model.Property;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class DatabaseDetails extends Activity {
+public class CollectionDetails extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class DatabaseDetails extends Activity {
 
         setContentView(R.layout.activity_database_details);
 
-        setTitle(getString(R.string.about_database));
+        setTitle(getString(R.string.about_collection));
 
         ActionBar actionbar = getActionBar();
         if (actionbar != null) {
@@ -38,7 +36,7 @@ public class DatabaseDetails extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        DatabaseInfos dbInfos = EncycloDatabase.getInstance().getInfos();
+        CollectionInfos dbInfos = Collection.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
         textView.setText(dbInfos.getName());
 
@@ -49,10 +47,10 @@ public class DatabaseDetails extends Activity {
         textView.setText(dbInfos.getVersion());
 
         textView = findViewById(R.id.textNbItems);
-        textView.setText(String.format(Locale.getDefault(), "%d", EncycloDatabase.getInstance().getNbItems()));
+        textView.setText(String.format(Locale.getDefault(), "%d", Collection.getInstance().getNbItems()));
 
         ListView lv = findViewById(R.id.propertiesList);
-        if (EncycloDatabase.getInstance().getNbProperties() > 0) {
+        if (Collection.getInstance().getNbProperties() > 0) {
             ArrayList<Map<String, String>> list = buildData();
             String[] from = {"name", "description"};
             int[] to = {android.R.id.text1, android.R.id.text2};
@@ -67,7 +65,7 @@ public class DatabaseDetails extends Activity {
 
     private ArrayList<Map<String, String>> buildData() {
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        List<Property> properties = EncycloDatabase.getInstance().getProperties();
+        List<Property> properties = Collection.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (Property property : properties) {
                 list.add(putData(property));

@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.Manifest;
 import android.app.ActionBar;
@@ -25,17 +25,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
-
+import com.avlweb.collectionviewer.adapter.HomeListAdapter;
+import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.encycloviewer.BuildConfig;
 import com.avlweb.encycloviewer.R;
-import com.avlweb.encycloviewer.adapter.HomeListAdapter;
-import com.avlweb.encycloviewer.model.DatabaseInfos;
-import com.avlweb.encycloviewer.model.EncycloDatabase;
-import com.avlweb.encycloviewer.util.xmlFactory;
+import com.avlweb.collectionviewer.util.xmlFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,10 +43,6 @@ import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
-import static com.avlweb.encycloviewer.ui.Settings.KEY_DATABASES_ROOT_LOCATION;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_HIDE_SAMPLE_DATABASE;
-import static com.avlweb.encycloviewer.ui.Settings.KEY_PREFS;
 
 public class Home extends BaseActivity implements HomeListAdapter.customButtonListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
@@ -89,11 +83,11 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             checkDefaultDatabase(defaultDir);
 
             // Get preferences
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
             // Get flag "Hide sample database"
-            boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
+            boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_DATABASE, false);
             // Get Databases Root location
-            databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
+            databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
 
             // Add databases found in databases root location
             getFilesRec(xmlfiles, databasesRootLocation, true);
@@ -136,10 +130,10 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             case R.id.menu_add:
                 final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog_new_something);
-                dialog.setTitle(getString(R.string.new_database));
+                dialog.setTitle(getString(R.string.new_collection));
 
                 TextView textView = dialog.findViewById(R.id.message);
-                textView.setText(R.string.message_new_database);
+                textView.setText(R.string.message_new_collection);
 
                 Button btnOK = dialog.findViewById(R.id.btn_ok);
                 Button btnCancel = dialog.findViewById(R.id.btn_cancel);
@@ -208,11 +202,11 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
 
     @Override
     public void onTextClickListener(int position, String path) {
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         database.clear();
         xmlFactory.readXMLFile(path);
         Toast.makeText(getApplicationContext(),
-                String.format(Locale.getDefault(), getString(R.string.database_loaded), path), Toast.LENGTH_SHORT).show();
+                String.format(Locale.getDefault(), getString(R.string.collection_loaded), path), Toast.LENGTH_SHORT).show();
         database.getInfos().setPath(new File(path).getParent());
         database.getInfos().setXmlPath(path);
 
@@ -222,23 +216,23 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
 
     private void addDatabase(String name) {
         // Initialize new database
-        EncycloDatabase database = EncycloDatabase.getInstance();
+        Collection database = Collection.getInstance();
         database.clear();
 
         // Set database infos
-        DatabaseInfos infos = new DatabaseInfos();
+        CollectionInfos infos = new CollectionInfos();
         infos.setName(name);
         infos.setVersion("1.0");
         database.setInfos(infos);
 
         // Generate database XML file in default root location
         // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         // Get Default External location
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
             // Get Databases Root location from preferences
-            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.getAbsolutePath());
+            String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getAbsolutePath());
             // Format DB name and directory name
             String dbName = name.toLowerCase().replace(" ", "_");
             String dbDirectory = name.toUpperCase().replace(" ", "_");
@@ -253,12 +247,12 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 xmlfiles.add(xmlPath);
                 // Write XML file
                 if (xmlFactory.writeXml()) {
-                    Toast.makeText(getApplicationContext(), R.string.database_successfully_created, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.collection_successfully_created, Toast.LENGTH_SHORT).show();
                     // Display activity to modify the database
-                    Intent intent = new Intent(this, DatabaseModify.class);
+                    Intent intent = new Intent(this, CollectionModify.class);
                     startActivity(intent);
                 } else
-                    Toast.makeText(getApplicationContext(), R.string.database_creation_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.collection_creation_error, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -298,20 +292,20 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         switch (item.getItemId()) {
             case R.id.menu_modify:
                 // Load database
-                EncycloDatabase database = EncycloDatabase.getInstance();
+                Collection database = Collection.getInstance();
                 database.clear();
                 xmlFactory.readXMLFile(this.selectedDatabase);
                 database.getInfos().setXmlPath(this.selectedDatabase);
                 database.getInfos().setPath(new File(this.selectedDatabase).getParent());
                 // Display activity to modify the database
-                Intent intent = new Intent(this, DatabaseModify.class);
+                Intent intent = new Intent(this, CollectionModify.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_delete:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
-                alertDialogBuilder.setMessage(R.string.warning_database_deletion);
+                alertDialogBuilder.setMessage(R.string.warning_collection_deletion);
                 alertDialogBuilder.setNegativeButton(getString(R.string.no),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -326,7 +320,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                                 File databaseDir = new File(selectedDatabase);
                                 if (deleteRecursive(databaseDir.getParentFile())) {
                                     removeDatabaseFromList(selectedDatabase);
-                                    Toast.makeText(getApplicationContext(), R.string.database_deletion_successful, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), R.string.collection_deletion_successful, Toast.LENGTH_SHORT).show();
                                 } else
                                     Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
                             }

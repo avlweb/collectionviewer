@@ -1,13 +1,13 @@
-package com.avlweb.encycloviewer.model;
+package com.avlweb.collectionviewer.model;
 
-public class DatabaseInfos {
+public class CollectionInfos {
     private String name;
     private String description;
     private String version;
     private String path;
     private String xmlPath;
 
-    public DatabaseInfos() {
+    public CollectionInfos() {
     }
 
     public void setName(String name) {

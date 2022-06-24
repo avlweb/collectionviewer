@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EncycloViewer</string>
+    <string name="app_name">CollectionViewer</string>
     <string name="menu_settings">Réglages</string>
-    <string name="title_activity_main">EncycloViewer</string>
+    <string name="title_activity_main">CollectionViewer</string>
     <string name="hello_world">Bonjour le monde !</string>
     <string name="title_activity_display_item">Vue</string>
     <string name="image_content">Contenu Image</string>
     <string name="menu_previous_element">Précédent</string>
     <string name="menu_next_element">Suivant</string>
     <string name="menu_details_element">Détails</string>
-    <string name="menu_open_database">Ouvrir Base de données</string>
+    <string name="menu_open_collection">Ouvrir Collection</string>
     <string name="title_activity_search">Rechercher</string>
     <string name="title_activity_settings">Réglages</string>
     <string name="search">Rechercher</string>
     <string name="clear_search">Effacer la recherche</string>
     <string name="_1_1">1/1</string>
-    <string name="about_database">Au sujet de la base</string>
+    <string name="about_collection">Au sujet de la collection</string>
     <string name="version">Version</string>
     <string name="settings">Réglages</string>
     <string name="language">Langue</string>
@@ -33,13 +33,13 @@
     <string name="appli_version">Nom : %1$s\nPaquet : %2$s\nVersion : %3$s\nDate : %4$s</string>
     <string name="not_available">Pas disponible</string>
     <string name="number_of_items">Nombre d\'éléments</string>
-    <string name="available_databases">Base de données disponibles</string>
+    <string name="available_collections">Collections disponibles</string>
     <string name="close">Close</string>
     <string name="settings_saved">Réglages sauvegardés !</string>
     <string name="clear_done">Recherche effacée !</string>
-    <string name="databases_root_location">Chemin par défaut des bases de données</string>
+    <string name="collections_root_location">Chemin par défaut des collections</string>
     <string name="default_root_location">Chemin par défaut</string>
-    <string name="hide_sample_database">Cacher la base d\'exemple</string>
+    <string name="hide_sample_collection">Cacher la collection d\'exemple</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="words_to_search">Mots à chercher séparés par des virgules</string>
     <string name="no">Non</string>
@@ -50,14 +50,14 @@
         <item>Gauche</item>
     </string-array>
     <string name="found_items">%1$d éléments trouvés</string>
-    <string name="search_in_database">Recherche dans la base</string>
+    <string name="search_in_collection">Recherche dans la collection</string>
     <string name="choose_font_size">Taille des caractères pour les descriptions</string>
     <string name="small">petit</string>
     <string name="normal">normal</string>
     <string name="big">gros</string>
     <string name="very_big">très gros</string>
     <string name="number_slash_number">%1$d/%2$d</string>
-    <string name="title_activity_database_details">Détails de la base</string>
+    <string name="title_activity_collection_details">Détails de la collection</string>
     <string name="name">Nom</string>
     <string name="description">Description</string>
     <string name="properties_list">Liste des propriétés</string>
@@ -65,24 +65,24 @@
     <string name="zoom">Zoom</string>
     <string name="modify">Modifier</string>
     <string name="informations">Informations</string>
-    <string name="successfully_saved">Base sauvegardée !</string>
+    <string name="successfully_saved">Collection sauvegardée !</string>
     <string name="problem_during_save">Il y a eu un problème lors de la sauvegarde !</string>
     <string name="property_name">Saisir le nom de la propriété</string>
     <string name="cancel">Annuler</string>
     <string name="property_description">Description de la propriété</string>
     <string name="add">Ajouter</string>
-    <string name="database_name">Nom de la base</string>
-    <string name="new_database">Nouvelle base de données</string>
+    <string name="collection_name">Nom de la collection</string>
+    <string name="new_collection">Nouvelle collection</string>
     <string name="new_property">Nouvelle propriété</string>
-    <string name="message_new_database">Une nouvelle base de donnée va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
-    <string name="database_successfully_created">Base créée avec succès.</string>
-    <string name="menu_database">Menu Base de données</string>
+    <string name="message_new_collection">Une nouvelle collection de donnée va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
+    <string name="collection_successfully_created">Collection créée avec succès.</string>
+    <string name="menu_collection">Menu Collection</string>
     <string name="delete">Supprimer</string>
-    <string name="title_activity_database_modify">Modifier la base</string>
-    <string name="database_deletion_successful">Base supprimée avec succès.</string>
+    <string name="title_activity_collection_modify">Modifier la collection</string>
+    <string name="collection_deletion_successful">Collection supprimée avec succès.</string>
     <string name="deletion_error">Une erreur s\'est produite durant la suppression !</string>
-    <string name="database_creation_error">Une erreur s\'est produite durant la création !</string>
-    <string name="warning_database_deletion">Voulez-vous réellement supprimer cette base ?</string>
+    <string name="collection_creation_error">Une erreur s\'est produite durant la création !</string>
+    <string name="warning_collection_deletion">Voulez-vous réellement supprimer cette collection ?</string>
     <string name="warning">Attention</string>
     <string name="title_activity_modify_item">Modifier</string>
     <string name="item_successfully_saved">Les changements ont été sauvegardés.</string>
@@ -91,9 +91,9 @@
     <string name="properties">Propriétés</string>
     <string name="add_item">Ajouter un élément</string>
     <string name="warning_item_deletion">Voulez-vous réellement supprimer cet élément ?</string>
-    <string name="database_is_empty">La base de données est vide !</string>
+    <string name="collection_is_empty">La collection est vide !</string>
     <string name="no_image_to_display">Pas d\'image à afficher !</string>
-    <string name="database_modify">Modification de la base</string>
+    <string name="collection_modify">Modification de la collection</string>
     <string name="no_properties_to_display">Pas de propriétés à afficher !</string>
     <string name="to_be_completed">A compléter</string>
     <string name="new_item">Nouvel élément</string>
@@ -107,6 +107,6 @@
     <string name="help">Aide</string>
     <string name="hide_help_button">Cacher le bouton d\'aide</string>
     <string name="reduce_images_button">Réduire la taille des images</string>
-    <string name="database_loaded">Base de données %1$s chargée.</string>
+    <string name="collection_loaded">Collection %1$s chargée.</string>
     <string name="must_contains_alphabet">Ne peut contenir que des caractères alphabétiques et des tirets</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.avlweb.encycloviewer.ui;
+package com.avlweb.collectionviewer.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -18,10 +18,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.NavUtils;
 import androidx.documentfile.provider.DocumentFile;
-
 import com.avlweb.encycloviewer.R;
 
 import java.io.File;
