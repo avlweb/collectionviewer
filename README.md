@@ -6,7 +6,7 @@
 
 Simple application to manage your collection of ... what you want.
 
-For instance, you have a collection of Pokemon cards and you want to show it to your friends. With CollectionViewer, you can show it to us. You can also list all the cards you have and check those you are missing. This can be very convenient if you want to trade cards !
+For instance, you have a collection of Pokemon cards and you want to show it to your friends. With CollectionViewer, you can list all the cards you have and check those you are missing. This can be very convenient if you want to trade cards !
 
 A sample of collection is provided with this application. You have to create your own.
 
