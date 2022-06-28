@@ -18,10 +18,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionItem;
-import com.avlweb.collectionviewer.model.CollectionProperty;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 
 import java.util.List;
 import java.util.Locale;
@@ -46,17 +46,16 @@ public class SearchInCollection extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        CollectionModel database = CollectionModel.getInstance();
-        List<CollectionProperty> properties = database.getProperties();
+        CollectionModel collectionModel = CollectionModel.getInstance();
+        List<CollectionProperty> properties = collectionModel.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
-            // Check if it is not the first time we reach the search view for this database
-            if ((nbProperties == 0) || (nbProperties != database.getNbProperties()) || (!dbName.equals(database.getInfos().getName()))) {
-                // Save data about current database
-                dbName = database.getInfos().getName();
-                nbProperties = database.getNbProperties();
-                originalPropertiesToSearch = null;
+            // Check if it is not the first time we display the search view for this collection
+            if ((nbProperties == 0) || (nbProperties != collectionModel.getNbProperties()) || (!dbName.equals(collectionModel.getInfos().getName()))) {
+                // Save data about current collection
+                dbName = collectionModel.getInfos().getName();
+                nbProperties = collectionModel.getNbProperties();
                 originalPropertiesToSearch = new String[nbProperties];
                 originalNameToSearch = null;
                 originalDescriptionToSearch = null;
@@ -102,11 +101,10 @@ public class SearchInCollection extends Activity {
         }
     }
 
-    public void searchInDatabase(View view) {
+    public void searchInCollection(View view) {
         String[][] stringsToSearch = new String[nbProperties][];
         String[] namesToSearch = null;
         String[] descriptionsToSearch = null;
-        CollectionModel database = CollectionModel.getInstance();
         int nbStringsToMatch = 0;
 
         // Name
@@ -143,7 +141,7 @@ public class SearchInCollection extends Activity {
         if (nbStringsToMatch == 0)
             return;
 
-        List<CollectionItem> items = database.getItems();
+        List<CollectionItem> items = CollectionModel.getInstance().getItems();
         if ((items != null) && (items.size() > 0)) {
             for (CollectionItem item : items)
                 item.setNotSelected();

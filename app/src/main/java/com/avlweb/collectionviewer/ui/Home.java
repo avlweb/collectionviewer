@@ -25,17 +25,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
-
 import com.avlweb.collectionviewer.BuildConfig;
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.adapter.HomeListAdapter;
-import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.util.xmlFactory;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.util.XmlFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,35 +74,36 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
 
         displayHelpButton();
 
-        // Build list of available databases
-        // Check that default database is present otherwise we copy it to default storage
+        // Build list of available collections and check that default collection is present otherwise we copy it to default storage
         File defaultPath = this.getExternalFilesDir(null);
-        String databasesRootLocation = null;
         if (defaultPath != null) {
+            // Build default collection path
             File defaultDir = new File(defaultPath.getAbsolutePath() + File.separator + "Default");
-            checkDefaultDatabase(defaultDir);
+            // Copy default collection if needed
+            checkDefaultCollection(defaultDir);
 
             // Get preferences
             SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
-            // Get flag "Hide sample database"
-            boolean hideSampledatabase = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_COLLECTION, false);
-            // Get Databases Root location
-            databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getPath());
+            // Get flag "Hide sample collection"
+            boolean hideSampleCollection = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_COLLECTION, false);
+            // Get Collections Root location
+            String collectionsRootLocation = pref.getString(Settings.KEY_COLLECTIONS_ROOT_LOCATION, defaultPath.getPath());
 
-            // Add databases found in databases root location
-            getFilesRec(availableCollections, databasesRootLocation, true);
-            // Add default database if not deactivated or if there are no other database
-            if ((availableCollections.size() == 0) || !hideSampledatabase)
-                getFilesRec(availableCollections, defaultDir.getAbsolutePath(), false);
+            // Add collections found in root location
+            getFilesRecursive(availableCollections, collectionsRootLocation, true);
+
+            // Add default collection if not deactivated or if there are no other collection already created
+            if ((availableCollections.size() == 0) || !hideSampleCollection)
+                getFilesRecursive(availableCollections, defaultDir.getAbsolutePath(), false);
         }
 
         // Get scrollbar position from settings
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
 
-        // Populate list of databases
+        // Populate list of collections
         ListView lv = findViewById(R.id.listView);
-        adapter = new HomeListAdapter(this, availableCollections, databasesRootLocation, scrollbarPosition);
+        adapter = new HomeListAdapter(this, availableCollections, scrollbarPosition);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
         registerForContextMenu(lv);
@@ -153,7 +152,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                             return;
                         }
                         dialog.dismiss();
-                        addDatabase(name);
+                        addCollection(name);
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -196,61 +195,55 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     }
 
     @Override
-    public void onButtonClickListener(View view, int position, CollectionInfos value) {
-        this.selectedCollection = value;
+    public void onButtonClickListener(View view, CollectionInfos infos) {
+        this.selectedCollection = infos;
         openContextMenu(view);
     }
 
     @Override
-    public void onTextClickListener(int position, CollectionInfos infos) {
-        CollectionModel database = CollectionModel.getInstance();
-        database.clear();
-        xmlFactory.readXMLFile(infos.getXmlPath());
+    public void onTextClickListener(CollectionInfos infos) {
+        // Load selected collection
+        XmlFactory.readXMLFile(infos.getXmlPath());
         Toast.makeText(getApplicationContext(),
                 String.format(Locale.getDefault(), getString(R.string.collection_loaded), infos), Toast.LENGTH_SHORT).show();
-        //database.getInfos().setPath(new File(infos).getParent());
-        //database.getInfos().setXmlPath(infos);
-
         Intent intent = new Intent(this, MainList.class);
         startActivity(intent);
     }
 
-    private void addDatabase(String name) {
-        // Initialize new database
-        CollectionModel database = CollectionModel.getInstance();
-        database.clear();
+    private void addCollection(String name) {
+        // Initialize new collection
+        CollectionModel collectionModel = CollectionModel.getInstance();
+        collectionModel.clear();
 
-        // Set database infos
+        // Set collection infos
         CollectionInfos infos = new CollectionInfos();
         infos.setName(name);
         infos.setVersion("1.0");
-        database.setInfos(infos);
+        collectionModel.setInfos(infos);
 
-        // Generate database XML file in default root location
-        // Get preferences
+        // Generate collection XML file in default root location
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         // Get Default External location
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
-            // Get Databases Root location from preferences
-            String databasesRootLocation = pref.getString(Settings.KEY_DATABASES_ROOT_LOCATION, defaultPath.getAbsolutePath());
+            // Get Collections Root location from preferences
+            String collectionsRootLocation = pref.getString(Settings.KEY_COLLECTIONS_ROOT_LOCATION, defaultPath.getAbsolutePath());
             // Format DB name and directory name
             String dbName = name.toLowerCase().replace(" ", "_");
             String dbDirectory = name.toUpperCase().replace(" ", "_");
-            String dbPath = databasesRootLocation + File.separatorChar + dbDirectory;
-            // Create new database directory
+            String dbPath = collectionsRootLocation + File.separatorChar + dbDirectory;
+            // Create new collection directory
             File defaultImagesPath = new File(dbPath, "images");
             if (defaultImagesPath.mkdirs()) {
                 String xmlPath = dbPath + File.separatorChar + dbName + ".xml";
-                database.getInfos().setXmlPath(xmlPath);
-                database.getInfos().setPath(new File(xmlPath).getParent());
                 // Add new XML file to list to refresh adapter
                 infos.setXmlPath(xmlPath);
+                infos.setPath(new File(xmlPath).getParent());
                 availableCollections.add(infos);
                 // Write XML file
-                if (xmlFactory.writeXml()) {
+                if (XmlFactory.writeXml()) {
                     Toast.makeText(getApplicationContext(), R.string.collection_successfully_created, Toast.LENGTH_SHORT).show();
-                    // Display activity to modify the database
+                    // Display activity to modify the collection
                     Intent intent = new Intent(this, CollectionModify.class);
                     startActivity(intent);
                 } else
@@ -293,17 +286,14 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_modify:
-                // Load database
-                CollectionModel database = CollectionModel.getInstance();
-                database.clear();
-                xmlFactory.readXMLFile(this.selectedCollection.getXmlPath());
-                //database.getInfos().setXmlPath(this.selectedCollection);
-                //database.getInfos().setPath(new File(this.selectedCollection).getParent());
-                // Display activity to modify the database
+                // Load selected collection
+                XmlFactory.readXMLFile(this.selectedCollection.getXmlPath());
+                // Display activity to modify the collection
                 Intent intent = new Intent(this, CollectionModify.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_delete:
+                // Display dialog to ask user to confirm the deletion
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
@@ -319,9 +309,10 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                File databaseDir = new File(selectedCollection.getXmlPath());
-                                if (deleteRecursive(databaseDir.getParentFile())) {
-                                    removeDatabaseFromList(selectedCollection);
+                                // Delete the collection
+                                File collectionPath = new File(selectedCollection.getXmlPath());
+                                if (deleteRecursive(collectionPath.getParentFile())) {
+                                    removeCollectionFromList(selectedCollection);
                                     Toast.makeText(getApplicationContext(), R.string.collection_deletion_successful, Toast.LENGTH_SHORT).show();
                                 } else
                                     Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
@@ -335,7 +326,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         }
     }
 
-    private void removeDatabaseFromList(CollectionInfos infos) {
+    private void removeCollectionFromList(CollectionInfos infos) {
         if (infos != null) {
             availableCollections.remove(infos);
             adapter.remove(infos);
@@ -361,24 +352,27 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
     }
 
-    private void checkDefaultDatabase(File defaultPath) {
+    private void checkDefaultCollection(File defaultPath) {
         Log.d("HOME", "Default dir = " + defaultPath.getAbsolutePath());
         if (!defaultPath.exists()) {
             Log.d("HOME", "Default dir does not exists");
-            File defaultImages = new File(defaultPath, "images");
-            boolean mkdirResult = defaultImages.mkdirs();
+            // Create directory for images
+            File defaultImagePath = new File(defaultPath, "images");
+            boolean mkdirResult = defaultImagePath.mkdirs();
             Log.d("HOME", "mkdir result = " + mkdirResult);
             AssetManager assetManager = getAssets();
             try {
+                // Copy all files from asset "Default" directory
                 String[] assets = assetManager.list("Default");
                 if (assets == null)
                     return;
                 for (String asset : assets) {
                     Log.d("HOME", "asset = " + asset);
+                    // Destination path differs whatever it is an image or the xml file
                     if (asset.endsWith(MainList.SAMPLE_COLLECTION_XML)) {
                         copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
                     } else {
-                        copyFileFromAssets(assetManager, asset, defaultImages.getAbsolutePath());
+                        copyFileFromAssets(assetManager, asset, defaultImagePath.getAbsolutePath());
                     }
                 }
             } catch (IOException e) {
@@ -402,7 +396,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             out_chan = out_stream.getChannel();
             in_chan.transferTo(in_afd.getStartOffset(), in_afd.getLength(), out_chan);
         } catch (IOException ioe) {
-            Log.w("HOME", "Failed to copy file '" + file2Copy + "' to external storage : " + ioe.toString());
+            Log.w("HOME", "Failed to copy file '" + file2Copy + "' to external storage : " + ioe);
         } finally {
             try {
                 if (in_chan != null) {
@@ -417,7 +411,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         }
     }
 
-    private void getFilesRec(ArrayList<CollectionInfos> files, String root, boolean skipDefault) {
+    private void getFilesRecursive(ArrayList<CollectionInfos> files, String root, boolean skipDefault) {
         File f = new File(root);
         File[] listFiles = f.listFiles();
 
@@ -425,12 +419,14 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             for (File listFile : listFiles) {
                 String fname = listFile.toString();
                 if (listFile.isDirectory())
-                    getFilesRec(files, fname, skipDefault);
+                    getFilesRecursive(files, fname, skipDefault);
                 else if (fname.endsWith(".xml")) {
                     if (fname.endsWith(MainList.SAMPLE_COLLECTION_XML) && skipDefault)
                         continue;
-                    CollectionInfos infos = xmlFactory.readCollectionName(fname);
+                    // Read XML file to get collection infos
+                    CollectionInfos infos = XmlFactory.readCollectionInfos(fname);
                     infos.setXmlPath(fname);
+                    infos.setPath(listFile.getParent());
                     files.add(infos);
                 }
             }

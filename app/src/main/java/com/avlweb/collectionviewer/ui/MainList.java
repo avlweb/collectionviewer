@@ -20,11 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.adapter.MainListAdapter;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionItem;
-import com.avlweb.collectionviewer.util.xmlFactory;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.adapter.MainListAdapter;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.util.XmlFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     private int position = 0;
     private int maxPosition = 0;
     private MainListAdapter adapter;
-    private boolean databaseModified = false;
+    private boolean collectionIsModified = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,8 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Save all changes to XML file if needed
-                if (databaseModified) {
-                    if (xmlFactory.writeXml())
+                if (collectionIsModified) {
+                    if (XmlFactory.writeXml())
                         Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
@@ -139,7 +139,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_modify:
-                databaseModified = true;
+                collectionIsModified = true;
                 Intent intent = new Intent(this, ItemModify.class);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
@@ -259,20 +259,20 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     private void addItem(String name) {
-        CollectionModel database = CollectionModel.getInstance();
+        CollectionModel collectionModel = CollectionModel.getInstance();
         // Create new item
         CollectionItem item = new CollectionItem();
         item.setName(name);
-        item.setPositionInSelectedList(database.getNbItems());
-        // Add item to database
-        database.addItem(item);
-        databaseModified = true;
+        item.setPositionInSelectedList(collectionModel.getNbItems());
+        // Add item to collection
+        collectionModel.addItem(item);
+        collectionIsModified = true;
         // Add item to adapter
         adapter.add(item);
         // Hide or not listView
         hideOrNotListView();
         // Call modification page
-        this.position = database.getNbItems() - 1;
+        this.position = collectionModel.getNbItems() - 1;
         this.maxPosition++;
         Intent intent = new Intent(this, ItemModify.class);
         intent.putExtra("position", position);
@@ -287,7 +287,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         hideOrNotListView();
         // Delete item from database
         items.remove(this.position);
-        databaseModified = true;
+        collectionIsModified = true;
         Toast.makeText(getApplicationContext(), R.string.item_deletion_successful, Toast.LENGTH_SHORT).show();
     }
 

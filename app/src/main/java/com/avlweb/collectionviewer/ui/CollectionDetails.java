@@ -9,10 +9,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.model.CollectionProperty;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class CollectionDetails extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_database_details);
+        setContentView(R.layout.activity_collection_details);
 
         setTitle(getString(R.string.about_collection));
 
@@ -36,21 +36,22 @@ public class CollectionDetails extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
+        CollectionModel collectionModel = CollectionModel.getInstance();
+        CollectionInfos infos = collectionModel.getInfos();
         TextView textView = findViewById(R.id.textName);
-        textView.setText(dbInfos.getName());
+        textView.setText(infos.getName());
 
         textView = findViewById(R.id.textDescription);
-        textView.setText(dbInfos.getDescription());
+        textView.setText(infos.getDescription());
 
         textView = findViewById(R.id.textVersion);
-        textView.setText(dbInfos.getVersion());
+        textView.setText(infos.getVersion());
 
         textView = findViewById(R.id.textNbItems);
-        textView.setText(String.format(Locale.getDefault(), "%d", CollectionModel.getInstance().getNbItems()));
+        textView.setText(String.format(Locale.getDefault(), "%d", collectionModel.getNbItems()));
 
         ListView lv = findViewById(R.id.propertiesList);
-        if (CollectionModel.getInstance().getNbProperties() > 0) {
+        if (collectionModel.getNbProperties() > 0) {
             ArrayList<Map<String, String>> list = buildData();
             String[] from = {"name", "description"};
             int[] to = {android.R.id.text1, android.R.id.text2};

@@ -74,7 +74,7 @@
                 android:background="@color/dark_blue"
                 android:contentDescription="@string/search"
                 android:gravity="center"
-                android:onClick="searchInDatabase"
+                android:onClick="searchInCollection"
                 android:padding="10dp"
                 android:text="@string/search"
                 android:textColor="@android:color/white" />

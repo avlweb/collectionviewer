@@ -28,10 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionItem;
-import com.avlweb.collectionviewer.model.CollectionProperty;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,7 +46,7 @@ public class ItemModify extends BaseActivity {
     private int position;
     private CollectionItem currentItem = null;
     private boolean imageZoomed;
-    private final CollectionModel collection = CollectionModel.getInstance();
+    private final CollectionModel collectionModel = CollectionModel.getInstance();
     private int currentImageIndex = 0;
 
     @Override
@@ -67,7 +67,7 @@ public class ItemModify extends BaseActivity {
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
-        List<CollectionProperty> properties = collection.getProperties();
+        List<CollectionProperty> properties = collectionModel.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             for (CollectionProperty description : properties) {
@@ -175,14 +175,14 @@ public class ItemModify extends BaseActivity {
             if (resultData != null) {
                 Uri uri = resultData.getData();
                 if (uri != null) {
-                    File databasePath = new File(collection.getInfos().getPath());
-                    Log.d("ItemModify", "database path = " + databasePath.getAbsolutePath());
-                    String finalPath = databasePath.getAbsolutePath() + File.separator + "images";
-                    Log.d("ItemModify", "images path = " + databasePath.getAbsolutePath());
+                    File collectionPath = new File(collectionModel.getInfos().getPath());
+                    Log.d("ItemModify", "collection path = " + collectionPath.getAbsolutePath());
+                    String finalPath = collectionPath.getAbsolutePath() + File.separator + "images";
+                    Log.d("ItemModify", "images path = " + collectionPath.getAbsolutePath());
                     String uriPath = uri.getPath();
                     File externalPath = Environment.getExternalStorageDirectory();
                     if ((uriPath != null) && (uriPath.length() > 0) && (externalPath != null)) {
-                        Log.d("SETTINGS", "default path = " + databasePath.getAbsolutePath());
+                        Log.d("SETTINGS", "default path = " + collectionPath.getAbsolutePath());
                         Log.d("SETTINGS", "uri path = " + uriPath);
                         String[] tmp = uriPath.split("/");
                         String imageName = tmp[tmp.length - 1];
@@ -202,7 +202,7 @@ public class ItemModify extends BaseActivity {
                         }
                         Log.d("ItemModify", "source path = " + sourcePath);
                         Log.d("ItemModify", "final path = " + finalPath);
-                        // Copy image to database images folder
+                        // Copy image to collection images folder
                         copyImage(sourcePath, finalPath);
                         // Save path of image into item
                         currentItem.addImagePath("images" + File.separator + imageName);
@@ -282,7 +282,7 @@ public class ItemModify extends BaseActivity {
         editText = findViewById(R.id.textDescription);
         currentItem.setDescription(editText.getText().toString());
         // Save properties
-        List<CollectionProperty> properties = collection.getProperties();
+        List<CollectionProperty> properties = collectionModel.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             for (CollectionProperty description : properties) {
                 editText = findViewById(description.getId());
@@ -298,7 +298,7 @@ public class ItemModify extends BaseActivity {
     private void displayItem() {
         currentItem = null;
 
-        List<CollectionItem> items = collection.getItems();
+        List<CollectionItem> items = collectionModel.getItems();
         if ((items != null) && (items.size() > 0)) {
             for (CollectionItem item : items) {
                 if (item.getPositionInSelectedList() == this.position) {
@@ -334,7 +334,7 @@ public class ItemModify extends BaseActivity {
             editText.setText(currentItem.getDescription());
         }
         // Display properties if exists
-        List<CollectionProperty> properties = collection.getProperties();
+        List<CollectionProperty> properties = collectionModel.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int idx = 0;
             for (CollectionProperty description : properties) {
@@ -370,7 +370,7 @@ public class ItemModify extends BaseActivity {
         if (imagePath == null)
             return;
 
-        String absolutePath = collection.getInfos().getPath() + File.separatorChar + imagePath;
+        String absolutePath = collectionModel.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {

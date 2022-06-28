@@ -42,7 +42,7 @@ public abstract class BaseActivity extends Activity {
         if (this instanceof Home) {
             intent.putExtra("origin", Help.HELP_HOME);
         } else if (this instanceof CollectionModify) {
-            intent.putExtra("origin", Help.HELP_DATABASE_MODIFY);
+            intent.putExtra("origin", Help.HELP_COLLECTION_MODIFY);
         } else if (this instanceof ItemDisplay) {
             intent.putExtra("origin", Help.HELP_ITEM_DISPLAY);
         } else if (this instanceof ItemModify) {

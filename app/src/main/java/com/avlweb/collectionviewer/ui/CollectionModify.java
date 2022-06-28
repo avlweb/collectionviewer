@@ -21,11 +21,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.model.CollectionProperty;
-import com.avlweb.collectionviewer.util.xmlFactory;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.util.XmlFactory;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class CollectionModify extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_database_modify);
+        setContentView(R.layout.activity_collection_modify);
 
         setTitle(getString(R.string.collection_modify));
 
@@ -67,7 +67,7 @@ public class CollectionModify extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_database_details, menu);
+        getMenuInflater().inflate(R.menu.activity_collection_details, menu);
         return true;
     }
 
@@ -88,27 +88,27 @@ public class CollectionModify extends BaseActivity {
 
     private void saveDatas() {
         // Get new datas
-        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
+        CollectionInfos infos = CollectionModel.getInstance().getInfos();
         EditText editText = findViewById(R.id.textName);
         if (editText.getText().length() == 0) {
             editText.setError(getString(R.string.must_not_be_empty));
             return;
         }
-        dbInfos.setName(editText.getText().toString());
+        infos.setName(editText.getText().toString());
 
         editText = findViewById(R.id.textDescription);
         if (editText.getText().length() == 0) {
             editText.setError(getString(R.string.must_not_be_empty));
             return;
         }
-        dbInfos.setDescription(editText.getText().toString());
+        infos.setDescription(editText.getText().toString());
 
         editText = findViewById(R.id.textVersion);
         if (editText.getText().length() == 0) {
             editText.setError(getString(R.string.must_not_be_empty));
             return;
         }
-        dbInfos.setVersion(editText.getText().toString());
+        infos.setVersion(editText.getText().toString());
 
         List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
@@ -119,7 +119,7 @@ public class CollectionModify extends BaseActivity {
         }
 
         // Finally write datas to XML file
-        if (xmlFactory.writeXml())
+        if (XmlFactory.writeXml())
             Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();

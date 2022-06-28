@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class Settings extends Activity {
 
     public static final String KEY_PREFS = "CollectionViewerPreferences";
-    public static final String KEY_DATABASES_ROOT_LOCATION = "key_root_location";
+    public static final String KEY_COLLECTIONS_ROOT_LOCATION = "key_root_location";
     public static final String KEY_HIDE_SAMPLE_COLLECTION = "key_hide_sample";
     public static final String KEY_HIDE_HELP_BUTTON = "key_hide_help";
     public static final String KEY_REDUCE_SIZE_OF_IMAGES = "key_reduce_size_of_images";
@@ -52,10 +52,10 @@ public class Settings extends Activity {
 
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Hide sample database"
-        boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_COLLECTION, false);
+        // Get flag "Hide sample collection"
+        boolean hideSampleCollection = pref.getBoolean(KEY_HIDE_SAMPLE_COLLECTION, false);
         Switch hide = findViewById(R.id.switch_hide);
-        hide.setChecked(hideSampledatabase);
+        hide.setChecked(hideSampleCollection);
         // Get flag "Hide help button"
         boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
         Switch help = findViewById(R.id.switch_help);
@@ -64,12 +64,12 @@ public class Settings extends Activity {
         boolean reduceImagesSizeButton = pref.getBoolean(KEY_REDUCE_SIZE_OF_IMAGES, false);
         Switch reduce = findViewById(R.id.switch_reduce_images);
         reduce.setChecked(reduceImagesSizeButton);
-        // Get Databases Root location
+        // Get Collections Root location
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
-            String databasesRootLocation = pref.getString(KEY_DATABASES_ROOT_LOCATION, defaultPath.toString());
+            String collectionsRootLocation = pref.getString(KEY_COLLECTIONS_ROOT_LOCATION, defaultPath.toString());
             TextView textView = findViewById(R.id.EditTextRootLocation);
-            textView.setText(databasesRootLocation);
+            textView.setText(collectionsRootLocation);
         }
         // Get Scrollbar position
         int scrollbar = pref.getInt(KEY_SCROLLBAR, 0);
@@ -147,15 +147,15 @@ public class Settings extends Activity {
     public void SaveSettings(View view) {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        // Databases Root location
+        // Collections Root location
         EditText rootLocation = findViewById(R.id.EditTextRootLocation);
-        editor.putString(KEY_DATABASES_ROOT_LOCATION, rootLocation.getText().toString());
+        editor.putString(KEY_COLLECTIONS_ROOT_LOCATION, rootLocation.getText().toString());
         // Scrollbar position
         Spinner spinner = findViewById(R.id.spinnerScrollbar);
         editor.putInt(KEY_SCROLLBAR, spinner.getSelectedItemPosition());
         // Font size
         editor.putInt(KEY_FONT_SIZE, fontSize);
-        // Hide sample database
+        // Hide sample collection
         Switch hide = findViewById(R.id.switch_hide);
         editor.putBoolean(KEY_HIDE_SAMPLE_COLLECTION, hide.isChecked());
         // Hide help button

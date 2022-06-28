@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.ui.MainList;
@@ -17,22 +16,21 @@ import java.util.ArrayList;
 public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
     private customButtonListener customListener;
     private final Context context;
-    private final String databasesRootLocation;
     private final int scrollbarPosition;
 
     public interface customButtonListener {
-        void onButtonClickListener(View view, int position, CollectionInfos value);
-        void onTextClickListener(int position, CollectionInfos value);
+        void onButtonClickListener(View view, CollectionInfos infos);
+
+        void onTextClickListener(CollectionInfos infos);
     }
 
     public void setCustomButtonListener(customButtonListener listener) {
         this.customListener = listener;
     }
 
-    public HomeListAdapter(Context context, ArrayList<CollectionInfos> infos, String location, int scrollbarPosition) {
+    public HomeListAdapter(Context context, ArrayList<CollectionInfos> infos, int scrollbarPosition) {
         super(context, R.layout.my_main_list, infos);
         this.context = context;
-        this.databasesRootLocation = location;
         this.scrollbarPosition = scrollbarPosition;
     }
 
@@ -52,23 +50,21 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final CollectionInfos temp = getItem(position);
-        if (temp.getName().equals(MainList.SAMPLE_COLLECTION_NAME)) {
-            // Menu is disabled because sample database is read only
+        final CollectionInfos infos = getItem(position);
+        // Menu is disabled because sample collection is read only
+        if (infos.getName().equals(MainList.SAMPLE_COLLECTION_NAME)) {
             viewHolder.button.setEnabled(false);
-            viewHolder.text.setText(MainList.SAMPLE_COLLECTION_NAME);
+            viewHolder.button.setVisibility(View.INVISIBLE);
         } else {
             viewHolder.button.setEnabled(true);
-            if ((this.databasesRootLocation != null) && (temp.getName().startsWith(this.databasesRootLocation)))
-                viewHolder.text.setText(temp.getName().substring(this.databasesRootLocation.length()));
-            else
-                viewHolder.text.setText(temp.getName());
+            viewHolder.button.setVisibility(View.VISIBLE);
         }
+        viewHolder.text.setText(infos.getName());
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (customListener != null) {
-                    customListener.onTextClickListener(position, temp);
+                    customListener.onTextClickListener(infos);
                 }
             }
         });
@@ -77,7 +73,7 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
             @Override
             public void onClick(View v) {
                 if (customListener != null) {
-                    customListener.onButtonClickListener(finalConvertView, position, temp);
+                    customListener.onButtonClickListener(finalConvertView, infos);
                 }
             }
         });

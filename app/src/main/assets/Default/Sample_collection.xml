@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database>
+<collection>
     <content>
         <name>My Playing Cards</name>
         <description>Sample collection to show how CollectionViewer works ! This collection is a classical playing deck of cards.</description>
@@ -381,4 +381,4 @@
             <img>images/card_back_blue_and_brown.png</img>
         </item>
     </items>
-</database>
+</collection>

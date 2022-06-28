@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionItem;
 
 import java.util.ArrayList;
 import java.util.Collections;

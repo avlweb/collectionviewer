@@ -18,10 +18,10 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.avlweb.collectionviewer.model.CollectionModel;
-import com.avlweb.collectionviewer.model.CollectionItem;
-import com.avlweb.collectionviewer.model.CollectionProperty;
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 
 import java.io.File;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ItemDisplay extends BaseActivity {
     private boolean detailsOpen = false;
     private CollectionItem currentItem = null;
     private boolean imageZoomed;
-    private final CollectionModel collection = CollectionModel.getInstance();
+    private final CollectionModel collectionModel = CollectionModel.getInstance();
     private int imgIdx = 0;
     private int maxPosition;
 
@@ -178,9 +178,9 @@ public class ItemDisplay extends BaseActivity {
     }
 
     private void displayElement() {
-        currentItem = collection.getItem(this.position);
+        currentItem = collectionModel.getItem(this.position);
 
-        for (CollectionItem item : collection.getItems()) {
+        for (CollectionItem item : collectionModel.getItems()) {
             if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
@@ -209,7 +209,7 @@ public class ItemDisplay extends BaseActivity {
         }
 
         // Format details string
-        List<CollectionProperty> properties = collection.getProperties();
+        List<CollectionProperty> properties = collectionModel.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int size = properties.size();
             StringBuilder tmp = new StringBuilder();
@@ -249,7 +249,7 @@ public class ItemDisplay extends BaseActivity {
             return;
         }
 
-        String absolutePath = collection.getInfos().getPath() + File.separatorChar + imagePath;
+        String absolutePath = collectionModel.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");
         File imgFile = new File(absolutePath);
         if (imgFile.exists()) {

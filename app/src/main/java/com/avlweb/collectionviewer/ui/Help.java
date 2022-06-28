@@ -24,7 +24,7 @@ public class Help extends Activity {
     private TextView[] dots = new TextView[5];
     public static final int HELP_HOME = 0;
     public static final int HELP_MAINLIST = 1;
-    public static final int HELP_DATABASE_MODIFY = 2;
+    public static final int HELP_COLLECTION_MODIFY = 2;
     public static final int HELP_ITEM_DISPLAY = 3;
     public static final int HELP_ITEM_MODIFY = 4;
 
@@ -115,8 +115,8 @@ public class Help extends Activity {
                     case HELP_MAINLIST:
                         imageView.setImageResource(R.drawable.help_fr_mainlist);
                         break;
-                    case HELP_DATABASE_MODIFY:
-                        imageView.setImageResource(R.drawable.help_fr_database_modify);
+                    case HELP_COLLECTION_MODIFY:
+                        imageView.setImageResource(R.drawable.help_fr_collection_modify);
                         break;
                     case HELP_ITEM_DISPLAY:
                         imageView.setImageResource(R.drawable.help_fr_item_display);
@@ -133,8 +133,8 @@ public class Help extends Activity {
                     case HELP_MAINLIST:
                         imageView.setImageResource(R.drawable.help_en_mainlist);
                         break;
-                    case HELP_DATABASE_MODIFY:
-                        imageView.setImageResource(R.drawable.help_en_database_modify);
+                    case HELP_COLLECTION_MODIFY:
+                        imageView.setImageResource(R.drawable.help_en_collection_modify);
                         break;
                     case HELP_ITEM_DISPLAY:
                         imageView.setImageResource(R.drawable.help_en_item_display);

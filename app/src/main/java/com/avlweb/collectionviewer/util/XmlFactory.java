@@ -1,10 +1,11 @@
 package com.avlweb.collectionviewer.util;
 
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
-import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionProperty;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -17,11 +18,12 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.List;
 
-public class xmlFactory {
+public class XmlFactory {
     private static final String ns = null;
 
     public static void readXMLFile(String path) {
-        CollectionModel collection = CollectionModel.getInstance();
+        CollectionModel collectionModel = CollectionModel.getInstance();
+        collectionModel.clear();
         FileInputStream fin = null;
         InputStreamReader isr = null;
         CollectionItem item = null;
@@ -137,17 +139,17 @@ public class xmlFactory {
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
-                        collection.setInfos(dbInfos);
+                        collectionModel.setInfos(dbInfos);
                         caseContent = false;
                     } else if (strNode.equals("properties")) {
                         caseProperties = false;
                     } else if (caseProperties && (strNode.equals("property"))) {
-                        collection.addProperty(property);
+                        collectionModel.addProperty(property);
                         caseProperty = false;
                     } else if (strNode.equals("items")) {
                         caseItems = false;
                     } else if (caseItems && (strNode.equals("item"))) {
-                        collection.addItem(item);
+                        collectionModel.addItem(item);
                         caseItem = false;
                     }
                     type = 0;
@@ -169,9 +171,11 @@ public class xmlFactory {
                 e.printStackTrace();
             }
         }
+        String result = JsonFactory.writeJsonFile();
+        Log.d("XML_FACTORY", "JSON : " + result);
     }
 
-    public static CollectionInfos readCollectionName(String path) {
+    public static CollectionInfos readCollectionInfos(String path) {
         FileInputStream fin = null;
         InputStreamReader isr = null;
         CollectionInfos infos = null;
@@ -242,14 +246,15 @@ public class xmlFactory {
                 e.printStackTrace();
             }
         }
+
         return infos;
     }
 
     public static boolean writeXml() {
 
-        CollectionModel database = CollectionModel.getInstance();
+        CollectionModel collectionModel = CollectionModel.getInstance();
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getXmlPath());
+            FileOutputStream fileOutputStream = new FileOutputStream(collectionModel.getInfos().getXmlPath());
             XmlSerializer xmlSerializer = Xml.newSerializer();
             xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             StringWriter writer = new StringWriter();
@@ -258,9 +263,9 @@ public class xmlFactory {
             xmlSerializer.startDocument("UTF-8", true);
             xmlSerializer.startTag(ns, "collection");
 
-            insertDatabaseInfos(xmlSerializer, database.getInfos());
-            insertProperties(xmlSerializer, database.getProperties());
-            insertItems(xmlSerializer, database.getItems());
+            insertInfos(xmlSerializer, collectionModel.getInfos());
+            insertProperties(xmlSerializer, collectionModel.getProperties());
+            insertItems(xmlSerializer, collectionModel.getItems());
 
             xmlSerializer.endTag(ns, "collection");
             xmlSerializer.endDocument();
@@ -275,10 +280,11 @@ public class xmlFactory {
             e.printStackTrace();
             return false;
         }
+
         return true;
     }
 
-    private static void insertDatabaseInfos(XmlSerializer xmlSerializer, CollectionInfos dbInfos) throws IOException {
+    private static void insertInfos(XmlSerializer xmlSerializer, CollectionInfos dbInfos) throws IOException {
         xmlSerializer.startTag(ns, "content");
 
         xmlSerializer.startTag(ns, "name");
