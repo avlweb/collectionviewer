@@ -3,7 +3,6 @@
     <string name="app_name">CollectionViewer</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">CollectionViewer</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_display_item">View</string>
     <string name="image_content">Image Content</string>
     <string name="menu_previous_element">Previous</string>
@@ -30,7 +29,7 @@
     <string name="view">View</string>
     <string name="warning_points">Warning :</string>
     <string name="warning_permission">Permission is mandatory so application will close !</string>
-    <string name="appli_version">Name : %1$s\nPackage : %2$s\nVersion : %3$s\nDate : %4$s</string>
+    <string name="appli_version">Name : %1$s\nVersion : %2$s\nDate : %3$s</string>
     <string name="name">Name</string>
     <string name="not_available">Not available</string>
     <string name="description">Description</string>

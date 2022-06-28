@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
 
 import static com.avlweb.collectionviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
 import static com.avlweb.collectionviewer.ui.Settings.KEY_PREFS;

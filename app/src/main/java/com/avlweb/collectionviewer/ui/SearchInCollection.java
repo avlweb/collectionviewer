@@ -18,10 +18,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.Collection;
-import com.avlweb.collectionviewer.model.Item;
-import com.avlweb.collectionviewer.model.Property;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.R;
 
 import java.util.List;
 import java.util.Locale;
@@ -46,8 +46,8 @@ public class SearchInCollection extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        Collection database = Collection.getInstance();
-        List<Property> properties = database.getProperties();
+        CollectionModel database = CollectionModel.getInstance();
+        List<CollectionProperty> properties = database.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
             int idx = 0;
@@ -62,7 +62,7 @@ public class SearchInCollection extends Activity {
                 originalDescriptionToSearch = null;
             }
             // Create and fill properties
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
                 textView.setText(property.getName());
@@ -106,7 +106,7 @@ public class SearchInCollection extends Activity {
         String[][] stringsToSearch = new String[nbProperties][];
         String[] namesToSearch = null;
         String[] descriptionsToSearch = null;
-        Collection database = Collection.getInstance();
+        CollectionModel database = CollectionModel.getInstance();
         int nbStringsToMatch = 0;
 
         // Name
@@ -127,9 +127,9 @@ public class SearchInCollection extends Activity {
 
         // Properties
         int idx = 0;
-        List<Property> properties = Collection.getInstance().getProperties();
+        List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 EditText editText = findViewById(property.getId());
                 if ((editText.getText() != null) && (editText.getText().length() > 0)) {
                     originalPropertiesToSearch[idx] = editText.getText().toString();
@@ -143,13 +143,13 @@ public class SearchInCollection extends Activity {
         if (nbStringsToMatch == 0)
             return;
 
-        List<Item> items = database.getItems();
+        List<CollectionItem> items = database.getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (Item item : items)
+            for (CollectionItem item : items)
                 item.setNotSelected();
 
             int nbElementsFound = 0;
-            for (Item item : items) {
+            for (CollectionItem item : items) {
                 int nbStringsMatching = 0;
 
                 // Name
@@ -224,7 +224,7 @@ public class SearchInCollection extends Activity {
                 });
                 builder.create().show();
 
-                for (Item item : items)
+                for (CollectionItem item : items)
                     item.setSelected();
             } else
                 Toast.makeText(getApplicationContext(), String.format(Locale.getDefault(), getString(R.string.found_items), nbElementsFound), Toast.LENGTH_SHORT).show();
@@ -233,9 +233,9 @@ public class SearchInCollection extends Activity {
 
     public void clearSearch(View view) {
         // It's time to clean
-        List<Item> items = Collection.getInstance().getItems();
+        List<CollectionItem> items = CollectionModel.getInstance().getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (Item item : items)
+            for (CollectionItem item : items)
                 item.setSelected();
         }
         // Name
@@ -248,9 +248,9 @@ public class SearchInCollection extends Activity {
         originalDescriptionToSearch = null;
         // Properties
         int idx = 0;
-        List<Property> properties = Collection.getInstance().getProperties();
+        List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 editText = findViewById(property.getId());
                 editText.setText("");
                 if (originalPropertiesToSearch != null)

@@ -28,10 +28,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.avlweb.collectionviewer.model.Collection;
-import com.avlweb.collectionviewer.model.Item;
-import com.avlweb.collectionviewer.model.Property;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,9 +44,9 @@ public class ItemModify extends BaseActivity {
     private final int ACTIVITY_ADD_IMAGE = 10254841;
     private final DisplayMetrics metrics = new DisplayMetrics();
     private int position;
-    private Item currentItem = null;
+    private CollectionItem currentItem = null;
     private boolean imageZoomed;
-    private final Collection collection = Collection.getInstance();
+    private final CollectionModel collection = CollectionModel.getInstance();
     private int currentImageIndex = 0;
 
     @Override
@@ -67,10 +67,10 @@ public class ItemModify extends BaseActivity {
         Intent intent = getIntent();
         this.position = intent.getIntExtra("position", 0);
 
-        List<Property> properties = collection.getProperties();
+        List<CollectionProperty> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             LinearLayout linearLayout = findViewById(R.id.linearlayout);
-            for (Property description : properties) {
+            for (CollectionProperty description : properties) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                 textView.setText(description.getName());
@@ -282,9 +282,9 @@ public class ItemModify extends BaseActivity {
         editText = findViewById(R.id.textDescription);
         currentItem.setDescription(editText.getText().toString());
         // Save properties
-        List<Property> properties = collection.getProperties();
+        List<CollectionProperty> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property description : properties) {
+            for (CollectionProperty description : properties) {
                 editText = findViewById(description.getId());
                 if ((editText.getText() != null) && (editText.getText().length() > 0)) {
                     currentItem.setProperty(idx, editText.getText().toString());
@@ -298,9 +298,9 @@ public class ItemModify extends BaseActivity {
     private void displayItem() {
         currentItem = null;
 
-        List<Item> items = collection.getItems();
+        List<CollectionItem> items = collection.getItems();
         if ((items != null) && (items.size() > 0)) {
-            for (Item item : items) {
+            for (CollectionItem item : items) {
                 if (item.getPositionInSelectedList() == this.position) {
                     currentItem = item;
                     break;
@@ -334,10 +334,10 @@ public class ItemModify extends BaseActivity {
             editText.setText(currentItem.getDescription());
         }
         // Display properties if exists
-        List<Property> properties = collection.getProperties();
+        List<CollectionProperty> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int idx = 0;
-            for (Property description : properties) {
+            for (CollectionProperty description : properties) {
                 editText = findViewById(description.getId());
                 editText.setText(currentItem.getProperty(idx));
                 idx++;

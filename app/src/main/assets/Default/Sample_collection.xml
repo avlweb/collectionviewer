@@ -1,142 +1,384 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database>
     <content>
-        <name>Sample collection</name>
-        <description>Sample collection to show how CollectionViewer works ! This collection is a collection of shapes.</description>
+        <name>My Playing Cards</name>
+        <description>Sample collection to show how CollectionViewer works ! This collection is a classical playing deck of cards.</description>
         <version>1.0</version>
     </content>
     <properties>
         <property>
             <name>Color</name>
-            <description>Colors of the shapes in this item, comma separated.</description>
+            <description>Color of the card</description>
         </property>
         <property>
-            <name>Number of elements</name>
-            <description>Number of shapes in this item.</description>
+            <name>Rank</name>
+            <description>Rank of card or court card name</description>
         </property>
         <property>
-            <name>List of shapes</name>
-            <description>List of shapes in this item, comma separated.</description>
+            <name>Suit</name>
+            <description>Clubs, diamonds, hearts or spades</description>
         </property>
     </properties>
     <items>
         <item>
-            <name>Item 1</name>
-            <description>One red diamond.</description>
-            <property>red</property>
+            <name>Ace of clubs</name>
+            <description>Ace of clubs card.</description>
+            <property>black</property>
             <property>1</property>
-            <property>diamond</property>
-            <img>images\content1_1.jpg</img>
-            <img>images\content1_2.jpg</img>
+            <property>clubs</property>
+            <img>images/1_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Item 2</name>
-            <description>One brown square.</description>
-            <property>brown</property>
-            <property>1</property>
-            <property>square</property>
-            <img>images\content2_1.jpg</img>
-        </item>
-        <item>
-            <name>Item 3</name>
-            <description>One yellow rectangle.</description>
-            <property>yellow</property>
-            <property>1</property>
-            <property>rectangle</property>
-            <img>images\content3_1.jpg</img>
-            <img>images\content3_2.jpg</img>
-        </item>
-        <item>
-            <name>Item 4</name>
-            <description>A square and a rectangle in grey.</description>
-            <property>grey</property>
+            <name>2 of clubs</name>
+            <description>2 of clubs card.</description>
+            <property>black</property>
             <property>2</property>
-            <property>square,rectangle</property>
-            <img>images\content4_1.jpg</img>
-            <img>images\content4_2.jpg</img>
-            <img>images\content4_3.jpg</img>
+            <property>clubs</property>
+            <img>images/2_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Item 5</name>
-            <description>One purple circle.</description>
-            <property>purple</property>
-            <property>1</property>
-            <property>circle</property>
-            <img>images\content5_1.jpg</img>
-        </item>
-        <item>
-            <name>Item 6</name>
-            <description>Two blue circles.</description>
-            <property>blue</property>
-            <property>2</property>
-            <property>circle</property>
-            <img>images\content6_1.jpg</img>
-            <img>images\content6_2.jpg</img>
-        </item>
-        <item>
-            <name>Item 7</name>
-            <description>One orange hexagon.</description>
-            <property>orange</property>
-            <property>1</property>
-            <property>hexagon</property>
-            <img>images\content7_1.jpg</img>
-            <img>images\content7_2.jpg</img>
-        </item>
-        <item>
-            <name>Item 8</name>
-            <description>One red triangle.</description>
-            <property>red</property>
-            <property>1</property>
-            <property>triangle</property>
-            <img>images\content8_1.jpg</img>
-            <img>images\content8_2.jpg</img>
-        </item>
-        <item>
-            <name>Item 9</name>
-            <description>Two blue squares.</description>
-            <property>blue</property>
-            <property>2</property>
-            <property>square</property>
-            <img>images\content9_1.jpg</img>
-            <img>images\content9_2.jpg</img>
-        </item>
-        <item>
-            <name>Item 10</name>
-            <description>One orange square.</description>
-            <property>orange</property>
-            <property>1</property>
-            <property>square</property>
-            <img>images\content10_1.jpg</img>
-        </item>
-        <item>
-            <name>Item 11</name>
-            <description>Three purple rectangles.</description>
-            <property>purple</property>
+            <name>3 of clubs</name>
+            <description>3 of clubs card.</description>
+            <property>black</property>
             <property>3</property>
-            <property>rectangle</property>
-            <img>images\content11_1.jpg</img>
-            <img>images\content11_2.jpg</img>
+            <property>clubs</property>
+            <img>images/3_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Item 12</name>
-            <description>One brown circle.</description>
-            <property>brown</property>
+            <name>4 of clubs</name>
+            <description>4 of clubs card.</description>
+            <property>black</property>
+            <property>4</property>
+            <property>clubs</property>
+            <img>images/4_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 of clubs</name>
+            <description>5 of clubs card.</description>
+            <property>black</property>
+            <property>5</property>
+            <property>clubs</property>
+            <img>images/5_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 of clubs</name>
+            <description>6 of clubs card.</description>
+            <property>black</property>
+            <property>6</property>
+            <property>clubs</property>
+            <img>images/6_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 of clubs</name>
+            <description>7 of clubs card.</description>
+            <property>black</property>
+            <property>7</property>
+            <property>clubs</property>
+            <img>images/7_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 of clubs</name>
+            <description>8 of clubs card.</description>
+            <property>black</property>
+            <property>8</property>
+            <property>clubs</property>
+            <img>images/8_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 of clubs</name>
+            <description>9 of clubs card.</description>
+            <property>black</property>
+            <property>9</property>
+            <property>clubs</property>
+            <img>images/9_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 of clubs</name>
+            <description>10 of clubs card.</description>
+            <property>black</property>
+            <property>10</property>
+            <property>clubs</property>
+            <img>images/10_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Ace of spades</name>
+            <description>Ace of spades card.</description>
+            <property>black</property>
             <property>1</property>
-            <property>circle</property>
-            <img>images\content12_1.jpg</img>
+            <property>spades</property>
+            <img>images/1_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Item 13</name>
-            <description>Two triangles. One red and one green.</description>
-            <property>red,green</property>
+            <name>2 of spades</name>
+            <description>2 of spades card.</description>
+            <property>black</property>
             <property>2</property>
-            <property>triangle</property>
-            <img>images\content13_1.jpg</img>
-            <img>images\content13_2.jpg</img>
+            <property>spades</property>
+            <img>images/2_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Item 14</name>
-            <description>Empty item.</description>
+            <name>3 of spades</name>
+            <description>3 of spades card.</description>
+            <property>black</property>
+            <property>3</property>
+            <property>spades</property>
+            <img>images/3_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 of spades</name>
+            <description>4 of spades card.</description>
+            <property>black</property>
+            <property>4</property>
+            <property>spades</property>
+            <img>images/4_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 of spades</name>
+            <description>5 of spades card.</description>
+            <property>black</property>
+            <property>5</property>
+            <property>spades</property>
+            <img>images/5_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 of spades</name>
+            <description>6 of spades card.</description>
+            <property>black</property>
+            <property>6</property>
+            <property>spades</property>
+            <img>images/6_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 of spades</name>
+            <description>7 of spades card.</description>
+            <property>black</property>
+            <property>7</property>
+            <property>spades</property>
+            <img>images/7_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 of spades</name>
+            <description>8 of spades card.</description>
+            <property>black</property>
+            <property>8</property>
+            <property>spades</property>
+            <img>images/8_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 of spades</name>
+            <description>9 of spades card.</description>
+            <property>black</property>
+            <property>9</property>
+            <property>spades</property>
+            <img>images/9_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 of spades</name>
+            <description>10 of spades card.</description>
+            <property>black</property>
+            <property>10</property>
+            <property>spades</property>
+            <img>images/10_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Ace of hearts</name>
+            <description>Ace of hearts card.</description>
+            <property>red</property>
+            <property>1</property>
+            <property>hearts</property>
+            <img>images/1_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 of hearts</name>
+            <description>2 of hearts card.</description>
+            <property>red</property>
+            <property>2</property>
+            <property>hearts</property>
+            <img>images/2_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 of hearts</name>
+            <description>3 of hearts card.</description>
+            <property>red</property>
+            <property>3</property>
+            <property>hearts</property>
+            <img>images/3_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 of hearts</name>
+            <description>4 of hearts card.</description>
+            <property>red</property>
+            <property>4</property>
+            <property>hearts</property>
+            <img>images/4_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 of hearts</name>
+            <description>5 of hearts card.</description>
+            <property>red</property>
+            <property>5</property>
+            <property>hearts</property>
+            <img>images/5_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 of hearts</name>
+            <description>6 of hearts card.</description>
+            <property>red</property>
+            <property>6</property>
+            <property>hearts</property>
+            <img>images/6_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 of hearts</name>
+            <description>7 of hearts card.</description>
+            <property>red</property>
+            <property>7</property>
+            <property>hearts</property>
+            <img>images/7_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 of hearts</name>
+            <description>8 of hearts card.</description>
+            <property>red</property>
+            <property>8</property>
+            <property>hearts</property>
+            <img>images/8_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 of hearts</name>
+            <description>9 of hearts card.</description>
+            <property>red</property>
+            <property>9</property>
+            <property>hearts</property>
+            <img>images/9_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 of hearts</name>
+            <description>10 of hearts card.</description>
+            <property>red</property>
+            <property>10</property>
+            <property>hearts</property>
+            <img>images/10_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Ace of diamonds</name>
+            <description>Ace of diamonds card.</description>
+            <property>red</property>
+            <property>1</property>
+            <property>diamonds</property>
+            <img>images/1_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 of diamonds</name>
+            <description>2 of diamonds card.</description>
+            <property>red</property>
+            <property>2</property>
+            <property>diamonds</property>
+            <img>images/2_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 of diamonds</name>
+            <description>3 of diamonds card.</description>
+            <property>red</property>
+            <property>3</property>
+            <property>diamonds</property>
+            <img>images/3_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 of diamonds</name>
+            <description>4 of diamonds card.</description>
+            <property>red</property>
+            <property>4</property>
+            <property>diamonds</property>
+            <img>images/4_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 of diamonds</name>
+            <description>5 of diamonds card.</description>
+            <property>red</property>
+            <property>5</property>
+            <property>diamonds</property>
+            <img>images/5_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 of diamonds</name>
+            <description>6 of diamonds card.</description>
+            <property>red</property>
+            <property>6</property>
+            <property>diamonds</property>
+            <img>images/6_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 of diamonds</name>
+            <description>7 of diamonds card.</description>
+            <property>red</property>
+            <property>7</property>
+            <property>diamonds</property>
+            <img>images/7_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 of diamonds</name>
+            <description>8 of diamonds card.</description>
+            <property>red</property>
+            <property>8</property>
+            <property>diamonds</property>
+            <img>images/8_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 of diamonds</name>
+            <description>9 of diamonds card.</description>
+            <property>red</property>
+            <property>9</property>
+            <property>diamonds</property>
+            <img>images/9_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 of diamonds</name>
+            <description>10 of diamonds card.</description>
+            <property>red</property>
+            <property>10</property>
+            <property>diamonds</property>
+            <img>images/10_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
         </item>
     </items>
 </database>

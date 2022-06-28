@@ -9,10 +9,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.model.Property;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class CollectionDetails extends Activity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        CollectionInfos dbInfos = Collection.getInstance().getInfos();
+        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
         textView.setText(dbInfos.getName());
 
@@ -47,10 +47,10 @@ public class CollectionDetails extends Activity {
         textView.setText(dbInfos.getVersion());
 
         textView = findViewById(R.id.textNbItems);
-        textView.setText(String.format(Locale.getDefault(), "%d", Collection.getInstance().getNbItems()));
+        textView.setText(String.format(Locale.getDefault(), "%d", CollectionModel.getInstance().getNbItems()));
 
         ListView lv = findViewById(R.id.propertiesList);
-        if (Collection.getInstance().getNbProperties() > 0) {
+        if (CollectionModel.getInstance().getNbProperties() > 0) {
             ArrayList<Map<String, String>> list = buildData();
             String[] from = {"name", "description"};
             int[] to = {android.R.id.text1, android.R.id.text2};
@@ -65,16 +65,16 @@ public class CollectionDetails extends Activity {
 
     private ArrayList<Map<String, String>> buildData() {
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        List<Property> properties = Collection.getInstance().getProperties();
+        List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 list.add(putData(property));
             }
         }
         return list;
     }
 
-    private HashMap<String, String> putData(Property property) {
+    private HashMap<String, String> putData(CollectionProperty property) {
         HashMap<String, String> item = new HashMap<>();
         item.put("name", property.getName());
         item.put("description", property.getDescription());

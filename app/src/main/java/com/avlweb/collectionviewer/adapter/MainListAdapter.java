@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
-import com.avlweb.collectionviewer.model.Item;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +18,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexer {
+//public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexer {
+public class MainListAdapter extends ArrayAdapter<CollectionItem> {
     private final int scrollbarPosition;
     private final HashMap<String, Integer> mapIndex;
     private final String[] sections;
@@ -36,7 +36,7 @@ public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexe
         this.customListener = listener;
     }
 
-    public MainListAdapter(Context context, List<Item> list, int scrollbarPosition) {
+    public MainListAdapter(Context context, List<CollectionItem> list, int scrollbarPosition) {
         super(context, R.layout.my_main_list, list);
         this.context = context;
 
@@ -80,7 +80,7 @@ public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexe
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final Item temp = getItem(position);
+        final CollectionItem temp = getItem(position);
         viewHolder.text.setText(temp.getName());
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override

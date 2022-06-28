@@ -3,7 +3,6 @@
     <string name="app_name">CollectionViewer</string>
     <string name="menu_settings">Réglages</string>
     <string name="title_activity_main">CollectionViewer</string>
-    <string name="hello_world">Bonjour le monde !</string>
     <string name="title_activity_display_item">Vue</string>
     <string name="image_content">Contenu Image</string>
     <string name="menu_previous_element">Précédent</string>
@@ -30,7 +29,7 @@
     <string name="view">Vue</string>
     <string name="warning_points">Attention :</string>
     <string name="warning_permission">Les permissions sont obligatoires donc l\'application va se fermer !</string>
-    <string name="appli_version">Nom : %1$s\nPaquet : %2$s\nVersion : %3$s\nDate : %4$s</string>
+    <string name="appli_version">Nom : %1$s\nVersion : %2$s\nDate : %3$s</string>
     <string name="not_available">Pas disponible</string>
     <string name="number_of_items">Nombre d\'éléments</string>
     <string name="available_collections">Collections disponibles</string>
@@ -74,7 +73,7 @@
     <string name="collection_name">Nom de la collection</string>
     <string name="new_collection">Nouvelle collection</string>
     <string name="new_property">Nouvelle propriété</string>
-    <string name="message_new_collection">Une nouvelle collection de donnée va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
+    <string name="message_new_collection">Une nouvelle collection va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
     <string name="collection_successfully_created">Collection créée avec succès.</string>
     <string name="menu_collection">Menu Collection</string>
     <string name="delete">Supprimer</string>

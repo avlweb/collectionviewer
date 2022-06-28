@@ -21,10 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
 import com.avlweb.collectionviewer.adapter.MainListAdapter;
-import com.avlweb.collectionviewer.model.Collection;
-import com.avlweb.collectionviewer.model.Item;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.util.xmlFactory;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,8 @@ import java.util.List;
 public class MainList extends BaseActivity implements MainListAdapter.customButtonListener {
     private final int ACTIVITY_ITEM_MODIFY = 486758485;
     private final int ACTIVITY_ITEM_DISPLAY = 846516548;
+    public static final String SAMPLE_COLLECTION_XML = "Sample_collection.xml";
+    public static final String SAMPLE_COLLECTION_NAME = "My Playing Cards";
     private int position = 0;
     private int maxPosition = 0;
     private MainListAdapter adapter;
@@ -188,12 +190,12 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     public void buildMainListContent() {
-        ArrayList<Item> items = Collection.getInstance().getItems();
-        ArrayList<Item> selectedItems = new ArrayList<>();
+        ArrayList<CollectionItem> items = CollectionModel.getInstance().getItems();
+        ArrayList<CollectionItem> selectedItems = new ArrayList<>();
 
         if ((items != null) && (items.size() > 0)) {
             int idx = 0;
-            for (Item item : items) {
+            for (CollectionItem item : items) {
                 if (item.isSelected()) {
                     selectedItems.add(item);
                     item.setPositionInSelectedList(idx);
@@ -257,9 +259,9 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     private void addItem(String name) {
-        Collection database = Collection.getInstance();
+        CollectionModel database = CollectionModel.getInstance();
         // Create new item
-        Item item = new Item();
+        CollectionItem item = new CollectionItem();
         item.setName(name);
         item.setPositionInSelectedList(database.getNbItems());
         // Add item to database
@@ -278,7 +280,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     private void deleteItem() {
-        List<Item> items = Collection.getInstance().getItems();
+        List<CollectionItem> items = CollectionModel.getInstance().getItems();
         // Delete item from adapter
         adapter.remove(items.get(this.position));
         // Hide or not listView

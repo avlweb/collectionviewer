@@ -21,11 +21,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
-import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.model.Property;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 import com.avlweb.collectionviewer.util.xmlFactory;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class CollectionModify extends BaseActivity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        CollectionInfos dbInfos = Collection.getInstance().getInfos();
+        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
         textView.setText(dbInfos.getName());
 
@@ -55,7 +55,7 @@ public class CollectionModify extends BaseActivity {
         textView = findViewById(R.id.textVersion);
         textView.setText(dbInfos.getVersion());
 
-        if (Collection.getInstance().getNbProperties() > 0) {
+        if (CollectionModel.getInstance().getNbProperties() > 0) {
             createPropertiesList();
         } else {
             textView = findViewById(R.id.textNoProperties);
@@ -88,7 +88,7 @@ public class CollectionModify extends BaseActivity {
 
     private void saveDatas() {
         // Get new datas
-        CollectionInfos dbInfos = Collection.getInstance().getInfos();
+        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
         EditText editText = findViewById(R.id.textName);
         if (editText.getText().length() == 0) {
             editText.setError(getString(R.string.must_not_be_empty));
@@ -110,9 +110,9 @@ public class CollectionModify extends BaseActivity {
         }
         dbInfos.setVersion(editText.getText().toString());
 
-        List<Property> properties = Collection.getInstance().getProperties();
+        List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property desc : properties) {
+            for (CollectionProperty desc : properties) {
                 editText = findViewById(desc.getId());
                 desc.setDescription(editText.getText().toString());
             }
@@ -166,11 +166,11 @@ public class CollectionModify extends BaseActivity {
     }
 
     private void createNewProperty(String name) {
-        Property property = new Property();
+        CollectionProperty property = new CollectionProperty();
         property.setName(name);
         property.setId(View.generateViewId());
         property.setDescription(null);
-        Collection.getInstance().addProperty(property);
+        CollectionModel.getInstance().addProperty(property);
 
         addProperty(property);
 
@@ -189,7 +189,7 @@ public class CollectionModify extends BaseActivity {
         });
     }
 
-    private void addProperty(Property property) {
+    private void addProperty(CollectionProperty property) {
         LinearLayout linearLayout = findViewById(R.id.linearlayout);
 
         TextView textView = new TextView(this);
@@ -221,9 +221,9 @@ public class CollectionModify extends BaseActivity {
     }
 
     private void createPropertiesList() {
-        List<Property> properties = Collection.getInstance().getProperties();
+        List<CollectionProperty> properties = CollectionModel.getInstance().getProperties();
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 addProperty(property);
             }
         }

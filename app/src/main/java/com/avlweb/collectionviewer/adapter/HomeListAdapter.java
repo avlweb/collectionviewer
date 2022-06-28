@@ -8,29 +8,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionInfos;
+import com.avlweb.collectionviewer.ui.MainList;
 
 import java.util.ArrayList;
 
-public class HomeListAdapter extends ArrayAdapter<String> {
-    public static final String SAMPLE_COLLECTION_XML = "Sample_collection.xml";
+public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
     private customButtonListener customListener;
     private final Context context;
     private final String databasesRootLocation;
     private final int scrollbarPosition;
 
     public interface customButtonListener {
-        void onButtonClickListener(View view, int position, String value);
-
-        void onTextClickListener(int position, String value);
+        void onButtonClickListener(View view, int position, CollectionInfos value);
+        void onTextClickListener(int position, CollectionInfos value);
     }
 
     public void setCustomButtonListener(customButtonListener listener) {
         this.customListener = listener;
     }
 
-    public HomeListAdapter(Context context, ArrayList<String> dataItem, String location, int scrollbarPosition) {
-        super(context, R.layout.my_main_list, dataItem);
+    public HomeListAdapter(Context context, ArrayList<CollectionInfos> infos, String location, int scrollbarPosition) {
+        super(context, R.layout.my_main_list, infos);
         this.context = context;
         this.databasesRootLocation = location;
         this.scrollbarPosition = scrollbarPosition;
@@ -52,17 +52,17 @@ public class HomeListAdapter extends ArrayAdapter<String> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final String temp = getItem(position);
-        if (temp.endsWith(SAMPLE_COLLECTION_XML)) {
-            // Line menu is disabled because sample database is read only
+        final CollectionInfos temp = getItem(position);
+        if (temp.getName().equals(MainList.SAMPLE_COLLECTION_NAME)) {
+            // Menu is disabled because sample database is read only
             viewHolder.button.setEnabled(false);
-            viewHolder.text.setText(SAMPLE_COLLECTION_XML);
+            viewHolder.text.setText(MainList.SAMPLE_COLLECTION_NAME);
         } else {
             viewHolder.button.setEnabled(true);
-            if ((this.databasesRootLocation != null) && (temp.startsWith(this.databasesRootLocation)))
-                viewHolder.text.setText(temp.substring(this.databasesRootLocation.length()));
+            if ((this.databasesRootLocation != null) && (temp.getName().startsWith(this.databasesRootLocation)))
+                viewHolder.text.setText(temp.getName().substring(this.databasesRootLocation.length()));
             else
-                viewHolder.text.setText(temp);
+                viewHolder.text.setText(temp.getName());
         }
         viewHolder.text.setOnClickListener(new View.OnClickListener() {
             @Override

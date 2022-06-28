@@ -18,10 +18,10 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.avlweb.collectionviewer.model.Collection;
-import com.avlweb.collectionviewer.model.Item;
-import com.avlweb.collectionviewer.model.Property;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.R;
 
 import java.io.File;
 import java.util.List;
@@ -34,9 +34,9 @@ public class ItemDisplay extends BaseActivity {
     private GestureDetector gestureDetector;
     private int position;
     private boolean detailsOpen = false;
-    private Item currentItem = null;
+    private CollectionItem currentItem = null;
     private boolean imageZoomed;
-    private final Collection collection = Collection.getInstance();
+    private final CollectionModel collection = CollectionModel.getInstance();
     private int imgIdx = 0;
     private int maxPosition;
 
@@ -180,7 +180,7 @@ public class ItemDisplay extends BaseActivity {
     private void displayElement() {
         currentItem = collection.getItem(this.position);
 
-        for (Item item : collection.getItems()) {
+        for (CollectionItem item : collection.getItems()) {
             if (item.getPositionInSelectedList() == this.position) {
                 currentItem = item;
                 break;
@@ -209,7 +209,7 @@ public class ItemDisplay extends BaseActivity {
         }
 
         // Format details string
-        List<Property> properties = collection.getProperties();
+        List<CollectionProperty> properties = collection.getProperties();
         if ((properties != null) && (properties.size() > 0)) {
             int size = properties.size();
             StringBuilder tmp = new StringBuilder();

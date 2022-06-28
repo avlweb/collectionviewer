@@ -2,10 +2,10 @@ package com.avlweb.collectionviewer.util;
 
 import android.util.Xml;
 import android.view.View;
-import com.avlweb.collectionviewer.model.Collection;
+import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.model.Item;
-import com.avlweb.collectionviewer.model.Property;
+import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionProperty;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -21,11 +21,11 @@ public class xmlFactory {
     private static final String ns = null;
 
     public static void readXMLFile(String path) {
-        Collection collection = Collection.getInstance();
+        CollectionModel collection = CollectionModel.getInstance();
         FileInputStream fin = null;
         InputStreamReader isr = null;
-        Item item = null;
-        Property property = null;
+        CollectionItem item = null;
+        CollectionProperty property = null;
         CollectionInfos dbInfos = null;
 
         XmlPullParser parser = Xml.newPullParser();
@@ -52,12 +52,12 @@ public class xmlFactory {
                         caseProperties = true;
                     } else if (caseProperties && (strNode.equals("property"))) {
                         caseProperty = true;
-                        property = new Property();
+                        property = new CollectionProperty();
                     } else if (strNode.equals("items")) {
                         caseItems = true;
                     } else if (caseItems && (strNode.equals("item"))) {
                         caseItem = true;
-                        item = new Item();
+                        item = new CollectionItem();
                     } else if (caseContent) {
                         switch (strNode) {
                             case "name":
@@ -171,9 +171,83 @@ public class xmlFactory {
         }
     }
 
+    public static CollectionInfos readCollectionName(String path) {
+        FileInputStream fin = null;
+        InputStreamReader isr = null;
+        CollectionInfos infos = null;
+
+        XmlPullParser parser = Xml.newPullParser();
+        try {
+            fin = new FileInputStream(path);
+            isr = new InputStreamReader(fin);
+            parser.setInput(isr);
+
+            int eventType = parser.getEventType();
+
+            boolean caseContent = false;
+            int type = 0;
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_TAG) {
+                    String strNode = parser.getName();
+                    if (strNode.equals("content")) {
+                        caseContent = true;
+                        infos = new CollectionInfos();
+                    } else if (caseContent) {
+                        switch (strNode) {
+                            case "name":
+                                type = 1;
+                                break;
+                            case "description":
+                                type = 2;
+                                break;
+                            case "version":
+                                type = 3;
+                                break;
+                        }
+                    }
+                } else if (eventType == XmlPullParser.TEXT) {
+                    if (caseContent) {
+                        switch (type) {
+                            case 1:
+                                infos.setName(parser.getText());
+                                break;
+                            case 2:
+                                infos.setDescription(parser.getText());
+                                break;
+                            case 3:
+                                infos.setVersion(parser.getText());
+                                break;
+                        }
+                    }
+                } else if (eventType == XmlPullParser.END_TAG) {
+                    String strNode = parser.getName();
+                    if (strNode.equals("content")) {
+                        break;
+                    }
+                    type = 0;
+                }
+                eventType = parser.next();
+            }
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (isr != null) {
+                    isr.close();
+                }
+                if (fin != null) {
+                    fin.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return infos;
+    }
+
     public static boolean writeXml() {
 
-        Collection database = Collection.getInstance();
+        CollectionModel database = CollectionModel.getInstance();
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(database.getInfos().getXmlPath());
             XmlSerializer xmlSerializer = Xml.newSerializer();
@@ -224,10 +298,10 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "content");
     }
 
-    private static void insertProperties(XmlSerializer xmlSerializer, List<Property> properties) throws IOException {
+    private static void insertProperties(XmlSerializer xmlSerializer, List<CollectionProperty> properties) throws IOException {
         xmlSerializer.startTag(ns, "properties");
         if ((properties != null) && (properties.size() > 0)) {
-            for (Property property : properties) {
+            for (CollectionProperty property : properties) {
                 xmlSerializer.startTag(ns, "property");
 
                 xmlSerializer.startTag(ns, "name");
@@ -245,10 +319,10 @@ public class xmlFactory {
         xmlSerializer.endTag(ns, "properties");
     }
 
-    private static void insertItems(XmlSerializer xmlSerializer, List<Item> items) throws IOException {
+    private static void insertItems(XmlSerializer xmlSerializer, List<CollectionItem> items) throws IOException {
         xmlSerializer.startTag(ns, "items");
         if ((items != null) && (items.size() > 0)) {
-            for (Item item : items) {
+            for (CollectionItem item : items) {
                 xmlSerializer.startTag(ns, "item");
                 // Add name
                 xmlSerializer.startTag(ns, "name");

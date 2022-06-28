@@ -20,16 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.NavUtils;
 import androidx.documentfile.provider.DocumentFile;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class Settings extends Activity {
 
-    public static final String KEY_PREFS = "EncycloViewerPreferences";
-    public static final String KEY_DATABASES_ROOT_LOCATION = "key_language";
-    public static final String KEY_HIDE_SAMPLE_DATABASE = "key_hide_sample";
+    public static final String KEY_PREFS = "CollectionViewerPreferences";
+    public static final String KEY_DATABASES_ROOT_LOCATION = "key_root_location";
+    public static final String KEY_HIDE_SAMPLE_COLLECTION = "key_hide_sample";
     public static final String KEY_HIDE_HELP_BUTTON = "key_hide_help";
     public static final String KEY_REDUCE_SIZE_OF_IMAGES = "key_reduce_size_of_images";
     public static final String KEY_SCROLLBAR = "key_scrollbar";
@@ -53,7 +53,7 @@ public class Settings extends Activity {
         // Get preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         // Get flag "Hide sample database"
-        boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_DATABASE, false);
+        boolean hideSampledatabase = pref.getBoolean(KEY_HIDE_SAMPLE_COLLECTION, false);
         Switch hide = findViewById(R.id.switch_hide);
         hide.setChecked(hideSampledatabase);
         // Get flag "Hide help button"
@@ -157,7 +157,7 @@ public class Settings extends Activity {
         editor.putInt(KEY_FONT_SIZE, fontSize);
         // Hide sample database
         Switch hide = findViewById(R.id.switch_hide);
-        editor.putBoolean(KEY_HIDE_SAMPLE_DATABASE, hide.isChecked());
+        editor.putBoolean(KEY_HIDE_SAMPLE_COLLECTION, hide.isChecked());
         // Hide help button
         Switch help = findViewById(R.id.switch_help);
         editor.putBoolean(KEY_HIDE_HELP_BUTTON, help.isChecked());
@@ -243,7 +243,7 @@ public class Settings extends Activity {
 //                getXmlFiles(files, tmpFile.getUri());
 //            else {
 //                if (tmpFile.getName().endsWith(".xml")) {
-//                    if (tmpFile.getName().endsWith("Sample_database.xml"))
+//                    if (tmpFile.getName().endsWith(MainList.SAMPLE_COLLECTION_XML))
 //                        continue;
 //                    files.add(tmpFile.getName());
 //                }

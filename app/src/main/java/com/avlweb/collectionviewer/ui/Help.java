@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import com.avlweb.encycloviewer.R;
+import com.avlweb.collectionviewer.R;
 
 import java.util.Locale;
 
