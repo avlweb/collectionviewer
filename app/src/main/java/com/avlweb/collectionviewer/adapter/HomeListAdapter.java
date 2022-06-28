@@ -20,7 +20,6 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
 
     public interface customButtonListener {
         void onButtonClickListener(View view, CollectionInfos infos);
-
         void onTextClickListener(CollectionInfos infos);
     }
 

@@ -106,6 +106,6 @@
     <string name="help">Aide</string>
     <string name="hide_help_button">Cacher le bouton d\'aide</string>
     <string name="reduce_images_button">Réduire la taille des images</string>
-    <string name="collection_loaded">Collection %1$s chargée.</string>
+    <string name="collection_loaded">Collection \'%1$s\' chargée.</string>
     <string name="must_contains_alphabet">Ne peut contenir que des caractères alphabétiques et des tirets</string>
 </resources>

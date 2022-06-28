@@ -3,14 +3,17 @@ package com.avlweb.collectionviewer.util;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+
 import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionProperty;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +31,7 @@ public class XmlFactory {
         InputStreamReader isr = null;
         CollectionItem item = null;
         CollectionProperty property = null;
-        CollectionInfos dbInfos = null;
+        CollectionInfos infos = null;
 
         XmlPullParser parser = Xml.newPullParser();
         try {
@@ -49,7 +52,7 @@ public class XmlFactory {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
                         caseContent = true;
-                        dbInfos = new CollectionInfos();
+                        infos = new CollectionInfos();
                     } else if (strNode.equals("properties")) {
                         caseProperties = true;
                     } else if (caseProperties && (strNode.equals("property"))) {
@@ -101,13 +104,13 @@ public class XmlFactory {
                     if (caseContent) {
                         switch (type) {
                             case 1:
-                                dbInfos.setName(parser.getText());
+                                infos.setName(parser.getText());
                                 break;
                             case 2:
-                                dbInfos.setDescription(parser.getText());
+                                infos.setDescription(parser.getText());
                                 break;
                             case 3:
-                                dbInfos.setVersion(parser.getText());
+                                infos.setVersion(parser.getText());
                                 break;
                         }
                     } else if (caseProperty) {
@@ -139,7 +142,9 @@ public class XmlFactory {
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
-                        collectionModel.setInfos(dbInfos);
+                        infos.setXmlPath(path);
+                        infos.setPath(new File(path).getParent());
+                        collectionModel.setInfos(infos);
                         caseContent = false;
                     } else if (strNode.equals("properties")) {
                         caseProperties = false;

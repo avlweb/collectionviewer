@@ -45,15 +45,15 @@ public class CollectionModify extends BaseActivity {
             actionbar.setDisplayShowHomeEnabled(false);
         }
 
-        CollectionInfos dbInfos = CollectionModel.getInstance().getInfos();
+        CollectionInfos infos = CollectionModel.getInstance().getInfos();
         TextView textView = findViewById(R.id.textName);
-        textView.setText(dbInfos.getName());
+        textView.setText(infos.getName());
 
         textView = findViewById(R.id.textDescription);
-        textView.setText(dbInfos.getDescription());
+        textView.setText(infos.getDescription());
 
         textView = findViewById(R.id.textVersion);
-        textView.setText(dbInfos.getVersion());
+        textView.setText(infos.getVersion());
 
         if (CollectionModel.getInstance().getNbProperties() > 0) {
             createPropertiesList();

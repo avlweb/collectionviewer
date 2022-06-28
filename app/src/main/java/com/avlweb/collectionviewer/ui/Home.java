@@ -205,7 +205,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
         // Load selected collection
         XmlFactory.readXMLFile(infos.getXmlPath());
         Toast.makeText(getApplicationContext(),
-                String.format(Locale.getDefault(), getString(R.string.collection_loaded), infos), Toast.LENGTH_SHORT).show();
+                String.format(Locale.getDefault(), getString(R.string.collection_loaded), infos.getName()), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainList.class);
         startActivity(intent);
     }
