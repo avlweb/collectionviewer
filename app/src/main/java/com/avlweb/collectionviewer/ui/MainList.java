@@ -19,7 +19,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.NavUtils;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.adapter.MainListAdapter;
 import com.avlweb.collectionviewer.model.CollectionItem;
@@ -226,20 +228,23 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         lv.setSelectionFromTop(this.position, 30);
         registerForContextMenu(lv);
 
+        TextView textView = findViewById(R.id.textViewTitle);
+        textView.setText(CollectionModel.getInstance().getInfos().getName());
+
         hideOrNotListView();
     }
 
     private void hideOrNotListView() {
         if (adapter.getCount() == 0) {
             ListView lv = findViewById(R.id.listView1);
-            lv.setVisibility(View.GONE);
+            lv.setVisibility(View.INVISIBLE);
             TextView textView = findViewById(R.id.textView);
             textView.setVisibility(View.VISIBLE);
         } else {
             ListView lv = findViewById(R.id.listView1);
             lv.setVisibility(View.VISIBLE);
             TextView textView = findViewById(R.id.textView);
-            textView.setVisibility(View.GONE);
+            textView.setVisibility(View.INVISIBLE);
         }
     }
 

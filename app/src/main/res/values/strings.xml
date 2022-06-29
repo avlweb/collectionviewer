@@ -45,7 +45,7 @@
     <string name="words_to_search">Words to search comma separated</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="no_item_found">No item was found with those criteria.</string>
+    <string name="no_item_found">No item was found with those criteria</string>
     <string-array name="scrollbar_position_array">
         <item>Right</item>
         <item>Left</item>
@@ -74,17 +74,17 @@
     <string name="new_collection">New Collection</string>
     <string name="new_property">New Property</string>
     <string name="message_new_collection">A new collection will be created with the given name. You will have to fill its description, create properties and add items !</string>
-    <string name="collection_successfully_created">Collection successfully created.</string>
+    <string name="collection_successfully_created">Collection successfully created</string>
     <string name="menu_collection">Collection Menu</string>
     <string name="delete">Delete</string>
     <string name="title_activity_collection_modify">Modify collection</string>
-    <string name="collection_deletion_successful">Collection successfully deleted.</string>
+    <string name="collection_deletion_successful">Collection successfully deleted</string>
     <string name="deletion_error">An error occurred during deletion !</string>
     <string name="collection_creation_error">An error occurred during creation !</string>
     <string name="warning_collection_deletion">Do you really want to delete this collection ?</string>
     <string name="warning">Warning</string>
     <string name="title_activity_modify_item">Modify</string>
-    <string name="item_successfully_saved">Changes successfully saved.</string>
+    <string name="item_successfully_saved">Changes successfully saved</string>
     <string name="item_error_save">An error occurred during save !</string>
     <string name="images">Images</string>
     <string name="properties">Properties</string>
@@ -102,10 +102,11 @@
     <string name="warning_image_deletion">Do you really want to delete this image ?</string>
     <string name="must_not_be_empty">Must not be empty !</string>
     <string name="must_contains_alphabet">Can only contains alphabet characters and dashes</string>
-    <string name="image_deletion_successful">Image successfully deleted.</string>
-    <string name="item_deletion_successful">Item successfully deleted.</string>
+    <string name="image_deletion_successful">Image successfully deleted</string>
+    <string name="item_deletion_successful">Item successfully deleted</string>
     <string name="help">Help</string>
     <string name="hide_help_button">Hide help button</string>
     <string name="reduce_images_button">Reduce size of images</string>
-    <string name="collection_loaded">Collection \'%1$s\' loaded.</string>
+    <string name="collection_loaded">Collection \'%1$s\' loaded</string>
+    <string name="help_description">Help</string>
 </resources>

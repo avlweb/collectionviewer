@@ -43,7 +43,7 @@
     <string name="words_to_search">Mots à chercher séparés par des virgules</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>
-    <string name="no_item_found">Aucun élément n\'a été trouvé avec ces critères de recherche.</string>
+    <string name="no_item_found">Aucun élément n\'a été trouvé avec ces critères de recherche</string>
     <string-array name="scrollbar_position_array">
         <item>Droite</item>
         <item>Gauche</item>
@@ -74,17 +74,17 @@
     <string name="new_collection">Nouvelle collection</string>
     <string name="new_property">Nouvelle propriété</string>
     <string name="message_new_collection">Une nouvelle collection va être créée avec le nom saisi. Il faudra remplir sa description, ajouter des propriétés et ensuite des éléments !</string>
-    <string name="collection_successfully_created">Collection créée avec succès.</string>
+    <string name="collection_successfully_created">Collection créée avec succès</string>
     <string name="menu_collection">Menu Collection</string>
     <string name="delete">Supprimer</string>
     <string name="title_activity_collection_modify">Modifier la collection</string>
-    <string name="collection_deletion_successful">Collection supprimée avec succès.</string>
+    <string name="collection_deletion_successful">Collection supprimée avec succès</string>
     <string name="deletion_error">Une erreur s\'est produite durant la suppression !</string>
     <string name="collection_creation_error">Une erreur s\'est produite durant la création !</string>
     <string name="warning_collection_deletion">Voulez-vous réellement supprimer cette collection ?</string>
     <string name="warning">Attention</string>
     <string name="title_activity_modify_item">Modifier</string>
-    <string name="item_successfully_saved">Les changements ont été sauvegardés.</string>
+    <string name="item_successfully_saved">Les changements ont été sauvegardés</string>
     <string name="item_error_save">Une erreur s\'est produite durant la sauvegarde !</string>
     <string name="images">Images</string>
     <string name="properties">Propriétés</string>
@@ -101,11 +101,12 @@
     <string name="content">Contenu</string>
     <string name="warning_image_deletion">Voulez-vous réellement supprimer cette image ?</string>
     <string name="must_not_be_empty">Ne peut pas être vide !</string>
-    <string name="image_deletion_successful">Image supprimée avec succès.</string>
-    <string name="item_deletion_successful">Elément supprimé avec succès.</string>
+    <string name="image_deletion_successful">Image supprimée avec succès</string>
+    <string name="item_deletion_successful">Elément supprimé avec succès</string>
     <string name="help">Aide</string>
     <string name="hide_help_button">Cacher le bouton d\'aide</string>
     <string name="reduce_images_button">Réduire la taille des images</string>
-    <string name="collection_loaded">Collection \'%1$s\' chargée.</string>
+    <string name="collection_loaded">Collection \'%1$s\' chargée</string>
     <string name="must_contains_alphabet">Ne peut contenir que des caractères alphabétiques et des tirets</string>
+    <string name="help_description">Aide</string>
 </resources>
