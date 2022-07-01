@@ -3,7 +3,6 @@ package com.avlweb.collectionviewer.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,7 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
@@ -192,11 +193,7 @@ public class ItemDisplay extends BaseActivity {
             builder.setTitle(getString(R.string.element_not_found));
             builder.setIcon(R.drawable.ic_launcher);
             builder.setMessage(getString(R.string.list_position) + this.position);
-            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.cancel());
             builder.create().show();
             return;
         }
@@ -260,11 +257,7 @@ public class ItemDisplay extends BaseActivity {
             builder.setIcon(R.drawable.ic_launcher);
             builder.setTitle(getString(R.string.image_not_found));
             builder.setMessage(getString(R.string.path) + absolutePath);
-            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.cancel());
             builder.create().show();
         }
     }

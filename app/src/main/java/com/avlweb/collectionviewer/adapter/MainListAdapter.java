@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.avlweb.collectionviewer.R;
+import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionItem;
+import com.avlweb.collectionviewer.model.CollectionModel;
+import com.avlweb.collectionviewer.ui.MainList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +24,7 @@ import java.util.Set;
 
 //public class MainListAdapter extends ArrayAdapter<Item> implements SectionIndexer {
 public class MainListAdapter extends ArrayAdapter<CollectionItem> {
+    private final CollectionInfos infos;
     private final int scrollbarPosition;
     private final HashMap<String, Integer> mapIndex;
     private final String[] sections;
@@ -62,6 +67,8 @@ public class MainListAdapter extends ArrayAdapter<CollectionItem> {
         sectionList.toArray(sections);
 
         this.scrollbarPosition = scrollbarPosition;
+
+        this.infos = CollectionModel.getInstance().getInfos();
     }
 
     @Override
@@ -81,22 +88,26 @@ public class MainListAdapter extends ArrayAdapter<CollectionItem> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final CollectionItem temp = getItem(position);
+
+        // Menu is disabled because sample collection is read only
+        if ((this.infos.getName().equals(MainList.SAMPLE_COLLECTION_FR_NAME))
+                || (this.infos.getName().equals(MainList.SAMPLE_COLLECTION_EN_NAME))) {
+            viewHolder.button.setEnabled(false);
+            viewHolder.button.setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.button.setEnabled(true);
+            viewHolder.button.setVisibility(View.VISIBLE);
+        }
         viewHolder.text.setText(temp.getName());
-        viewHolder.text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (customListener != null) {
-                    customListener.onTextClickListener(position);
-                }
+        viewHolder.text.setOnClickListener(v -> {
+            if (customListener != null) {
+                customListener.onTextClickListener(position);
             }
         });
         final View finalConvertView = convertView;
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (customListener != null) {
-                    customListener.onButtonClickListener(finalConvertView, position);
-                }
+        viewHolder.button.setOnClickListener(v -> {
+            if (customListener != null) {
+                customListener.onButtonClickListener(finalConvertView, position);
             }
         });
 

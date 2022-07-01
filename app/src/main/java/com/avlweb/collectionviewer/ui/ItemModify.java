@@ -3,14 +3,12 @@ package com.avlweb.collectionviewer.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +26,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.exifinterface.media.ExifInterface;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
@@ -120,21 +121,13 @@ public class ItemModify extends BaseActivity {
         alertDialogBuilder.setIcon(R.drawable.ic_warning);
         alertDialogBuilder.setMessage(R.string.warning_image_deletion);
         alertDialogBuilder.setNegativeButton(getString(R.string.no),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, arg1) -> dialog.cancel());
         alertDialogBuilder.setPositiveButton(getString(R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        currentItem.deleteImage(currentImageIndex);
-                        currentImageIndex = 0;
-                        displayImage();
-                        Toast.makeText(getApplicationContext(), R.string.image_deletion_successful, Toast.LENGTH_SHORT).show();
-                    }
+                (arg0, arg1) -> {
+                    currentItem.deleteImage(currentImageIndex);
+                    currentImageIndex = 0;
+                    displayImage();
+                    Toast.makeText(getApplicationContext(), R.string.image_deletion_successful, Toast.LENGTH_SHORT).show();
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -149,7 +142,7 @@ public class ItemModify extends BaseActivity {
                 setResult(Activity.RESULT_OK, resultIntent);
                 this.finish();
                 return true;
-            case R.id.save_btn:
+            case (R.id.save_btn):
                 saveItem();
                 return true;
         }
@@ -252,7 +245,7 @@ public class ItemModify extends BaseActivity {
                 finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
             byte[] bitmapped = bos.toByteArray();
-            fos = new FileOutputStream(new File(destPath));
+            fos = new FileOutputStream(destPath);
             fos.write(bitmapped);
 
         } catch (IOException e) {
@@ -313,11 +306,7 @@ public class ItemModify extends BaseActivity {
             builder.setTitle(getString(R.string.element_not_found));
             builder.setIcon(R.drawable.ic_launcher);
             builder.setMessage(getString(R.string.list_position) + this.position);
-            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.cancel());
             builder.create().show();
             return;
         }
@@ -398,11 +387,7 @@ public class ItemModify extends BaseActivity {
             builder.setIcon(R.drawable.ic_launcher);
             builder.setTitle(getString(R.string.image_not_found));
             builder.setMessage(getString(R.string.path) + absolutePath);
-            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.cancel());
             builder.create().show();
         }
     }

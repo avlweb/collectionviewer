@@ -162,10 +162,11 @@
 
     <ImageButton
         android:id="@+id/fab"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="20dp"
         android:background="@drawable/circle"
+        android:contentDescription="@string/help_description"
         android:onClick="openHelp"
         android:src="@drawable/action_help"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -17,7 +17,7 @@
         android:padding="10dp"
         android:text="@string/app_name"
         android:textColor="@android:color/white"
-        android:textSize="26sp"
+        android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -30,20 +30,22 @@
         app:layout_constraintTop_toBottomOf="@id/title" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listViewHome"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="@color/dark_blue"
         android:dividerHeight="1dp"
+        android:scrollbarStyle="outsideInset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <ImageButton
         android:id="@+id/fab"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="20dp"
         android:background="@drawable/circle"
+        android:contentDescription="@string/help_description"
         android:onClick="openHelp"
         android:src="@drawable/action_help"
         app:layout_constraintBottom_toBottomOf="parent"

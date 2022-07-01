@@ -3,7 +3,6 @@ package com.avlweb.collectionviewer.ui;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.InputType;
@@ -17,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.NavUtils;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
@@ -215,11 +216,7 @@ public class SearchInCollection extends Activity {
                 builder.setTitle(R.string.search);
                 builder.setIcon(R.drawable.ic_launcher);
                 builder.setMessage(getString(R.string.no_item_found));
-                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                builder.setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.cancel());
                 builder.create().show();
 
                 for (CollectionItem item : items)

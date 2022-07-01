@@ -20,7 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.NavUtils;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionModel;
@@ -74,11 +76,11 @@ public class CollectionModify extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case (android.R.id.home):
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
 
-            case R.id.save_btn:
+            case (R.id.save_btn):
                 saveDatas();
                 return true;
         }
@@ -135,25 +137,19 @@ public class CollectionModify extends BaseActivity {
 
         Button btnOK = dialog.findViewById(R.id.btn_ok);
         Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText propertyName = dialog.findViewById(R.id.propertyName);
-                String name = propertyName.getText().toString();
-                if (name.isEmpty()) {
-                    propertyName.setError(getString(R.string.must_not_be_empty));
-                    return;
-                }
-                dialog.dismiss();
-                createNewProperty(name);
+        btnOK.setOnClickListener(view1 -> {
+            EditText propertyName = dialog.findViewById(R.id.propertyName);
+            String name = propertyName.getText().toString();
+            if (name.isEmpty()) {
+                propertyName.setError(getString(R.string.must_not_be_empty));
+                return;
             }
+            dialog.dismiss();
+            createNewProperty(name);
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard();
-                dialog.cancel();
-            }
+        btnCancel.setOnClickListener(view12 -> {
+            hideKeyboard();
+            dialog.cancel();
         });
 
         dialog.setCancelable(false);
@@ -178,14 +174,12 @@ public class CollectionModify extends BaseActivity {
         textView.setVisibility(View.GONE);
 
         final ScrollView scrollView = findViewById(R.id.detailsScrollview);
-        scrollView.post(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ignored) {
-                }
-                scrollView.fullScroll(View.FOCUS_DOWN);
+        scrollView.post(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ignored) {
             }
+            scrollView.fullScroll(View.FOCUS_DOWN);
         });
     }
 

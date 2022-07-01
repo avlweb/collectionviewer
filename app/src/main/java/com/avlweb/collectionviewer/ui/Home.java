@@ -6,12 +6,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -25,9 +25,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
+
 import com.avlweb.collectionviewer.BuildConfig;
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.adapter.HomeListAdapter;
@@ -97,12 +99,16 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 getFilesRecursive(availableCollections, defaultDir.getAbsolutePath(), false);
         }
 
-        // Get scrollbar position from settings
+        // Set scrollbar position according to settings
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
+        ListView lv = findViewById(R.id.listViewHome);
+        if (scrollbarPosition == 1)
+            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
+        else
+            lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
 
         // Populate list of collections
-        ListView lv = findViewById(R.id.listView);
         adapter = new HomeListAdapter(this, availableCollections, scrollbarPosition);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
@@ -119,16 +125,16 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case (android.R.id.home):
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
 
-            case R.id.menu_settings:
+            case (R.id.menu_settings):
                 Intent intent = new Intent(this, Settings.class);
                 startActivity(intent);
                 return true;
 
-            case R.id.menu_add:
+            case (R.id.menu_add):
                 final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog_new_something);
                 dialog.setTitle(getString(R.string.new_collection));
@@ -138,35 +144,29 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
 
                 Button btnOK = dialog.findViewById(R.id.btn_ok);
                 Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-                btnOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        EditText propertyName = dialog.findViewById(R.id.propertyName);
-                        String name = propertyName.getText().toString();
-                        if (name.isEmpty()) {
-                            propertyName.setError(getString(R.string.must_not_be_empty));
-                            return;
-                        }
-                        if (!name.matches("([A-Za-z0-9]|-)+")) {
-                            propertyName.setError(getString(R.string.must_contains_alphabet));
-                            return;
-                        }
-                        dialog.dismiss();
-                        addCollection(name);
+                btnOK.setOnClickListener(view -> {
+                    EditText propertyName = dialog.findViewById(R.id.propertyName);
+                    String name = propertyName.getText().toString();
+                    if (name.isEmpty()) {
+                        propertyName.setError(getString(R.string.must_not_be_empty));
+                        return;
                     }
+                    if (!name.matches("([A-Za-z0-9]|-)+")) {
+                        propertyName.setError(getString(R.string.must_contains_alphabet));
+                        return;
+                    }
+                    dialog.dismiss();
+                    addCollection(name);
                 });
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hideKeyboard();
-                        dialog.cancel();
-                    }
+                btnCancel.setOnClickListener(view -> {
+                    hideKeyboard();
+                    dialog.cancel();
                 });
                 dialog.setCancelable(false);
                 dialog.show();
                 return true;
 
-            case R.id.menu_version:
+            case (R.id.menu_version):
                 Context context = getApplicationContext();
                 PackageManager packageManager = context.getPackageManager();
                 String packageName = context.getPackageName();
@@ -183,11 +183,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 builder.setIcon(R.drawable.ic_launcher);
                 builder.setMessage(String.format(Locale.getDefault(), getString(R.string.appli_version),
                         context.getString(R.string.app_name), versionName, buildDate));
-                builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                builder.setPositiveButton(getString(R.string.ok), (dialog1, which) -> dialog1.cancel());
                 builder.create().show();
                 return true;
         }
@@ -263,12 +259,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 alertDialogBuilder.setIcon(R.drawable.ic_launcher);
                 alertDialogBuilder.setMessage(R.string.warning_permission);
                 alertDialogBuilder.setPositiveButton(getString(R.string.ok),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                finishAndRemoveTask();
-                            }
-                        });
+                        (arg0, arg1) -> finishAndRemoveTask());
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
@@ -285,38 +276,30 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_modify:
+            case (R.id.menu_modify):
                 // Load selected collection
                 XmlFactory.readXMLFile(this.selectedCollection.getXmlPath());
                 // Display activity to modify the collection
                 Intent intent = new Intent(this, CollectionModify.class);
                 startActivity(intent);
                 return true;
-            case R.id.menu_delete:
+            case (R.id.menu_delete):
                 // Display dialog to ask user to confirm the deletion
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
                 alertDialogBuilder.setMessage(R.string.warning_collection_deletion);
                 alertDialogBuilder.setNegativeButton(getString(R.string.no),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int arg1) {
-                                dialog.cancel();
-                            }
-                        });
+                        (dialog, arg1) -> dialog.cancel());
                 alertDialogBuilder.setPositiveButton(getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                // Delete the collection
-                                File collectionPath = new File(selectedCollection.getXmlPath());
-                                if (deleteRecursive(collectionPath.getParentFile())) {
-                                    removeCollectionFromList(selectedCollection);
-                                    Toast.makeText(getApplicationContext(), R.string.collection_deletion_successful, Toast.LENGTH_SHORT).show();
-                                } else
-                                    Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
-                            }
+                        (arg0, arg1) -> {
+                            // Delete the collection
+                            File collectionPath = new File(selectedCollection.getXmlPath());
+                            if (deleteRecursive(collectionPath.getParentFile())) {
+                                removeCollectionFromList(selectedCollection);
+                                Toast.makeText(getApplicationContext(), R.string.collection_deletion_successful, Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(getApplicationContext(), R.string.deletion_error, Toast.LENGTH_SHORT).show();
                         });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
@@ -361,6 +344,8 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             boolean mkdirResult = defaultImagePath.mkdirs();
             Log.d("HOME", "mkdir result = " + mkdirResult);
             AssetManager assetManager = getAssets();
+            String language = Resources.getSystem().getConfiguration().locale.getLanguage();
+            Log.d("HOME", "language = " + language);
             try {
                 // Copy all files from asset "Default" directory
                 String[] assets = assetManager.list("Default");
@@ -369,8 +354,11 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 for (String asset : assets) {
                     Log.d("HOME", "asset = " + asset);
                     // Destination path differs whatever it is an image or the xml file
-                    if (asset.endsWith(MainList.SAMPLE_COLLECTION_XML)) {
-                        copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
+                    if (asset.endsWith(".xml")) {
+                        if (((language.equals("fr")) && (asset.endsWith(MainList.SAMPLE_COLLECTION_FR_XML)))
+                                || ((!language.equals("fr")) && (asset.endsWith(MainList.SAMPLE_COLLECTION_EN_XML)))) {
+                            copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
+                        }
                     } else {
                         copyFileFromAssets(assetManager, asset, defaultImagePath.getAbsolutePath());
                     }
@@ -384,26 +372,26 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     }
 
     private void copyFileFromAssets(AssetManager assetManager, String file2Copy, String destDir) {
-        FileChannel in_chan = null, out_chan = null;
+        FileChannel inChannel = null, outChannel = null;
         try {
             AssetFileDescriptor in_afd = assetManager.openFd("Default/" + file2Copy);
             FileInputStream in_stream = in_afd.createInputStream();
-            in_chan = in_stream.getChannel();
+            inChannel = in_stream.getChannel();
             Log.d("HOME", "Asset space in file : start = " + in_afd.getStartOffset() + ", length = " + in_afd.getLength());
             File out_file = new File(destDir + File.separator + file2Copy);
             Log.d("HOME", "out file : " + out_file.getAbsolutePath());
             FileOutputStream out_stream = new FileOutputStream(out_file);
-            out_chan = out_stream.getChannel();
-            in_chan.transferTo(in_afd.getStartOffset(), in_afd.getLength(), out_chan);
+            outChannel = out_stream.getChannel();
+            inChannel.transferTo(in_afd.getStartOffset(), in_afd.getLength(), outChannel);
         } catch (IOException ioe) {
             Log.w("HOME", "Failed to copy file '" + file2Copy + "' to external storage : " + ioe);
         } finally {
             try {
-                if (in_chan != null) {
-                    in_chan.close();
+                if (inChannel != null) {
+                    inChannel.close();
                 }
-                if (out_chan != null) {
-                    out_chan.close();
+                if (outChannel != null) {
+                    outChannel.close();
                 }
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -421,7 +409,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 if (listFile.isDirectory())
                     getFilesRecursive(files, fname, skipDefault);
                 else if (fname.endsWith(".xml")) {
-                    if (fname.endsWith(MainList.SAMPLE_COLLECTION_XML) && skipDefault)
+                    if (fname.endsWith(MainList.SAMPLE_COLLECTION_FR_XML) && skipDefault)
                         continue;
                     // Read XML file to get collection infos
                     CollectionInfos infos = XmlFactory.readCollectionInfos(fname);

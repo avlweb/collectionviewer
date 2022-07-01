@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
 import androidx.core.app.NavUtils;
+
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionModel;

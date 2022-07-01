@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <collection>
     <content>
-        <name>My Playing Cards</name>
+        <name>Classical 54 Cards Deck</name>
         <description>Sample collection to show how CollectionViewer works ! This collection is a classical playing deck of cards.</description>
         <version>1.0</version>
     </content>
@@ -24,7 +24,7 @@
             <name>Ace of clubs</name>
             <description>Ace of clubs card.</description>
             <property>black</property>
-            <property>1</property>
+            <property>ace</property>
             <property>clubs</property>
             <img>images/1_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
@@ -111,10 +111,37 @@
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
+            <name>Jack of clubs</name>
+            <description>Jack of clubs.</description>
+            <property>black</property>
+            <property>jack</property>
+            <property>clubs</property>
+            <img>images/Jack_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Queen of clubs</name>
+            <description>Queen of clubs.</description>
+            <property>black</property>
+            <property>queen</property>
+            <property>clubs</property>
+            <img>images/Queen_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>King of clubs</name>
+            <description>King of clubs.</description>
+            <property>black</property>
+            <property>king</property>
+            <property>clubs</property>
+            <img>images/King_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
             <name>Ace of spades</name>
             <description>Ace of spades card.</description>
             <property>black</property>
-            <property>1</property>
+            <property>ace</property>
             <property>spades</property>
             <img>images/1_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
@@ -201,10 +228,37 @@
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
+            <name>Jack of spades</name>
+            <description>Jack of spades.</description>
+            <property>black</property>
+            <property>jack</property>
+            <property>spades</property>
+            <img>images/Jack_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Queen of spades</name>
+            <description>Queen of spades.</description>
+            <property>black</property>
+            <property>queen</property>
+            <property>spades</property>
+            <img>images/Queen_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>King of spades</name>
+            <description>King of spades.</description>
+            <property>black</property>
+            <property>king</property>
+            <property>spades</property>
+            <img>images/King_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
             <name>Ace of hearts</name>
             <description>Ace of hearts card.</description>
             <property>red</property>
-            <property>1</property>
+            <property>ace</property>
             <property>hearts</property>
             <img>images/1_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
@@ -291,10 +345,37 @@
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
+            <name>Jack of hearts</name>
+            <description>Jack of hearts.</description>
+            <property>red</property>
+            <property>jack</property>
+            <property>hearts</property>
+            <img>images/Jack_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Queen of hearts</name>
+            <description>Queen of hearts.</description>
+            <property>red</property>
+            <property>queen</property>
+            <property>hearts</property>
+            <img>images/Queen_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>King of hearts</name>
+            <description>King of hearts.</description>
+            <property>red</property>
+            <property>king</property>
+            <property>hearts</property>
+            <img>images/King_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
             <name>Ace of diamonds</name>
             <description>Ace of diamonds card.</description>
             <property>red</property>
-            <property>1</property>
+            <property>ace</property>
             <property>diamonds</property>
             <img>images/1_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
@@ -378,6 +459,51 @@
             <property>10</property>
             <property>diamonds</property>
             <img>images/10_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Jack of diamonds</name>
+            <description>Jack of diamonds.</description>
+            <property>red</property>
+            <property>jack</property>
+            <property>diamonds</property>
+            <img>images/Jack_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Queen of diamonds</name>
+            <description>Queen of diamonds.</description>
+            <property>red</property>
+            <property>queen</property>
+            <property>diamonds</property>
+            <img>images/Queen_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>King of diamonds</name>
+            <description>King of diamonds.</description>
+            <property>red</property>
+            <property>king</property>
+            <property>diamonds</property>
+            <img>images/King_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Black Joker</name>
+            <description>Black Joker.</description>
+            <property>black</property>
+            <property>joker</property>
+            <property></property>
+            <img>images/Joker_black.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Red Joker</name>
+            <description>Red Joker.</description>
+            <property>red</property>
+            <property>joker</property>
+            <property></property>
+            <img>images/Joker_red.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
     </items>

@@ -1,15 +1,16 @@
 package com.avlweb.collectionviewer.ui;
 
+import static com.avlweb.collectionviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
+import static com.avlweb.collectionviewer.ui.Settings.KEY_PREFS;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import com.avlweb.collectionviewer.R;
 
-import static com.avlweb.collectionviewer.ui.Settings.KEY_HIDE_HELP_BUTTON;
-import static com.avlweb.collectionviewer.ui.Settings.KEY_PREFS;
+import com.avlweb.collectionviewer.R;
 
 public abstract class BaseActivity extends Activity {
     private final int ACTIVITY_DISPLAY_HELP = 864316548;
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (requestCode == ACTIVITY_DISPLAY_HELP) {
             if (resultData != null) {
+                // Nothing to do
             }
         }
     }

@@ -18,12 +18,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.core.app.NavUtils;
 import androidx.documentfile.provider.DocumentFile;
+
 import com.avlweb.collectionviewer.R;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class Settings extends Activity {
 
@@ -84,12 +85,7 @@ public class Settings extends Activity {
         TextView textSeekbar = findViewById(R.id.TextLorum);
         textSeekbar.setTextSize(getFontSizeFromPref(fontSize));
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                doOnFontSizeChanged(group, checkedId);
-            }
-        });
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> doOnFontSizeChanged(group));
         RadioButton button = findViewById(R.id.radioButtonSmall);
         switch (fontSize) {
             case 1:
@@ -105,19 +101,19 @@ public class Settings extends Activity {
         button.setChecked(true);
     }
 
-    private void doOnFontSizeChanged(RadioGroup group, int checkedId) {
+    private void doOnFontSizeChanged(RadioGroup group) {
         int checkedRadioId = group.getCheckedRadioButtonId();
         switch (checkedRadioId) {
-            case R.id.radioButtonSmall:
+            case (R.id.radioButtonSmall):
                 fontSize = 0;
                 break;
-            case R.id.radioButtonNormal:
+            case (R.id.radioButtonNormal):
                 fontSize = 1;
                 break;
-            case R.id.radioButtonBig:
+            case (R.id.radioButtonBig):
                 fontSize = 2;
                 break;
-            case R.id.radioButtonVerybig:
+            case (R.id.radioButtonVerybig):
                 fontSize = 3;
                 break;
         }
@@ -126,11 +122,8 @@ public class Settings extends Activity {
     }
 
     public static int getFontSizeFromPref(int val) {
-        int res = 14;
+        int res;
         switch (val) {
-            case 0:
-                res = 14;
-                break;
             case 1:
                 res = 16;
                 break;
@@ -139,6 +132,9 @@ public class Settings extends Activity {
                 break;
             case 3:
                 res = 20;
+                break;
+            default:
+                res = 14;
                 break;
         }
         return res;
@@ -226,7 +222,7 @@ public class Settings extends Activity {
         }
     }
 
-    private void getXmlFiles(ArrayList<String> files, Uri uri) {
+    private void getXmlFiles(Uri uri) {
         Log.d("SETTINGS", "uri = " + uri.getPath());
         DocumentFile dir = DocumentFile.fromTreeUri(this, uri);
         Log.d("SETTINGS", "isDirectory = " + dir.isDirectory());

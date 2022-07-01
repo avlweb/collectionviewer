@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<collection>
+    <content>
+        <name>Classique Jeu de 54 Cartes</name>
+        <description>Collection d'exmple pour montrer comment fonctionne CollectionViewer ! Cette collection est un classique jeu de carte.</description>
+        <version>1.0</version>
+    </content>
+    <properties>
+        <property>
+            <name>Couleur</name>
+            <description>Couleur de la carte</description>
+        </property>
+        <property>
+            <name>Rang</name>
+            <description>Rang de la carte ou honneur</description>
+        </property>
+        <property>
+            <name>Enseigne</name>
+            <description>Pique, coeur, carreau ou trèfle</description>
+        </property>
+    </properties>
+    <items>
+        <item>
+            <name>As de trèfle</name>
+            <description>As de trèfle.</description>
+            <property>noire</property>
+            <property>as</property>
+            <property>trèfle</property>
+            <img>images/1_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 de trèfle</name>
+            <description>2 de trèfle.</description>
+            <property>noire</property>
+            <property>2</property>
+            <property>trèfle</property>
+            <img>images/2_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 de trèfle</name>
+            <description>3 de trèfle.</description>
+            <property>noire</property>
+            <property>3</property>
+            <property>trèfle</property>
+            <img>images/3_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 de trèfle</name>
+            <description>4 de trèfle.</description>
+            <property>noire</property>
+            <property>4</property>
+            <property>trèfle</property>
+            <img>images/4_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 de trèfle</name>
+            <description>5 de trèfle.</description>
+            <property>noire</property>
+            <property>5</property>
+            <property>trèfle</property>
+            <img>images/5_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 de trèfle</name>
+            <description>6 de trèfle.</description>
+            <property>noire</property>
+            <property>6</property>
+            <property>trèfle</property>
+            <img>images/6_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 de trèfle</name>
+            <description>7 de trèfle.</description>
+            <property>noire</property>
+            <property>7</property>
+            <property>trèfle</property>
+            <img>images/7_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 de trèfle</name>
+            <description>8 de trèfle.</description>
+            <property>noire</property>
+            <property>8</property>
+            <property>trèfle</property>
+            <img>images/8_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 de trèfle</name>
+            <description>9 de trèfle.</description>
+            <property>noire</property>
+            <property>9</property>
+            <property>trèfle</property>
+            <img>images/9_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 de trèfle</name>
+            <description>10 de trèfle.</description>
+            <property>noire</property>
+            <property>10</property>
+            <property>trèfle</property>
+            <img>images/10_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Valet de trèfle</name>
+            <description>Valet de trèfle.</description>
+            <property>noire</property>
+            <property>valet</property>
+            <property>trèfle</property>
+            <img>images/Jack_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Dame de trèfle</name>
+            <description>Dame de trèfle.</description>
+            <property>noire</property>
+            <property>dame</property>
+            <property>trèfle</property>
+            <img>images/Queen_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Roi de trèfle</name>
+            <description>Roi de trèfle.</description>
+            <property>noire</property>
+            <property>roi</property>
+            <property>trèfle</property>
+            <img>images/King_of_clubs.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>As de pique</name>
+            <description>As de pique.</description>
+            <property>noire</property>
+            <property>as</property>
+            <property>pique</property>
+            <img>images/1_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 de pique</name>
+            <description>2 de pique.</description>
+            <property>noire</property>
+            <property>2</property>
+            <property>pique</property>
+            <img>images/2_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 de pique</name>
+            <description>3 de pique.</description>
+            <property>noire</property>
+            <property>3</property>
+            <property>pique</property>
+            <img>images/3_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 de pique</name>
+            <description>4 de pique.</description>
+            <property>noire</property>
+            <property>4</property>
+            <property>pique</property>
+            <img>images/4_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 de pique</name>
+            <description>5 de pique.</description>
+            <property>noire</property>
+            <property>5</property>
+            <property>pique</property>
+            <img>images/5_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 de pique</name>
+            <description>6 de pique.</description>
+            <property>noire</property>
+            <property>6</property>
+            <property>pique</property>
+            <img>images/6_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 de pique</name>
+            <description>7 de pique.</description>
+            <property>noire</property>
+            <property>7</property>
+            <property>pique</property>
+            <img>images/7_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 de pique</name>
+            <description>8 de pique.</description>
+            <property>noire</property>
+            <property>8</property>
+            <property>pique</property>
+            <img>images/8_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 de pique</name>
+            <description>9 de pique.</description>
+            <property>noire</property>
+            <property>9</property>
+            <property>pique</property>
+            <img>images/9_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 de pique</name>
+            <description>10 de pique.</description>
+            <property>noire</property>
+            <property>10</property>
+            <property>pique</property>
+            <img>images/10_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Valet de pique</name>
+            <description>Valet de pique.</description>
+            <property>noire</property>
+            <property>valet</property>
+            <property>pique</property>
+            <img>images/Jack_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Dame de pique</name>
+            <description>Dame de pique.</description>
+            <property>noire</property>
+            <property>dame</property>
+            <property>pique</property>
+            <img>images/Queen_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Roi de pique</name>
+            <description>Roi de pique.</description>
+            <property>noire</property>
+            <property>roi</property>
+            <property>pique</property>
+            <img>images/King_of_spades.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>As de coeur</name>
+            <description>As de coeur.</description>
+            <property>rouge</property>
+            <property>as</property>
+            <property>coeur</property>
+            <img>images/1_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 de coeur</name>
+            <description>2 de coeur.</description>
+            <property>rouge</property>
+            <property>2</property>
+            <property>coeur</property>
+            <img>images/2_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 de coeur</name>
+            <description>3 de coeur.</description>
+            <property>rouge</property>
+            <property>3</property>
+            <property>coeur</property>
+            <img>images/3_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 de coeur</name>
+            <description>4 de coeur.</description>
+            <property>rouge</property>
+            <property>4</property>
+            <property>coeur</property>
+            <img>images/4_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 de coeur</name>
+            <description>5 de coeur.</description>
+            <property>rouge</property>
+            <property>5</property>
+            <property>coeur</property>
+            <img>images/5_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 de coeur</name>
+            <description>6 de coeur.</description>
+            <property>rouge</property>
+            <property>6</property>
+            <property>coeur</property>
+            <img>images/6_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 de coeur</name>
+            <description>7 de coeur.</description>
+            <property>rouge</property>
+            <property>7</property>
+            <property>coeur</property>
+            <img>images/7_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 de coeur</name>
+            <description>8 de coeur.</description>
+            <property>rouge</property>
+            <property>8</property>
+            <property>coeur</property>
+            <img>images/8_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 de coeur</name>
+            <description>9 de coeur.</description>
+            <property>rouge</property>
+            <property>9</property>
+            <property>coeur</property>
+            <img>images/9_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 de coeur</name>
+            <description>10 de coeur.</description>
+            <property>rouge</property>
+            <property>10</property>
+            <property>coeur</property>
+            <img>images/10_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Valet de coeur</name>
+            <description>Valet de coeur.</description>
+            <property>noire</property>
+            <property>valet</property>
+            <property>coeur</property>
+            <img>images/Jack_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Dame de coeur</name>
+            <description>Dame de coeur.</description>
+            <property>noire</property>
+            <property>dame</property>
+            <property>coeur</property>
+            <img>images/Queen_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Roi de coeur</name>
+            <description>Roi de coeur.</description>
+            <property>noire</property>
+            <property>roi</property>
+            <property>coeur</property>
+            <img>images/King_of_hearts.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>As of diamonds</name>
+            <description>As of diamonds.</description>
+            <property>rouge</property>
+            <property>as</property>
+            <property>carreau</property>
+            <img>images/1_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>2 of diamonds</name>
+            <description>2 of diamonds.</description>
+            <property>rouge</property>
+            <property>2</property>
+            <property>carreau</property>
+            <img>images/2_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>3 of diamonds</name>
+            <description>3 of diamonds.</description>
+            <property>rouge</property>
+            <property>3</property>
+            <property>carreau</property>
+            <img>images/3_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>4 of diamonds</name>
+            <description>4 of diamonds.</description>
+            <property>rouge</property>
+            <property>4</property>
+            <property>carreau</property>
+            <img>images/4_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>5 of diamonds</name>
+            <description>5 of diamonds.</description>
+            <property>rouge</property>
+            <property>5</property>
+            <property>carreau</property>
+            <img>images/5_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>6 of diamonds</name>
+            <description>6 of diamonds.</description>
+            <property>rouge</property>
+            <property>6</property>
+            <property>carreau</property>
+            <img>images/6_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>7 of diamonds</name>
+            <description>7 of diamonds.</description>
+            <property>rouge</property>
+            <property>7</property>
+            <property>carreau</property>
+            <img>images/7_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>8 of diamonds</name>
+            <description>8 of diamonds.</description>
+            <property>rouge</property>
+            <property>8</property>
+            <property>carreau</property>
+            <img>images/8_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>9 of diamonds</name>
+            <description>9 of diamonds.</description>
+            <property>rouge</property>
+            <property>9</property>
+            <property>carreau</property>
+            <img>images/9_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>10 of diamonds</name>
+            <description>10 of diamonds.</description>
+            <property>rouge</property>
+            <property>10</property>
+            <property>carreau</property>
+            <img>images/10_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Valet of diamonds</name>
+            <description>Valet of diamonds.</description>
+            <property>rouge</property>
+            <property>valet</property>
+            <property>carreau</property>
+            <img>images/Jack_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Dame of diamonds</name>
+            <description>Dame of diamonds.</description>
+            <property>rouge</property>
+            <property>dame</property>
+            <property>carreau</property>
+            <img>images/Queen_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Roi of diamonds</name>
+            <description>Roi of diamonds.</description>
+            <property>rouge</property>
+            <property>roi</property>
+            <property>carreau</property>
+            <img>images/King_of_diamonds.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Joker noir</name>
+            <description>Joker noir.</description>
+            <property>noire</property>
+            <property>joker</property>
+            <property></property>
+            <img>images/Joker_black.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+        <item>
+            <name>Joker rouge</name>
+            <description>Joker rouge.</description>
+            <property>rouge</property>
+            <property>joker</property>
+            <property></property>
+            <img>images/Joker_red.png</img>
+            <img>images/card_back_blue_and_brown.png</img>
+        </item>
+    </items>
+</collection>

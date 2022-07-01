@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,8 +33,10 @@ import java.util.List;
 public class MainList extends BaseActivity implements MainListAdapter.customButtonListener {
     private final int ACTIVITY_ITEM_MODIFY = 486758485;
     private final int ACTIVITY_ITEM_DISPLAY = 846516548;
-    public static final String SAMPLE_COLLECTION_XML = "Sample_collection.xml";
-    public static final String SAMPLE_COLLECTION_NAME = "My Playing Cards";
+    public static final String SAMPLE_COLLECTION_FR_XML = "sample_collection_fr.xml";
+    public static final String SAMPLE_COLLECTION_EN_XML = "sample_collection_en.xml";
+    public static final String SAMPLE_COLLECTION_FR_NAME = "Mon jeu de carte";
+    public static final String SAMPLE_COLLECTION_EN_NAME = "My Playing Cards";
     private int position = 0;
     private int maxPosition = 0;
     private MainListAdapter adapter;
@@ -55,7 +56,6 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         }
 
         displayHelpButton();
-
         buildMainListContent();
     }
 
@@ -69,7 +69,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case (android.R.id.home):
                 // Save all changes to XML file if needed
                 if (collectionIsModified) {
                     if (XmlFactory.writeXml())
@@ -81,7 +81,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
 
-            case R.id.add_btn:
+            case (R.id.add_btn):
                 final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog_new_something);
                 dialog.setTitle(getString(R.string.new_item));
@@ -91,37 +91,31 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
 
                 Button btnOK = dialog.findViewById(R.id.btn_ok);
                 Button btnCancel = dialog.findViewById(R.id.btn_cancel);
-                btnOK.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        EditText propertyName = dialog.findViewById(R.id.propertyName);
-                        String name = propertyName.getText().toString();
-                        if (name.isEmpty()) {
-                            propertyName.setError(getString(R.string.must_not_be_empty));
-                            return;
-                        }
-                        dialog.dismiss();
-                        addItem(name);
+                btnOK.setOnClickListener(view -> {
+                    EditText propertyName = dialog.findViewById(R.id.propertyName);
+                    String name = propertyName.getText().toString();
+                    if (name.isEmpty()) {
+                        propertyName.setError(getString(R.string.must_not_be_empty));
+                        return;
                     }
+                    dialog.dismiss();
+                    addItem(name);
                 });
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        hideKeyboard();
-                        dialog.cancel();
-                    }
+                btnCancel.setOnClickListener(view -> {
+                    hideKeyboard();
+                    dialog.cancel();
                 });
 
                 dialog.setCancelable(false);
                 dialog.show();
                 return true;
 
-            case R.id.search_btn:
+            case (R.id.search_btn):
                 intent = new Intent(this, SearchInCollection.class);
                 startActivity(intent);
                 return true;
 
-            case R.id.menu_about:
+            case (R.id.menu_about):
                 intent = new Intent(this, CollectionDetails.class);
                 startActivity(intent);
                 return true;
@@ -140,31 +134,21 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_modify:
+            case (R.id.menu_modify):
                 collectionIsModified = true;
                 Intent intent = new Intent(this, ItemModify.class);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
                 return true;
-            case R.id.menu_delete:
+            case (R.id.menu_delete):
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
                 alertDialogBuilder.setMessage(R.string.warning_item_deletion);
                 alertDialogBuilder.setNegativeButton(getString(R.string.no),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int arg1) {
-                                dialog.cancel();
-                            }
-                        });
+                        (dialog, arg1) -> dialog.cancel());
                 alertDialogBuilder.setPositiveButton(getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                deleteItem();
-                            }
-                        });
+                        (arg0, arg1) -> deleteItem());
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
                 return true;
@@ -178,13 +162,13 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         if ((requestCode == ACTIVITY_ITEM_DISPLAY) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
                 this.position = resultData.getIntExtra("position", 0);
-                ListView lv = findViewById(R.id.listView1);
+                ListView lv = findViewById(R.id.listViewMain);
                 lv.setSelectionFromTop(this.position, 30);
             }
         } else if ((requestCode == ACTIVITY_ITEM_MODIFY) && (resultCode == Activity.RESULT_OK)) {
             if (resultData != null) {
                 this.position = resultData.getIntExtra("position", 0);
-                ListView lv = findViewById(R.id.listView1);
+                ListView lv = findViewById(R.id.listViewMain);
                 lv.setSelectionFromTop(this.position, 30);
                 adapter.notifyDataSetChanged();
             }
@@ -214,14 +198,14 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         // Set scrollbar position according to settings
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
-        ListView lv = findViewById(R.id.listView1);
+        ListView lv = findViewById(R.id.listViewMain);
         if (scrollbarPosition == 1)
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
         else
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
 
         // Create listview adapter
-        adapter = null;     // For desallocation !
+        adapter = null;     // For GC !
         adapter = new MainListAdapter(this, selectedItems, scrollbarPosition);
         adapter.setCustomButtonListener(this);
         lv.setAdapter(adapter);
@@ -236,12 +220,12 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
 
     private void hideOrNotListView() {
         if (adapter.getCount() == 0) {
-            ListView lv = findViewById(R.id.listView1);
+            ListView lv = findViewById(R.id.listViewMain);
             lv.setVisibility(View.INVISIBLE);
             TextView textView = findViewById(R.id.textView);
             textView.setVisibility(View.VISIBLE);
         } else {
-            ListView lv = findViewById(R.id.listView1);
+            ListView lv = findViewById(R.id.listViewMain);
             lv.setVisibility(View.VISIBLE);
             TextView textView = findViewById(R.id.textView);
             textView.setVisibility(View.INVISIBLE);

@@ -13,15 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import com.avlweb.collectionviewer.R;
 
 import java.util.Locale;
 
 public class Help extends Activity {
     private static final int MAX_VIEWS = 5;
-    private TextView[] dots = new TextView[5];
+    private final TextView[] dots = new TextView[5];
     public static final int HELP_HOME = 0;
     public static final int HELP_MAINLIST = 1;
     public static final int HELP_COLLECTION_MODIFY = 2;

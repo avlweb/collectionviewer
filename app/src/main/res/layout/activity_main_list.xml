@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,13 +30,13 @@
         android:text="@string/about_collection"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/listView1"
+        app:layout_constraintBottom_toTopOf="@+id/listViewMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/listViewMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="@color/dark_blue"
@@ -44,7 +45,6 @@
         android:fastScrollAlwaysVisible="true"
         android:fastScrollEnabled="true"
         android:scrollbarStyle="outsideInset"
-        android:verticalScrollbarPosition="right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
