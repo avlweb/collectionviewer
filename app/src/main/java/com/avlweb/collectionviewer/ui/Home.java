@@ -48,6 +48,8 @@ import java.util.Locale;
 
 public class Home extends BaseActivity implements HomeListAdapter.customButtonListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
+    public static final String SAMPLE_COLLECTION_FR_XML = "sample_collection_fr.xml";
+    public static final String SAMPLE_COLLECTION_EN_XML = "sample_collection_en.xml";
     private final ArrayList<CollectionInfos> availableCollections = new ArrayList<>();
     private CollectionInfos selectedCollection;
     private HomeListAdapter adapter;
@@ -88,7 +90,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
             SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
             // Get flag "Hide sample collection"
             boolean hideSampleCollection = pref.getBoolean(Settings.KEY_HIDE_SAMPLE_COLLECTION, false);
-            // Get Collections Root location
+            // Get Collections Root location. Use default location is not set
             String collectionsRootLocation = pref.getString(Settings.KEY_COLLECTIONS_ROOT_LOCATION, defaultPath.getPath());
 
             // Add collections found in root location
@@ -355,8 +357,8 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                     Log.d("HOME", "asset = " + asset);
                     // Destination path differs whatever it is an image or the xml file
                     if (asset.endsWith(".xml")) {
-                        if (((language.equals("fr")) && (asset.endsWith(MainList.SAMPLE_COLLECTION_FR_XML)))
-                                || ((!language.equals("fr")) && (asset.endsWith(MainList.SAMPLE_COLLECTION_EN_XML)))) {
+                        if (((language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_FR_XML)))
+                                || ((!language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_EN_XML)))) {
                             copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
                         }
                     } else {
@@ -409,12 +411,14 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 if (listFile.isDirectory())
                     getFilesRecursive(files, fname, skipDefault);
                 else if (fname.endsWith(".xml")) {
-                    if (fname.endsWith(MainList.SAMPLE_COLLECTION_FR_XML) && skipDefault)
+                    boolean sampleCollection = fname.endsWith(SAMPLE_COLLECTION_FR_XML) || fname.endsWith(SAMPLE_COLLECTION_EN_XML);
+                    if (sampleCollection && skipDefault)
                         continue;
                     // Read XML file to get collection infos
                     CollectionInfos infos = XmlFactory.readCollectionInfos(fname);
                     infos.setXmlPath(fname);
                     infos.setPath(listFile.getParent());
+                    infos.setSampleCollection(sampleCollection);
                     files.add(infos);
                 }
             }

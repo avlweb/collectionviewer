@@ -33,10 +33,6 @@ import java.util.List;
 public class MainList extends BaseActivity implements MainListAdapter.customButtonListener {
     private final int ACTIVITY_ITEM_MODIFY = 486758485;
     private final int ACTIVITY_ITEM_DISPLAY = 846516548;
-    public static final String SAMPLE_COLLECTION_FR_XML = "sample_collection_fr.xml";
-    public static final String SAMPLE_COLLECTION_EN_XML = "sample_collection_en.xml";
-    public static final String SAMPLE_COLLECTION_FR_NAME = "Mon jeu de carte";
-    public static final String SAMPLE_COLLECTION_EN_NAME = "My Playing Cards";
     private int position = 0;
     private int maxPosition = 0;
     private MainListAdapter adapter;

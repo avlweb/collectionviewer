@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.model.CollectionInfos;
-import com.avlweb.collectionviewer.ui.MainList;
 
 import java.util.ArrayList;
 
@@ -41,9 +40,9 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(this.context);
             if (this.scrollbarPosition == 0)
-                convertView = inflater.inflate(R.layout.my_home_list_left, null);
+                convertView = inflater.inflate(R.layout.my_list_left, null);
             else
-                convertView = inflater.inflate(R.layout.my_home_list_right, null);
+                convertView = inflater.inflate(R.layout.my_list_right, null);
             viewHolder = new ViewHolder();
             viewHolder.text = convertView.findViewById(R.id.thetext);
             viewHolder.button = convertView.findViewById(R.id.thebutton);
@@ -54,8 +53,7 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         final CollectionInfos infos = getItem(position);
 
         // Menu is disabled because sample collection is read only
-        if ((infos.getName().equals(MainList.SAMPLE_COLLECTION_FR_NAME))
-                || (infos.getName().equals(MainList.SAMPLE_COLLECTION_EN_NAME))) {
+        if (infos.isSampleCollection()) {
             viewHolder.button.setEnabled(false);
             viewHolder.button.setVisibility(View.INVISIBLE);
         } else {

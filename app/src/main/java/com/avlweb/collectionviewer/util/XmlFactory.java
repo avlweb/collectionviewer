@@ -1,5 +1,8 @@
 package com.avlweb.collectionviewer.util;
 
+import static com.avlweb.collectionviewer.ui.Home.SAMPLE_COLLECTION_EN_XML;
+import static com.avlweb.collectionviewer.ui.Home.SAMPLE_COLLECTION_FR_XML;
+
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
@@ -142,9 +145,12 @@ public class XmlFactory {
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String strNode = parser.getName();
                     if (strNode.equals("content")) {
-                        infos.setXmlPath(path);
-                        infos.setPath(new File(path).getParent());
-                        collectionModel.setInfos(infos);
+                        if (infos != null) {
+                            infos.setXmlPath(path);
+                            infos.setPath(new File(path).getParent());
+                            infos.setSampleCollection(path.endsWith(SAMPLE_COLLECTION_FR_XML) || path.endsWith(SAMPLE_COLLECTION_EN_XML));
+                            collectionModel.setInfos(infos);
+                        }
                         caseContent = false;
                     } else if (strNode.equals("properties")) {
                         caseProperties = false;

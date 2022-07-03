@@ -6,6 +6,7 @@ public class CollectionInfos {
     private String version;
     private String path;
     private String xmlPath;
+    private boolean sampleCollection;
 
     public CollectionInfos() {
     }
@@ -48,5 +49,13 @@ public class CollectionInfos {
 
     public void setXmlPath(String xmlPath) {
         this.xmlPath = xmlPath;
+    }
+
+    public boolean isSampleCollection() {
+        return sampleCollection;
+    }
+
+    public void setSampleCollection(boolean sampleCollection) {
+        this.sampleCollection = sampleCollection;
     }
 }
