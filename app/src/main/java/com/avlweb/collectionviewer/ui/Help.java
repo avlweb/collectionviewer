@@ -105,7 +105,7 @@ public class Help extends Activity {
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View imageViewContainer = inflater.inflate(R.layout.walkthrough_simple_view, container);
+            View imageViewContainer = inflater.inflate(R.layout.walkthrough_simple_view, null);
             ImageView imageView = imageViewContainer.findViewById(R.id.image_view);
 
             // Get current language

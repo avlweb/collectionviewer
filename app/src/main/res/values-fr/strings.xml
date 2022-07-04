@@ -44,10 +44,8 @@
     <string name="no">Non</string>
     <string name="yes">Oui</string>
     <string name="no_item_found">Aucun élément n\'a été trouvé avec ces critères de recherche</string>
-    <string-array name="scrollbar_position_array">
-        <item>Droite</item>
-        <item>Gauche</item>
-    </string-array>
+    <string name="left">Gauche</string>
+    <string name="right">Droite</string>
     <string name="found_items">%1$d éléments trouvés</string>
     <string name="search_in_collection">Recherche dans la collection</string>
     <string name="choose_font_size">Taille des caractères pour les descriptions</string>
@@ -84,7 +82,7 @@
     <string name="warning_collection_deletion">Voulez-vous réellement supprimer cette collection ?</string>
     <string name="warning">Attention</string>
     <string name="title_activity_modify_item">Modifier</string>
-    <string name="item_successfully_saved">Les changements ont été sauvegardés</string>
+    <string name="item_successfully_saved">Modifications sauvegardées</string>
     <string name="item_error_save">Une erreur s\'est produite durant la sauvegarde !</string>
     <string name="images">Images</string>
     <string name="properties">Propriétés</string>

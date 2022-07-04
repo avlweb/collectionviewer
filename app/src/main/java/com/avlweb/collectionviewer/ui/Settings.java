@@ -10,11 +10,9 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,12 +72,13 @@ public class Settings extends Activity {
         }
         // Get Scrollbar position
         int scrollbar = pref.getInt(KEY_SCROLLBAR, 0);
-        Spinner spinner = findViewById(R.id.spinnerScrollbar);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.scrollbar_position_array, R.layout.my_main_list);
-        adapter.setDropDownViewResource(R.layout.my_main_list);
-        spinner.setAdapter(adapter);
-        spinner.setSelection(scrollbar);
+        RadioButton buttonScrollbar;
+        if (scrollbar == 0) {
+            buttonScrollbar = findViewById(R.id.radioButtonLeft);
+        } else {
+            buttonScrollbar = findViewById(R.id.radioButtonRight);
+        }
+        buttonScrollbar.setChecked(true);
         // Font size
         fontSize = pref.getInt(KEY_FONT_SIZE, 0);
         TextView textSeekbar = findViewById(R.id.TextLorum);
@@ -147,8 +146,8 @@ public class Settings extends Activity {
         EditText rootLocation = findViewById(R.id.EditTextRootLocation);
         editor.putString(KEY_COLLECTIONS_ROOT_LOCATION, rootLocation.getText().toString());
         // Scrollbar position
-        Spinner spinner = findViewById(R.id.spinnerScrollbar);
-        editor.putInt(KEY_SCROLLBAR, spinner.getSelectedItemPosition());
+        RadioButton buttonScrollbar = findViewById(R.id.radioButtonLeft);
+        editor.putInt(KEY_SCROLLBAR, buttonScrollbar.isChecked() ? 0 : 1);
         // Font size
         editor.putInt(KEY_FONT_SIZE, fontSize);
         // Hide sample collection

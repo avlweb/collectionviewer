@@ -212,12 +212,13 @@ public class ItemDisplay extends BaseActivity {
             StringBuilder tmp = new StringBuilder();
             for (int idx = 0; idx < size; idx++) {
                 String value = currentItem.getProperty(idx);
-                if ((value != null) && (value.length() > 0)) {
+                if ((value != null) && (value.length() > 0) && (!value.equals("__NO_VALUE__"))) {
+                    if (idx > 0) {
+                        tmp.append("\n");
+                    }
                     tmp.append(properties.get(idx).getName());
                     tmp.append(" : ");
                     tmp.append(currentItem.getProperty(idx));
-                    if (idx < (size - 1))
-                        tmp.append("\n");
                 }
             }
             TextView textView = findViewById(R.id.textViewDetails2);

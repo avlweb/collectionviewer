@@ -2,13 +2,13 @@
 <collection>
     <content>
         <name>Classique Jeu de 54 Cartes</name>
-        <description>Collection d'exmple pour montrer comment fonctionne CollectionViewer ! Cette collection est un classique jeu de carte.</description>
+        <description>Exemple de collection pour montrer comment fonctionne CollectionViewer ! Cette collection est un classique jeu de 54 cartes.</description>
         <version>1.0</version>
     </content>
     <properties>
         <property>
             <name>Couleur</name>
-            <description>Couleur de la carte</description>
+            <description>Couleur de la carte. Une carte peut être rouge ou noire</description>
         </property>
         <property>
             <name>Rang</name>
@@ -18,6 +18,10 @@
             <name>Enseigne</name>
             <description>Pique, coeur, carreau ou trèfle</description>
         </property>
+        <property>
+            <name>Genre</name>
+            <description>Genre de la carte dans le cas d'une carte d\'honneur : homme ou femme quand</description>
+        </property>
     </properties>
     <items>
         <item>
@@ -26,6 +30,7 @@
             <property>noire</property>
             <property>as</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -35,6 +40,7 @@
             <property>noire</property>
             <property>2</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -44,6 +50,7 @@
             <property>noire</property>
             <property>3</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -53,6 +60,7 @@
             <property>noire</property>
             <property>4</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -62,6 +70,7 @@
             <property>noire</property>
             <property>5</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -71,6 +80,7 @@
             <property>noire</property>
             <property>6</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -80,6 +90,7 @@
             <property>noire</property>
             <property>7</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -89,6 +100,7 @@
             <property>noire</property>
             <property>8</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -98,6 +110,7 @@
             <property>noire</property>
             <property>9</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -107,6 +120,7 @@
             <property>noire</property>
             <property>10</property>
             <property>trèfle</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -116,6 +130,7 @@
             <property>noire</property>
             <property>valet</property>
             <property>trèfle</property>
+            <property>homme</property>
             <img>images/Jack_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -125,6 +140,7 @@
             <property>noire</property>
             <property>dame</property>
             <property>trèfle</property>
+            <property>femme</property>
             <img>images/Queen_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -134,6 +150,7 @@
             <property>noire</property>
             <property>roi</property>
             <property>trèfle</property>
+            <property>homme</property>
             <img>images/King_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -143,6 +160,7 @@
             <property>noire</property>
             <property>as</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -152,6 +170,7 @@
             <property>noire</property>
             <property>2</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -161,6 +180,7 @@
             <property>noire</property>
             <property>3</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -170,6 +190,7 @@
             <property>noire</property>
             <property>4</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -179,6 +200,7 @@
             <property>noire</property>
             <property>5</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -188,6 +210,7 @@
             <property>noire</property>
             <property>6</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -197,6 +220,7 @@
             <property>noire</property>
             <property>7</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -206,6 +230,7 @@
             <property>noire</property>
             <property>8</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -215,6 +240,7 @@
             <property>noire</property>
             <property>9</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -224,6 +250,7 @@
             <property>noire</property>
             <property>10</property>
             <property>pique</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -233,6 +260,7 @@
             <property>noire</property>
             <property>valet</property>
             <property>pique</property>
+            <property>homme</property>
             <img>images/Jack_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -242,6 +270,7 @@
             <property>noire</property>
             <property>dame</property>
             <property>pique</property>
+            <property>femme</property>
             <img>images/Queen_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -251,6 +280,7 @@
             <property>noire</property>
             <property>roi</property>
             <property>pique</property>
+            <property>homme</property>
             <img>images/King_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -260,6 +290,7 @@
             <property>rouge</property>
             <property>as</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -269,6 +300,7 @@
             <property>rouge</property>
             <property>2</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -278,6 +310,7 @@
             <property>rouge</property>
             <property>3</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -287,6 +320,7 @@
             <property>rouge</property>
             <property>4</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -296,6 +330,7 @@
             <property>rouge</property>
             <property>5</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -305,6 +340,7 @@
             <property>rouge</property>
             <property>6</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -314,6 +350,7 @@
             <property>rouge</property>
             <property>7</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -323,6 +360,7 @@
             <property>rouge</property>
             <property>8</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -332,6 +370,7 @@
             <property>rouge</property>
             <property>9</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -341,6 +380,7 @@
             <property>rouge</property>
             <property>10</property>
             <property>coeur</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -350,6 +390,7 @@
             <property>noire</property>
             <property>valet</property>
             <property>coeur</property>
+            <property>homme</property>
             <img>images/Jack_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -359,6 +400,7 @@
             <property>noire</property>
             <property>dame</property>
             <property>coeur</property>
+            <property>femme</property>
             <img>images/Queen_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -368,123 +410,137 @@
             <property>noire</property>
             <property>roi</property>
             <property>coeur</property>
+            <property>homme</property>
             <img>images/King_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>As of diamonds</name>
-            <description>As of diamonds.</description>
+            <name>As de carreau</name>
+            <description>As de carreau.</description>
             <property>rouge</property>
             <property>as</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>2 of diamonds</name>
-            <description>2 of diamonds.</description>
+            <name>2 de carreau</name>
+            <description>2 de carreau.</description>
             <property>rouge</property>
             <property>2</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>3 of diamonds</name>
-            <description>3 of diamonds.</description>
+            <name>3 de carreau</name>
+            <description>3 de carreau.</description>
             <property>rouge</property>
             <property>3</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>4 of diamonds</name>
-            <description>4 of diamonds.</description>
+            <name>4 de carreau</name>
+            <description>4 de carreau.</description>
             <property>rouge</property>
             <property>4</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>5 of diamonds</name>
-            <description>5 of diamonds.</description>
+            <name>5 de carreau</name>
+            <description>5 de carreau.</description>
             <property>rouge</property>
             <property>5</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>6 of diamonds</name>
-            <description>6 of diamonds.</description>
+            <name>6 de carreau</name>
+            <description>6 de carreau.</description>
             <property>rouge</property>
             <property>6</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>7 of diamonds</name>
-            <description>7 of diamonds.</description>
+            <name>7 de carreau</name>
+            <description>7 de carreau.</description>
             <property>rouge</property>
             <property>7</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>8 of diamonds</name>
-            <description>8 of diamonds.</description>
+            <name>8 de carreau</name>
+            <description>8 de carreau.</description>
             <property>rouge</property>
             <property>8</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>9 of diamonds</name>
-            <description>9 of diamonds.</description>
+            <name>9 de carreau</name>
+            <description>9 de carreau.</description>
             <property>rouge</property>
             <property>9</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>10 of diamonds</name>
-            <description>10 of diamonds.</description>
+            <name>10 de carreau</name>
+            <description>10 de carreau.</description>
             <property>rouge</property>
             <property>10</property>
             <property>carreau</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Valet of diamonds</name>
-            <description>Valet of diamonds.</description>
+            <name>Valet de carreau</name>
+            <description>Valet de carreau.</description>
             <property>rouge</property>
             <property>valet</property>
             <property>carreau</property>
+            <property>homme</property>
             <img>images/Jack_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Dame of diamonds</name>
-            <description>Dame of diamonds.</description>
+            <name>Dame de carreau</name>
+            <description>Dame de carreau.</description>
             <property>rouge</property>
             <property>dame</property>
             <property>carreau</property>
+            <property>femme</property>
             <img>images/Queen_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
         <item>
-            <name>Roi of diamonds</name>
-            <description>Roi of diamonds.</description>
+            <name>Roi de carreau</name>
+            <description>Roi de carreau.</description>
             <property>rouge</property>
             <property>roi</property>
             <property>carreau</property>
+            <property>homme</property>
             <img>images/King_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -493,7 +549,8 @@
             <description>Joker noir.</description>
             <property>noire</property>
             <property>joker</property>
-            <property></property>
+            <property>__NO_VALUE__</property>
+            <property>femme,homme</property>
             <img>images/Joker_black.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -502,7 +559,8 @@
             <description>Joker rouge.</description>
             <property>rouge</property>
             <property>joker</property>
-            <property></property>
+            <property>__NO_VALUE__</property>
+            <property>femme,homme</property>
             <img>images/Joker_red.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>

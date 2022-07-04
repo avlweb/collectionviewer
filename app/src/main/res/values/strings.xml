@@ -46,10 +46,8 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="no_item_found">No item was found with those criteria</string>
-    <string-array name="scrollbar_position_array">
-        <item>Right</item>
-        <item>Left</item>
-    </string-array>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
     <string name="found_items">Found %1$d items</string>
     <string name="search_in_collection">Search in collection</string>
     <string name="choose_font_size">Font size for item description</string>

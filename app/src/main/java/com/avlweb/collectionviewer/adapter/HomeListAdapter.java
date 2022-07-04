@@ -40,9 +40,9 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(this.context);
             if (this.scrollbarPosition == 0)
-                convertView = inflater.inflate(R.layout.my_list_left, null);
-            else
                 convertView = inflater.inflate(R.layout.my_list_right, null);
+            else
+                convertView = inflater.inflate(R.layout.my_list_left, null);
             viewHolder = new ViewHolder();
             viewHolder.text = convertView.findViewById(R.id.thetext);
             viewHolder.button = convertView.findViewById(R.id.thebutton);
@@ -55,10 +55,10 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         // Menu is disabled because sample collection is read only
         if (infos.isSampleCollection()) {
             viewHolder.button.setEnabled(false);
-            viewHolder.button.setVisibility(View.INVISIBLE);
+            viewHolder.button.setAlpha(0.2f);
         } else {
             viewHolder.button.setEnabled(true);
-            viewHolder.button.setVisibility(View.VISIBLE);
+            viewHolder.button.setAlpha(1.0f);
         }
         viewHolder.text.setText(infos.getName());
         viewHolder.text.setOnClickListener(v -> {

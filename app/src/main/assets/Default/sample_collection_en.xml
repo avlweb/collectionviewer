@@ -18,6 +18,10 @@
             <name>Suit</name>
             <description>Clubs, diamonds, hearts or spades</description>
         </property>
+        <property>
+            <name>Gender</name>
+            <description>Gender in case of a court card : female or male</description>
+        </property>
     </properties>
     <items>
         <item>
@@ -26,6 +30,7 @@
             <property>black</property>
             <property>ace</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -35,6 +40,7 @@
             <property>black</property>
             <property>2</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -44,6 +50,7 @@
             <property>black</property>
             <property>3</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -53,6 +60,7 @@
             <property>black</property>
             <property>4</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -62,6 +70,7 @@
             <property>black</property>
             <property>5</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -71,6 +80,7 @@
             <property>black</property>
             <property>6</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -80,6 +90,7 @@
             <property>black</property>
             <property>7</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -89,6 +100,7 @@
             <property>black</property>
             <property>8</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -98,6 +110,7 @@
             <property>black</property>
             <property>9</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -107,6 +120,7 @@
             <property>black</property>
             <property>10</property>
             <property>clubs</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -116,6 +130,7 @@
             <property>black</property>
             <property>jack</property>
             <property>clubs</property>
+            <property>male</property>
             <img>images/Jack_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -125,6 +140,7 @@
             <property>black</property>
             <property>queen</property>
             <property>clubs</property>
+            <property>female</property>
             <img>images/Queen_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -134,6 +150,7 @@
             <property>black</property>
             <property>king</property>
             <property>clubs</property>
+            <property>male</property>
             <img>images/King_of_clubs.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -143,6 +160,7 @@
             <property>black</property>
             <property>ace</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -152,6 +170,7 @@
             <property>black</property>
             <property>2</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -161,6 +180,7 @@
             <property>black</property>
             <property>3</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -170,6 +190,7 @@
             <property>black</property>
             <property>4</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -179,6 +200,7 @@
             <property>black</property>
             <property>5</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -188,6 +210,7 @@
             <property>black</property>
             <property>6</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -197,6 +220,7 @@
             <property>black</property>
             <property>7</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -206,6 +230,7 @@
             <property>black</property>
             <property>8</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -215,6 +240,7 @@
             <property>black</property>
             <property>9</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -224,6 +250,7 @@
             <property>black</property>
             <property>10</property>
             <property>spades</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -233,6 +260,7 @@
             <property>black</property>
             <property>jack</property>
             <property>spades</property>
+            <property>male</property>
             <img>images/Jack_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -242,6 +270,7 @@
             <property>black</property>
             <property>queen</property>
             <property>spades</property>
+            <property>female</property>
             <img>images/Queen_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -251,6 +280,7 @@
             <property>black</property>
             <property>king</property>
             <property>spades</property>
+            <property>male</property>
             <img>images/King_of_spades.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -260,6 +290,7 @@
             <property>red</property>
             <property>ace</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -269,6 +300,7 @@
             <property>red</property>
             <property>2</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -278,6 +310,7 @@
             <property>red</property>
             <property>3</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -287,6 +320,7 @@
             <property>red</property>
             <property>4</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -296,6 +330,7 @@
             <property>red</property>
             <property>5</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -305,6 +340,7 @@
             <property>red</property>
             <property>6</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -314,6 +350,7 @@
             <property>red</property>
             <property>7</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -323,6 +360,7 @@
             <property>red</property>
             <property>8</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -332,6 +370,7 @@
             <property>red</property>
             <property>9</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -341,6 +380,7 @@
             <property>red</property>
             <property>10</property>
             <property>hearts</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -350,6 +390,7 @@
             <property>red</property>
             <property>jack</property>
             <property>hearts</property>
+            <property>male</property>
             <img>images/Jack_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -359,6 +400,7 @@
             <property>red</property>
             <property>queen</property>
             <property>hearts</property>
+            <property>female</property>
             <img>images/Queen_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -368,6 +410,7 @@
             <property>red</property>
             <property>king</property>
             <property>hearts</property>
+            <property>male</property>
             <img>images/King_of_hearts.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -377,6 +420,7 @@
             <property>red</property>
             <property>ace</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/1_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -386,6 +430,7 @@
             <property>red</property>
             <property>2</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/2_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -395,6 +440,7 @@
             <property>red</property>
             <property>3</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/3_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -404,6 +450,7 @@
             <property>red</property>
             <property>4</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/4_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -413,6 +460,7 @@
             <property>red</property>
             <property>5</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/5_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -422,6 +470,7 @@
             <property>red</property>
             <property>6</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/6_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -431,6 +480,7 @@
             <property>red</property>
             <property>7</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/7_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -440,6 +490,7 @@
             <property>red</property>
             <property>8</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/8_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -449,6 +500,7 @@
             <property>red</property>
             <property>9</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/9_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -458,6 +510,7 @@
             <property>red</property>
             <property>10</property>
             <property>diamonds</property>
+            <property>__NO_VALUE__</property>
             <img>images/10_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -467,6 +520,7 @@
             <property>red</property>
             <property>jack</property>
             <property>diamonds</property>
+            <property>male</property>
             <img>images/Jack_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -476,6 +530,7 @@
             <property>red</property>
             <property>queen</property>
             <property>diamonds</property>
+            <property>female</property>
             <img>images/Queen_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -485,6 +540,7 @@
             <property>red</property>
             <property>king</property>
             <property>diamonds</property>
+            <property>male</property>
             <img>images/King_of_diamonds.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -493,7 +549,8 @@
             <description>Black Joker.</description>
             <property>black</property>
             <property>joker</property>
-            <property></property>
+            <property>__NO_VALUE__</property>
+            <property>female,male</property>
             <img>images/Joker_black.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>
@@ -502,7 +559,8 @@
             <description>Red Joker.</description>
             <property>red</property>
             <property>joker</property>
-            <property></property>
+            <property>__NO_VALUE__</property>
+            <property>female,male</property>
             <img>images/Joker_red.png</img>
             <img>images/card_back_blue_and_brown.png</img>
         </item>

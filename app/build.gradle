@@ -23,15 +23,15 @@ android {
             }
         }
     }
-    compileSdkVersion 29
+    compileSdkVersion 30
 
 
     defaultConfig {
         applicationId "com.avlweb.collectionviewer"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 10004
-        versionName "1.0.4"
+        targetSdkVersion 30
+        versionCode 10000
+        versionName "1.0.0"
         setProperty("archivesBaseName", "CollectionViewer-$versionName")
     }
 
@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
-    implementation 'androidx.exifinterface:exifinterface:1.3.2'
+    implementation 'androidx.exifinterface:exifinterface:1.3.3'
 }
 repositories {
     mavenCentral()

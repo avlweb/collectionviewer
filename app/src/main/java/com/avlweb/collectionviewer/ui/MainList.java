@@ -195,7 +195,7 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
         ListView lv = findViewById(R.id.listViewMain);
-        if (scrollbarPosition == 1)
+        if (scrollbarPosition == 0)
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
         else
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
