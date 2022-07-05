@@ -203,13 +203,14 @@ public class CollectionModify extends BaseActivity {
         editText.setHint(R.string.to_be_completed);
         editText.setHintTextColor(getColor(R.color.dark_gray));
         editText.setGravity(Gravity.TOP);
-        if (property.getDescription() != null)
+        if (property.getDescription() != null) {
             editText.setText(property.getDescription());
+        }
         editText.setPadding(editText.getPaddingLeft(), 0, editText.getPaddingRight(), editText.getPaddingBottom());
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         editText.setSingleLine(false);
         editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         editText.setId(property.getId());
         linearLayout.addView(editText);
     }

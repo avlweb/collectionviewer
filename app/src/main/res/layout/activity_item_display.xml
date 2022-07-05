@@ -65,8 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginTop="8dp"
         android:text="@string/properties"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -78,7 +77,8 @@
         android:id="@+id/textViewDetails2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="4dp"
         android:paddingHorizontal="4dp"
         android:paddingVertical="2dp"
         android:textColor="@android:color/black"
@@ -86,7 +86,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewDetails"
-        tools:text="@string/lorem_ipsum"
+        tools:text="@string/lorem_ipsum1"
         tools:visibility="visible" />
 
     <ImageButton
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/open_folder"
         android:onClick="openDetails"
@@ -151,7 +151,7 @@
             android:text="@string/to_be_completed"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            tools:text="@string/lorem_ipsum" />
+            tools:text="@string/lorem_ipsum2" />
 
     </ScrollView>
 

@@ -30,23 +30,25 @@ public class CollectionModel {
     }
 
     public int getNbItems() {
-        if (this.items != null)
+        if (this.items != null) {
             return this.items.size();
-        else
-            return 0;
+        }
+        return 0;
     }
 
     public CollectionItem getItem(int position) {
         if (this.items != null) {
-            if ((position >= 0) && (position < this.items.size()))
+            if ((position >= 0) && (position < this.items.size())) {
                 return this.items.get(position);
+            }
         }
         return null;
     }
 
     public void addItem(CollectionItem item) {
-        if (this.items == null)
+        if (this.items == null) {
             this.items = new ArrayList<>();
+        }
         this.items.add(item);
     }
 
@@ -55,25 +57,27 @@ public class CollectionModel {
     }
 
     public int getNbProperties() {
-        if (this.properties != null)
+        if (this.properties != null) {
             return this.properties.size();
-        else
-            return 0;
+        }
+        return 0;
     }
 
     public String getPropertyName(int num) {
         if (this.properties != null) {
-            if ((num >= 0) && (num < this.properties.size()))
+            if ((num >= 0) && (num < this.properties.size())) {
                 return this.properties.get(num).getName();
-            else
+            } else {
                 return this.properties.get(0).getName();
+            }
         }
         return null;
     }
 
     public void addProperty(CollectionProperty property) {
-        if (this.properties == null)
+        if (this.properties == null) {
             this.properties = new ArrayList<>();
+        }
         this.properties.add(property);
     }
 

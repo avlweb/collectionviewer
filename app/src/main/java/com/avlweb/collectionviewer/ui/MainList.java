@@ -23,6 +23,7 @@ import androidx.core.app.NavUtils;
 
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.adapter.MainListAdapter;
+import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.util.XmlFactory;
@@ -62,16 +63,25 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        CollectionInfos infos = CollectionModel.getInstance().getInfos();
+        MenuItem bedMenuItem = menu.findItem(R.id.add_btn);
+        bedMenuItem.setVisible(!infos.isSampleCollection());
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
             case (android.R.id.home):
                 // Save all changes to XML file if needed
                 if (collectionIsModified) {
-                    if (XmlFactory.writeXml())
+                    if (XmlFactory.writeXml()) {
                         Toast.makeText(getApplicationContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show();
-                    else
+                    } else {
                         Toast.makeText(getApplicationContext(), R.string.problem_during_save, Toast.LENGTH_LONG).show();
+                    }
                 }
                 // Go back to Home
                 NavUtils.navigateUpFromSameTask(this);
@@ -182,8 +192,9 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                     selectedItems.add(item);
                     item.setPositionInSelectedList(idx);
                     idx++;
-                } else
+                } else {
                     item.setPositionInSelectedList(-1);
+                }
             }
 
             if (selectedItems.size() > 0) {
@@ -195,10 +206,11 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
         int scrollbarPosition = pref.getInt(Settings.KEY_SCROLLBAR, 0);
         ListView lv = findViewById(R.id.listViewMain);
-        if (scrollbarPosition == 0)
+        if (scrollbarPosition == 0) {
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_LEFT);
-        else
+        } else {
             lv.setVerticalScrollbarPosition(View.SCROLLBAR_POSITION_RIGHT);
+        }
 
         // Create listview adapter
         adapter = null;     // For GC !
@@ -278,6 +290,8 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
 
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (imm != null) imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        if (imm != null) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
     }
 }

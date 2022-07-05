@@ -18,15 +18,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
                 android:background="@color/dark_blue"
-                android:padding="7dp"
-                android:text="@string/informations"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_blue"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    android:text="@string/informations"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,11 +55,12 @@
                 android:autofillHints="@string/to_be_completed"
                 android:hint="@string/to_be_completed"
                 android:inputType="textNoSuggestions"
+                android:minHeight="48dp"
                 android:paddingHorizontal="5dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:text="@string/lorem_ipsum" />
+                tools:text="@string/lorem_ipsum1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -65,12 +77,12 @@
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/to_be_completed"
                 android:hint="@string/to_be_completed"
-                android:inputType="textNoSuggestions|textMultiLine"
+                android:inputType="textMultiLine|textNoSuggestions|textCapSentences"
                 android:paddingHorizontal="5dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:text="@string/lorem_ipsum" />
+                tools:text="@string/lorem_ipsum2" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -89,24 +101,28 @@
                 android:autofillHints="@string/to_be_completed"
                 android:hint="@string/to_be_completed"
                 android:inputType="textNoSuggestions"
+                android:minHeight="48dp"
                 android:paddingHorizontal="5dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp"
-                tools:text="@string/lorem_ipsum" />
+                tools:text="@string/lorem_ipsum3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:background="@color/dark_blue"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginVertical="2dp"
                     android:layout_weight="2"
-                    android:padding="5dp"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
                     android:text="@string/properties_list"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -120,8 +136,9 @@
                     android:layout_marginHorizontal="4dp"
                     android:background="@color/dark_blue"
                     android:contentDescription="@string/open_folder"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
                     android:onClick="addProperty"
-                    android:padding="5dp"
                     android:src="@drawable/action_add" />
 
             </LinearLayout>

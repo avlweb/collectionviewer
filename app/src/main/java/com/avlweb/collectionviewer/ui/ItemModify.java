@@ -93,7 +93,7 @@ public class ItemModify extends BaseActivity {
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 editText.setSingleLine(false);
                 editText.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
-                editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 editText.setId(description.getId());
                 linearLayout.addView(editText);
             }
@@ -281,6 +281,8 @@ public class ItemModify extends BaseActivity {
                 editText = findViewById(description.getId());
                 if ((editText.getText() != null) && (editText.getText().length() > 0)) {
                     currentItem.setProperty(idx, editText.getText().toString());
+                } else {
+                    currentItem.setProperty(idx, Home.NO_VALUE);
                 }
                 idx++;
             }
@@ -328,7 +330,10 @@ public class ItemModify extends BaseActivity {
             int idx = 0;
             for (CollectionProperty description : properties) {
                 editText = findViewById(description.getId());
-                editText.setText(currentItem.getProperty(idx));
+                String property = currentItem.getProperty(idx);
+                if ((property != null) && (property.length() > 0) && (!property.equals(Home.NO_VALUE))) {
+                    editText.setText(property);
+                }
                 idx++;
             }
         }

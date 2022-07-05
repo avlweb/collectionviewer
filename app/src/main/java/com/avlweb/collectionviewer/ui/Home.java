@@ -47,9 +47,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Home extends BaseActivity implements HomeListAdapter.customButtonListener {
+
     private static final int MY_PERMISSIONS_REQUEST_READ_WRITE_EXTERNAL_STORAGE = 1;
     public static final String SAMPLE_COLLECTION_FR_XML = "sample_collection_fr.xml";
     public static final String SAMPLE_COLLECTION_EN_XML = "sample_collection_en.xml";
+    public static final String NO_VALUE = "_NV_";
+
     private final ArrayList<CollectionInfos> availableCollections = new ArrayList<>();
     private CollectionInfos selectedCollection;
     private HomeListAdapter adapter;
@@ -339,38 +342,39 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
 
     private void checkDefaultCollection(File defaultPath) {
         Log.d("HOME", "Default dir = " + defaultPath.getAbsolutePath());
-        if (!defaultPath.exists()) {
-            Log.d("HOME", "Default dir does not exists");
-            // Create directory for images
-            File defaultImagePath = new File(defaultPath, "images");
-            boolean mkdirResult = defaultImagePath.mkdirs();
-            Log.d("HOME", "mkdir result = " + mkdirResult);
-            AssetManager assetManager = getAssets();
-            String language = Resources.getSystem().getConfiguration().locale.getLanguage();
-            Log.d("HOME", "language = " + language);
-            try {
-                // Copy all files from asset "Default" directory
-                String[] assets = assetManager.list("Default");
-                if (assets == null)
-                    return;
-                for (String asset : assets) {
-                    Log.d("HOME", "asset = " + asset);
-                    // Destination path differs whatever it is an image or the xml file
-                    if (asset.endsWith(".xml")) {
-                        if (((language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_FR_XML)))
-                                || ((!language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_EN_XML)))) {
-                            copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
-                        }
-                    } else {
-                        copyFileFromAssets(assetManager, asset, defaultImagePath.getAbsolutePath());
+        // TODO : on force la recopie de la collection par défaut. A supprimer
+//        if (defaultPath.exists()) {
+        Log.d("HOME", "Default dir does not exists");
+        // Create directory for images
+        File defaultImagePath = new File(defaultPath, "images");
+        boolean mkdirResult = defaultImagePath.mkdirs();
+        Log.d("HOME", "mkdir result = " + mkdirResult);
+        AssetManager assetManager = getAssets();
+        String language = Resources.getSystem().getConfiguration().locale.getLanguage();
+        Log.d("HOME", "language = " + language);
+        try {
+            // Copy all files from asset "Default" directory
+            String[] assets = assetManager.list("Default");
+            if (assets == null)
+                return;
+            for (String asset : assets) {
+                Log.d("HOME", "asset = " + asset);
+                // Destination path differs whatever it is an image or the xml file
+                if (asset.endsWith(".xml")) {
+                    if (((language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_FR_XML)))
+                            || ((!language.equals("fr")) && (asset.endsWith(SAMPLE_COLLECTION_EN_XML)))) {
+                        copyFileFromAssets(assetManager, asset, defaultPath.getAbsolutePath());
                     }
+                } else {
+                    copyFileFromAssets(assetManager, asset, defaultImagePath.getAbsolutePath());
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        } else {
-            Log.d("HOME", "Default dir exists");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        } else {
+//            Log.d("HOME", "Default dir exists");
+//        }
     }
 
     private void copyFileFromAssets(AssetManager assetManager, String file2Copy, String destDir) {

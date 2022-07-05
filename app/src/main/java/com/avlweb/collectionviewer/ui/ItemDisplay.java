@@ -212,7 +212,7 @@ public class ItemDisplay extends BaseActivity {
             StringBuilder tmp = new StringBuilder();
             for (int idx = 0; idx < size; idx++) {
                 String value = currentItem.getProperty(idx);
-                if ((value != null) && (value.length() > 0) && (!value.equals("__NO_VALUE__"))) {
+                if ((value != null) && (value.length() > 0) && (!value.equals(Home.NO_VALUE))) {
                     if (idx > 0) {
                         tmp.append("\n");
                     }

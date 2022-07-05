@@ -11,6 +11,7 @@ import com.avlweb.collectionviewer.model.CollectionInfos;
 import com.avlweb.collectionviewer.model.CollectionItem;
 import com.avlweb.collectionviewer.model.CollectionModel;
 import com.avlweb.collectionviewer.model.CollectionProperty;
+import com.avlweb.collectionviewer.ui.Home;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -276,7 +277,7 @@ public class XmlFactory {
 
             insertInfos(xmlSerializer, collectionModel.getInfos());
             insertProperties(xmlSerializer, collectionModel.getProperties());
-            insertItems(xmlSerializer, collectionModel.getItems());
+            insertItems(xmlSerializer, collectionModel.getItems(), (collectionModel.getProperties() == null) ? 0 : collectionModel.getProperties().size());
 
             xmlSerializer.endTag(ns, "collection");
             xmlSerializer.endDocument();
@@ -303,13 +304,17 @@ public class XmlFactory {
         xmlSerializer.endTag(ns, "name");
 
         xmlSerializer.startTag(ns, "description");
-        if (dbInfos.getDescription() != null)
-            xmlSerializer.text(dbInfos.getDescription());
+        String description = dbInfos.getDescription();
+        if ((description != null) && (description.length() > 0)) {
+            xmlSerializer.text(description);
+        }
         xmlSerializer.endTag(ns, "description");
 
         xmlSerializer.startTag(ns, "version");
-        if (dbInfos.getVersion() != null)
-            xmlSerializer.text(dbInfos.getVersion());
+        String version = dbInfos.getVersion();
+        if ((version != null) && (version.length() > 0)) {
+            xmlSerializer.text(version);
+        }
         xmlSerializer.endTag(ns, "version");
 
         xmlSerializer.endTag(ns, "content");
@@ -326,8 +331,10 @@ public class XmlFactory {
                 xmlSerializer.endTag(ns, "name");
 
                 xmlSerializer.startTag(ns, "description");
-                if ((property.getDescription() != null) && (property.getDescription().length() > 0))
-                    xmlSerializer.text(property.getDescription());
+                String description = property.getDescription();
+                if ((description != null) && (description.length() > 0)) {
+                    xmlSerializer.text(description);
+                }
                 xmlSerializer.endTag(ns, "description");
 
                 xmlSerializer.endTag(ns, "property");
@@ -336,7 +343,7 @@ public class XmlFactory {
         xmlSerializer.endTag(ns, "properties");
     }
 
-    private static void insertItems(XmlSerializer xmlSerializer, List<CollectionItem> items) throws IOException {
+    private static void insertItems(XmlSerializer xmlSerializer, List<CollectionItem> items, int nbProperties) throws IOException {
         xmlSerializer.startTag(ns, "items");
         if ((items != null) && (items.size() > 0)) {
             for (CollectionItem item : items) {
@@ -345,17 +352,27 @@ public class XmlFactory {
                 xmlSerializer.startTag(ns, "name");
                 xmlSerializer.text(item.getName());
                 xmlSerializer.endTag(ns, "name");
+
                 // Add description
                 xmlSerializer.startTag(ns, "description");
-                if ((item.getDescription() != null) && (item.getDescription().length() > 0))
-                    xmlSerializer.text(item.getDescription());
+                String description = item.getDescription();
+                if ((description != null) && (description.length() > 0)) {
+                    xmlSerializer.text(description);
+                }
                 xmlSerializer.endTag(ns, "description");
+
                 // Add properties
-                for (int idx = 0; idx < item.getNbProperties(); idx++) {
+                for (int idx = 0; idx < nbProperties; idx++) {
                     xmlSerializer.startTag(ns, "property");
-                    xmlSerializer.text(item.getProperty(idx));
+                    String property = item.getProperty(idx);
+                    if ((property != null) && (property.length() > 0)) {
+                        xmlSerializer.text(property);
+                    } else {
+                        xmlSerializer.text(Home.NO_VALUE);
+                    }
                     xmlSerializer.endTag(ns, "property");
                 }
+
                 // Add images
                 for (int idx = 0; idx < item.getNbImages(); idx++) {
                     xmlSerializer.startTag(ns, "img");

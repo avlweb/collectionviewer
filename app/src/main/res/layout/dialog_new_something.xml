@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
-        android:text="@string/lorem_ipsum"
+        android:text="@string/lorem_ipsum1"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -23,7 +23,8 @@
         android:gravity="top"
         android:hint="@string/name"
         android:inputType="textCapWords"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:minHeight="48dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +41,8 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/cancel"
             android:text="@string/cancel"
-            android:textColor="@color/dark_blue" />
+            android:textColor="@color/dark_blue"
+            style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/btn_ok"
@@ -50,7 +52,8 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/ok"
             android:text="@string/ok"
-            android:textColor="@color/dark_blue" />
+            android:textColor="@color/dark_blue"
+            style="?android:attr/buttonBarButtonStyle" />
 
     </LinearLayout>
 

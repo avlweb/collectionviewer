@@ -39,7 +39,10 @@
     <string name="collections_root_location">Chemin par défaut des collections</string>
     <string name="default_root_location">Chemin par défaut</string>
     <string name="hide_sample_collection">Cacher la collection d\'exemple</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="lorem_ipsum1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="lorem_ipsum2">Eum perferendis quae et reprehenderit error id accusantium delectus et velit quos vel minus cumque. Aut sequi dolorem a inventore laudantium et illum omnis est mollitia magnam sed totam quibusdam est dignissimos itaque.</string>
+    <string name="lorem_ipsum3">Sed officia minus qui ullam quo quisquam omnis in unde quisquam et provident mollitia ad harum architecto. Ea odit repudiandae cum officia dolore et corporis reiciendis.</string>
+    <string name="lorem_ipsum4">Quo facere dolores aut consequatur quia ut laboriosam quibusdam ut nostrum dolor ut galisum praesentium! Sit impedit itaque et quia sunt ea sint ducimus a similique iusto.</string>
     <string name="words_to_search">Mots à chercher séparés par des virgules</string>
     <string name="no">Non</string>
     <string name="yes">Oui</string>

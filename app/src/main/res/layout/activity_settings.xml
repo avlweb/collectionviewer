@@ -178,7 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:paddingHorizontal="10dp"
-            android:text="@string/lorem_ipsum"
+            android:text="@string/lorem_ipsum1"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
 

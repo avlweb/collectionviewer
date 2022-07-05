@@ -54,15 +54,17 @@ public class CollectionItem {
     }
 
     public void setProperty(int idx, String value) {
-        if (idx >= this.properties.size())
+        if (idx >= this.properties.size()) {
             this.properties.add(value);
-        else
+        } else {
             this.properties.set(idx, value);
+        }
     }
 
     public String getProperty(int num) {
-        if ((num >= 0) && (num < this.properties.size()))
+        if ((num >= 0) && (num < this.properties.size())) {
             return this.properties.get(num);
+        }
 
         return null;
     }
@@ -72,15 +74,17 @@ public class CollectionItem {
     }
 
     public String getImagePath(int index) {
-        if ((index >= 0) && (index < this.images.size()))
+        if ((index >= 0) && (index < this.images.size())) {
             return this.images.get(index);
+        }
 
         return null;
     }
 
     public void deleteImage(int index) {
-        if ((index >= 0) && (index < this.images.size()))
+        if ((index >= 0) && (index < this.images.size())) {
             this.images.remove(index);
+        }
     }
 
     public int getNbImages() {

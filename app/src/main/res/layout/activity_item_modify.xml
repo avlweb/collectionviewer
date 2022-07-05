@@ -26,9 +26,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
                     android:layout_weight="2"
-                    android:padding="5dp"
+                    android:padding="7dp"
                     android:text="@string/images"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -38,8 +37,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:padding="5dp"
+                    android:padding="7dp"
                     android:text="@string/_1_1"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
@@ -75,7 +73,7 @@
                 <ImageButton
                     android:id="@+id/buttonZoom"
                     android:layout_width="48dp"
-                    android:layout_height="36dp"
+                    android:layout_height="48dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/zoom"
                     android:onClick="zoomImage"
@@ -84,7 +82,7 @@
                 <ImageButton
                     android:id="@+id/buttonAdd"
                     android:layout_width="48dp"
-                    android:layout_height="36dp"
+                    android:layout_height="48dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/open_folder"
                     android:onClick="addImage"
@@ -93,7 +91,7 @@
                 <ImageButton
                     android:id="@+id/buttonDelete"
                     android:layout_width="48dp"
-                    android:layout_height="36dp"
+                    android:layout_height="48dp"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/open_folder"
                     android:onClick="deleteImage"
@@ -128,7 +126,8 @@
                 android:layout_marginHorizontal="4dp"
                 android:autofillHints="@string/to_be_completed"
                 android:hint="@string/to_be_completed"
-                android:inputType="textNoSuggestions"
+                android:inputType="textNoSuggestions|textCapSentences"
+                android:minHeight="48dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp" />
@@ -151,7 +150,8 @@
                 android:autofillHints="@string/to_be_completed"
                 android:hint="@string/to_be_completed"
                 android:imeOptions="flagNoEnterAction"
-                android:inputType="text|textMultiLine"
+                android:inputType="textMultiLine|text|textCapSentences"
+                android:minHeight="48dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="14sp" />
