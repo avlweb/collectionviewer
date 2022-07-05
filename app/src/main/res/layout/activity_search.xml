@@ -26,6 +26,7 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="textNoSuggestions"
+            android:minHeight="48dp"
             android:paddingHorizontal="6dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/dark_gray"
@@ -48,6 +49,7 @@
             android:autofillHints="@string/words_to_search"
             android:hint="@string/words_to_search"
             android:inputType="textNoSuggestions"
+            android:minHeight="48dp"
             android:paddingHorizontal="6dp"
             android:textColor="@android:color/black"
             android:textColorHint="@color/dark_gray"
@@ -71,25 +73,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/dark_blue"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/search"
                 android:gravity="center"
                 android:onClick="searchInCollection"
                 android:padding="10dp"
                 android:text="@string/search"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/dark_blue"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@color/dark_blue"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/clear_search"
                 android:onClick="clearSearch"
                 android:padding="10dp"
                 android:text="@string/clear_search"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/dark_blue"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
     </LinearLayout>
