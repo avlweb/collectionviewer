@@ -23,6 +23,7 @@ import androidx.documentfile.provider.DocumentFile;
 import com.avlweb.collectionviewer.R;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class Settings extends Activity {
 
@@ -33,6 +34,7 @@ public class Settings extends Activity {
     public static final String KEY_REDUCE_SIZE_OF_IMAGES = "key_reduce_size_of_images";
     public static final String KEY_SCROLLBAR = "key_scrollbar";
     public static final String KEY_FONT_SIZE = "key_font_size";
+    private final int OPEN_DIRECTORY_REQUEST_CODE = 142587484;
 
     private int fontSize;
 
@@ -180,21 +182,21 @@ public class Settings extends Activity {
         // Provide read access to files and sub-directories in the user-selected directory.
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        startActivityForResult(intent, 102541);
+        startActivityForResult(intent, OPEN_DIRECTORY_REQUEST_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == 102541 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == OPEN_DIRECTORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the directory that the user selected.
             if (resultData != null) {
                 Uri uri = resultData.getData();
                 if (uri != null) {
+//                    getXmlFiles(uri);
                     File defaultPath = Environment.getExternalStorageDirectory();
-//                    Log.d("SETTINGS", "getExternalStorageDirectory() = " + Environment.getExternalStorageDirectory());
-//                    Log.d("SETTINGS", "getDataDirectory() = " + Environment.getDataDirectory());
-//                    Log.d("SETTINGS", "getExternalMediaDirs() = " + Arrays.toString(this.getExternalMediaDirs()));
-//                    Log.d("SETTINGS", "getExternalFilesDirs() = " + Arrays.toString(this.getExternalFilesDirs(android.os.Environment.DIRECTORY_DOCUMENTS)));
+                    Log.d("SETTINGS", "getExternalStoragePublicDirectory(DIRECTORY_DOCUMENTS) = " + Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOCUMENTS));
+                    Log.d("SETTINGS", "getExternalStorageDirectory() = " + Environment.getExternalStorageDirectory());
+                    Log.d("SETTINGS", "getExternalFilesDirs(DIRECTORY_DOCUMENTS) = " + Arrays.toString(this.getExternalFilesDirs(android.os.Environment.DIRECTORY_DOCUMENTS)));
                     if (defaultPath != null) {
                         Log.d("SETTINGS", "default path = " + defaultPath.getAbsolutePath());
                         String finalPath = defaultPath.getAbsolutePath() + File.separator;
@@ -213,6 +215,7 @@ public class Settings extends Activity {
                                     finalPath += paths[1];
                             }
                         }
+                        Log.d("SETTINGS", "Final path = " + finalPath);
                         TextView textView = findViewById(R.id.EditTextRootLocation);
                         textView.setText(finalPath);
                     }
@@ -233,16 +236,12 @@ public class Settings extends Activity {
             Log.d("SETTINGS", "tmpFile getUri.getPathSegments = " + tmpFile.getUri().getPathSegments());
             Log.d("SETTINGS", "tmpFile getName = " + tmpFile.getName());
             Log.d("SETTINGS", "tmpFile getParentfile.getName = " + tmpFile.getParentFile().getName());
-//            DocumentFile tmp = DocumentFile.fromSingleUri(this, tmpFile.getUri());
-//            if (tmpFile.isDirectory())
-//                getXmlFiles(files, tmpFile.getUri());
-//            else {
-//                if (tmpFile.getName().endsWith(".xml")) {
-//                    if (tmpFile.getName().endsWith(MainList.SAMPLE_COLLECTION_XML))
-//                        continue;
-//                    files.add(tmpFile.getName());
-//                }
-//            }
+            if (tmpFile.isDirectory()) {
+                getXmlFiles(tmpFile.getUri());
+            } else {
+                DocumentFile tmp = DocumentFile.fromSingleUri(this, tmpFile.getUri());
+                Log.d("SETTINGS", "SingleURI getName = " + tmp.getName());
+            }
         }
     }
 }

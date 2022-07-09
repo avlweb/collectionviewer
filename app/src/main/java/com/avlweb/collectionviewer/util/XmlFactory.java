@@ -183,8 +183,6 @@ public class XmlFactory {
                 e.printStackTrace();
             }
         }
-        String result = JsonFactory.writeJsonFile();
-        Log.d("XML_FACTORY", "JSON : " + result);
     }
 
     public static CollectionInfos readCollectionInfos(String path) {
@@ -292,6 +290,10 @@ public class XmlFactory {
             e.printStackTrace();
             return false;
         }
+
+        // TODO : test Kotlin
+        String result = JsonFactory.writeJsonFile();
+        Log.d("XML_FACTORY", "JSON : " + result);
 
         return true;
     }

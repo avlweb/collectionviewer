@@ -8,7 +8,7 @@ class JsonFactory {
 
     companion object {
 
-        val mapper = jacksonObjectMapper()
+        private val mapper = jacksonObjectMapper()
 
         @JvmStatic
         fun readJsonFile() {
