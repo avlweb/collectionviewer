@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -239,10 +240,11 @@ public class ItemModify extends BaseActivity {
             Bitmap finalBitmap = Bitmap.createBitmap(myBitmap, 0, 0,
                     myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
 
-            if (reduceImagesSizeButton)
+            if (reduceImagesSizeButton) {
                 finalBitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-            else
+            } else {
                 finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            }
 
             byte[] bitmapped = bos.toByteArray();
             fos = new FileOutputStream(destPath);
@@ -313,8 +315,9 @@ public class ItemModify extends BaseActivity {
             return;
         }
 
-        if (currentImageIndex >= currentItem.getNbImages())
+        if (currentImageIndex >= currentItem.getNbImages()) {
             currentImageIndex = 0;
+        }
 
         // Display name
         EditText editText = findViewById(R.id.textName);
@@ -350,6 +353,8 @@ public class ItemModify extends BaseActivity {
             textView = findViewById(R.id.textView1);
             textView.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
+            ImageButton rubbish = findViewById(R.id.buttonDelete);
+            rubbish.setVisibility(View.GONE);
             return;
         } else {
             TextView textView = findViewById(R.id.textView2);
@@ -358,11 +363,14 @@ public class ItemModify extends BaseActivity {
             textView = findViewById(R.id.textView1);
             textView.setVisibility(View.GONE);
             imageView.setVisibility(View.VISIBLE);
+            ImageButton rubbish = findViewById(R.id.buttonDelete);
+            rubbish.setVisibility(View.VISIBLE);
         }
 
         String imagePath = currentItem.getImagePath(currentImageIndex);
-        if (imagePath == null)
+        if (imagePath == null) {
             return;
+        }
 
         String absolutePath = collectionModel.getInfos().getPath() + File.separatorChar + imagePath;
         absolutePath = absolutePath.replace("\\", "/");

@@ -185,6 +185,12 @@ public class Settings extends Activity {
         startActivityForResult(intent, OPEN_DIRECTORY_REQUEST_CODE);
     }
 
+    public void ResetFolder(View view) {
+        // Reset collection directory path to default
+        TextView textView = findViewById(R.id.EditTextRootLocation);
+        textView.setText(this.getExternalFilesDir(null).getPath());
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (requestCode == OPEN_DIRECTORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {

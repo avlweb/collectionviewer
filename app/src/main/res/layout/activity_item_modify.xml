@@ -84,7 +84,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/open_folder"
+                    android:contentDescription="@string/add_image"
                     android:onClick="addImage"
                     android:src="@drawable/action_add_black_square" />
 
@@ -93,7 +93,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/open_folder"
+                    android:contentDescription="@string/delete_image"
                     android:onClick="deleteImage"
                     android:src="@drawable/action_delete_black" />
 

@@ -61,7 +61,8 @@
     <string name="number_slash_number">%1$d/%2$d</string>
     <string name="title_activity_collection_details">Collection details</string>
     <string name="properties_list">Properties list</string>
-    <string name="open_folder">Open folder</string>
+    <string name="open_folder">Choose folder</string>
+    <string name="reset_folder">Reset folder</string>
     <string name="zoom">Zoom</string>
     <string name="modify">Modify</string>
     <string name="informations">Informations</string>
@@ -71,6 +72,10 @@
     <string name="cancel">Cancel</string>
     <string name="property_description">Property description</string>
     <string name="add">Add</string>
+    <string name="add_image">Add image</string>
+    <string name="delete_image">Delete image</string>
+    <string name="open_properties">Open properties</string>
+    <string name="close_properties">Close properties</string>
     <string name="collection_name">Collection name</string>
     <string name="new_collection">New Collection</string>
     <string name="new_property">New Property</string>

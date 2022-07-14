@@ -51,43 +51,53 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
+            android:padding="10dp"
             android:text="@string/collections_root_location"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <EditText
+            android:id="@+id/EditTextRootLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/default_root_location"
+            android:hint="@string/default_root_location"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/dark_gray"
+            android:textSize="14sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/EditTextRootLocation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:autofillHints="@string/default_root_location"
-                android:hint="@string/default_root_location"
-                android:inputType="text"
-                android:minHeight="48dp"
-                android:paddingHorizontal="10dp"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/dark_gray"
-                android:textSize="14sp" />
 
             <ImageButton
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:layout_margin="5dp"
                 android:background="@color/dark_blue"
                 android:contentDescription="@string/open_folder"
                 android:onClick="SearchFolder"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:src="@drawable/ic_folder"
+                android:textColor="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/dark_blue"
+                android:contentDescription="@string/reset_folder"
+                android:onClick="ResetFolder"
+                android:padding="10dp"
+                android:src="@drawable/ic_reset"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -95,8 +105,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="10dp"
+            android:padding="10dp"
             android:text="@string/scrollbar_position"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -128,8 +137,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
+            android:padding="10dp"
             android:text="@string/choose_font_size"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -177,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:paddingHorizontal="10dp"
+            android:padding="10dp"
             android:text="@string/lorem_ipsum1"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
@@ -187,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="30dp"
+            android:layout_margin="10dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/save"
             android:onClick="SaveSettings"

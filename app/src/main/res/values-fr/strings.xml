@@ -61,7 +61,8 @@
     <string name="name">Nom</string>
     <string name="description">Description</string>
     <string name="properties_list">Liste des propriétés</string>
-    <string name="open_folder">Open folder</string>
+    <string name="open_folder">Selectionner le répertoire</string>
+    <string name="reset_folder">Revenir au répertoire par défaut</string>
     <string name="zoom">Zoom</string>
     <string name="modify">Modifier</string>
     <string name="informations">Informations</string>
@@ -71,6 +72,10 @@
     <string name="cancel">Annuler</string>
     <string name="property_description">Description de la propriété</string>
     <string name="add">Ajouter</string>
+    <string name="add_image">Ajouter une image</string>
+    <string name="delete_image">Supprimer l\'image</string>
+    <string name="open_properties">Ouvrir les propriétés</string>
+    <string name="close_properties">Fermer les propriétés</string>
     <string name="collection_name">Nom de la collection</string>
     <string name="new_collection">Nouvelle collection</string>
     <string name="new_property">Nouvelle propriété</string>

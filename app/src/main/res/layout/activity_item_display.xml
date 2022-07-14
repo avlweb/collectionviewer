@@ -34,7 +34,9 @@
             android:id="@+id/imageView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/image_content" />
+            android:contentDescription="@string/image_content"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="5dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,9 +65,9 @@
     <TextView
         android:id="@+id/textViewDetails"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
         android:text="@string/properties"
         android:textColor="@android:color/black"
         android:textSize="14sp"
@@ -78,7 +80,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="4dp"
         android:paddingHorizontal="4dp"
         android:paddingVertical="2dp"
         android:textColor="@android:color/black"
@@ -92,12 +93,11 @@
     <ImageButton
         android:id="@+id/buttonBottom"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="end"
         android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/open_folder"
+        android:contentDescription="@string/open_properties"
         android:onClick="openDetails"
         android:src="@drawable/navigation_bottom_black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,12 +106,11 @@
     <ImageButton
         android:id="@+id/buttonPrevious"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="end"
         android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="2dp"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/open_folder"
+        android:contentDescription="@string/close_properties"
         android:onClick="openDetails"
         android:src="@drawable/navigation_previous_black"
         android:visibility="gone"
