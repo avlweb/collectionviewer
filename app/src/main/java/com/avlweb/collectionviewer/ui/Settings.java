@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -102,6 +103,25 @@ public class Settings extends Activity {
         button.setChecked(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_item_modify, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case (R.id.save_btn):
+                saveSettings();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void doOnFontSizeChanged(RadioGroup group) {
         int checkedRadioId = group.getCheckedRadioButtonId();
         switch (checkedRadioId) {
@@ -141,7 +161,7 @@ public class Settings extends Activity {
         return res;
     }
 
-    public void SaveSettings(View view) {
+    public void saveSettings() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(KEY_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         // Collections Root location
@@ -166,16 +186,7 @@ public class Settings extends Activity {
         Toast.makeText(getApplicationContext(), R.string.settings_saved, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void SearchFolder(View view) {
+    public void searchFolder(View view) {
         // Choose a directory using the system's file picker.
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
@@ -185,7 +196,7 @@ public class Settings extends Activity {
         startActivityForResult(intent, OPEN_DIRECTORY_REQUEST_CODE);
     }
 
-    public void ResetFolder(View view) {
+    public void resetFolder(View view) {
         // Reset collection directory path to default
         TextView textView = findViewById(R.id.EditTextRootLocation);
         textView.setText(this.getExternalFilesDir(null).getPath());

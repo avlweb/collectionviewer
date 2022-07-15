@@ -73,7 +73,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <ImageButton
@@ -83,7 +83,7 @@
                 android:layout_margin="5dp"
                 android:background="@color/dark_blue"
                 android:contentDescription="@string/open_folder"
-                android:onClick="SearchFolder"
+                android:onClick="searchFolder"
                 android:padding="10dp"
                 android:src="@drawable/ic_folder"
                 android:textColor="@android:color/white" />
@@ -95,7 +95,7 @@
                 android:layout_margin="5dp"
                 android:background="@color/dark_blue"
                 android:contentDescription="@string/reset_folder"
-                android:onClick="ResetFolder"
+                android:onClick="resetFolder"
                 android:padding="10dp"
                 android:src="@drawable/ic_reset"
                 android:textColor="@android:color/white" />
@@ -189,19 +189,6 @@
             android:text="@string/lorem_ipsum1"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="10dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/save"
-            android:onClick="SaveSettings"
-            android:padding="10dp"
-            android:text="@string/save"
-            android:textColor="@color/dark_blue" />
 
     </LinearLayout>
 
