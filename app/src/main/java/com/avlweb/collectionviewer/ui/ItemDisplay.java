@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,6 +84,29 @@ public class ItemDisplay extends BaseActivity {
         displayElement();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_item_display, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("position", this.position);
+                setResult(Activity.RESULT_OK, resultIntent);
+                this.finish();
+                return true;
+            case (R.id.modify_btn):
+//                modifyItem();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void zoomImage(View v) {
         ConstraintLayout mConstrainLayout = findViewById(R.id.myclayout);
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) mConstrainLayout.getLayoutParams();
@@ -149,19 +173,6 @@ public class ItemDisplay extends BaseActivity {
         public boolean onDown(MotionEvent e) {
             return true;
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("position", this.position);
-            setResult(Activity.RESULT_OK, resultIntent);
-            this.finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void displayNextElement() {

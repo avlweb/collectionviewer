@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -21,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class ItemModify extends BaseActivity {
     private final int ACTIVITY_ADD_IMAGE = 10254841;
@@ -179,9 +180,11 @@ public class ItemModify extends BaseActivity {
                         Log.d("SETTINGS", "default path = " + collectionPath.getAbsolutePath());
                         Log.d("SETTINGS", "uri path = " + uriPath);
                         String[] tmp = uriPath.split("/");
-                        String imageName = tmp[tmp.length - 1];
+                        String fileExt = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+                        String uuid = UUID.randomUUID().toString();
+                        String imageName = uuid + "." + fileExt;
                         Log.d("SETTINGS", "file name = " + imageName);
-                        finalPath += File.separator + tmp[tmp.length - 1];
+                        finalPath += File.separator + imageName;
                         String sourcePath = externalPath.getAbsolutePath() + File.separator;
                         if (uriPath.startsWith("/document/home:")) {
                             String[] paths = uriPath.split(":");
@@ -209,11 +212,6 @@ public class ItemModify extends BaseActivity {
     }
 
     private void copyImage(String sourcePath, String destPath) {
-        // Get preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Settings.KEY_PREFS, MODE_PRIVATE);
-        // Get flag "Reduce size of images button"
-        boolean reduceImagesSizeButton = pref.getBoolean(Settings.KEY_REDUCE_SIZE_OF_IMAGES, false);
-
         File source = new File(sourcePath);
         Bitmap myBitmap = BitmapFactory.decodeFile(source.getAbsolutePath());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -235,16 +233,19 @@ public class ItemModify extends BaseActivity {
                     break;
             }
 
-            Matrix matrix = new Matrix();
-            matrix.postRotate(rotate);
-            Bitmap finalBitmap = Bitmap.createBitmap(myBitmap, 0, 0,
-                    myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-
-            if (reduceImagesSizeButton) {
-                finalBitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-            } else {
-                finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            int newHeight = myBitmap.getHeight();
+            if (myBitmap.getWidth() > metrics.widthPixels) {
+                newHeight = (int) myBitmap.getHeight() * metrics.widthPixels / myBitmap.getWidth();
             }
+
+            Bitmap tmpBitmap = Bitmap.createScaledBitmap(myBitmap, metrics.widthPixels, newHeight, true);
+            Bitmap finalBitmap;
+            if (rotate != 0) {
+                finalBitmap = rotateBitmap(tmpBitmap, rotate);
+            } else {
+                finalBitmap = tmpBitmap;
+            }
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
             byte[] bitmapped = bos.toByteArray();
             fos = new FileOutputStream(destPath);
@@ -262,6 +263,15 @@ public class ItemModify extends BaseActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private Bitmap rotateBitmap(Bitmap original, float degrees) {
+        int x = original.getWidth();
+        int y = original.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.preRotate(degrees);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+        return rotatedBitmap;
     }
 
     private void saveItem() {

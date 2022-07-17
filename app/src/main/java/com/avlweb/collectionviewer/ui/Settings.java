@@ -32,7 +32,6 @@ public class Settings extends Activity {
     public static final String KEY_COLLECTIONS_ROOT_LOCATION = "key_root_location";
     public static final String KEY_HIDE_SAMPLE_COLLECTION = "key_hide_sample";
     public static final String KEY_HIDE_HELP_BUTTON = "key_hide_help";
-    public static final String KEY_REDUCE_SIZE_OF_IMAGES = "key_reduce_size_of_images";
     public static final String KEY_SCROLLBAR = "key_scrollbar";
     public static final String KEY_FONT_SIZE = "key_font_size";
     private final int OPEN_DIRECTORY_REQUEST_CODE = 142587484;
@@ -62,10 +61,6 @@ public class Settings extends Activity {
         boolean hideHelpButton = pref.getBoolean(KEY_HIDE_HELP_BUTTON, false);
         Switch help = findViewById(R.id.switch_help);
         help.setChecked(hideHelpButton);
-        // Get flag "Reduce size of images button"
-        boolean reduceImagesSizeButton = pref.getBoolean(KEY_REDUCE_SIZE_OF_IMAGES, false);
-        Switch reduce = findViewById(R.id.switch_reduce_images);
-        reduce.setChecked(reduceImagesSizeButton);
         // Get Collections Root location
         File defaultPath = this.getExternalFilesDir(null);
         if (defaultPath != null) {
@@ -178,9 +173,6 @@ public class Settings extends Activity {
         // Hide help button
         Switch help = findViewById(R.id.switch_help);
         editor.putBoolean(KEY_HIDE_HELP_BUTTON, help.isChecked());
-        // Reduce size of images button
-        Switch reduce = findViewById(R.id.switch_reduce_images);
-        editor.putBoolean(KEY_REDUCE_SIZE_OF_IMAGES, reduce.isChecked());
         // Save preferences
         editor.apply();
         Toast.makeText(getApplicationContext(), R.string.settings_saved, Toast.LENGTH_SHORT).show();

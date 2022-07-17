@@ -35,19 +35,6 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/switch_reduce_images"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/reduce_images_button"
-            android:textColor="@android:color/black"
-            android:textOff="@string/no"
-            android:textOn="@string/yes"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
