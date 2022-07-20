@@ -52,6 +52,26 @@ public class CollectionModel {
         this.items.add(item);
     }
 
+    public boolean moveItemUp(int position) {
+        if (position > 0) {
+            CollectionItem item = this.items.get(position);
+            this.items.remove(position);
+            this.items.add(position - 1, item);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean moveItemDown(int position) {
+        if (position < (this.items.size() - 1)) {
+            CollectionItem item = this.items.get(position);
+            this.items.remove(position);
+            this.items.add(position + 1, item);
+            return true;
+        }
+        return false;
+    }
+
     public ArrayList<CollectionProperty> getProperties() {
         return this.properties;
     }

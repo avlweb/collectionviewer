@@ -41,10 +41,12 @@ public class SearchInCollection extends Activity {
 
         setTitle(getString(R.string.search_in_collection));
 
-        ActionBar actionbar = getActionBar();
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setDisplayShowHomeEnabled(false);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            // Customize the back button
+            actionBar.setHomeAsUpIndicator(R.drawable.action_back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
         }
 
         CollectionModel collectionModel = CollectionModel.getInstance();
@@ -77,7 +79,7 @@ public class SearchInCollection extends Activity {
                 editText.setHint(R.string.words_to_search);
                 editText.setHintTextColor(getColor(R.color.dark_gray));
                 editText.setGravity(Gravity.TOP);
-                editText.setPadding(20, 0, 20, 10);
+                editText.setPadding(20, 20, 20, 20);
                 editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 editText.setMinHeight(48);
                 editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);

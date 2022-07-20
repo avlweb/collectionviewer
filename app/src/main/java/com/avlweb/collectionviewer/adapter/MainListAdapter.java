@@ -52,6 +52,7 @@ public class MainListAdapter extends ArrayAdapter<CollectionItem> {
             viewHolder = new ViewHolder();
             viewHolder.text = convertView.findViewById(R.id.thetext);
             viewHolder.button = convertView.findViewById(R.id.thebutton);
+            viewHolder.position = position;
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -61,7 +62,7 @@ public class MainListAdapter extends ArrayAdapter<CollectionItem> {
         // Menu is disabled because sample collection is read only
         if (this.infos.isSampleCollection()) {
             viewHolder.button.setEnabled(false);
-            viewHolder.button.setAlpha(0.2f);
+            viewHolder.button.setAlpha(0.4f);
         } else {
             viewHolder.button.setEnabled(true);
             viewHolder.button.setAlpha(1.0f);
@@ -85,5 +86,10 @@ public class MainListAdapter extends ArrayAdapter<CollectionItem> {
     public static class ViewHolder {
         TextView text;
         ImageButton button;
+        int position;
+
+        public int getPosition() {
+            return position;
+        }
     }
 }

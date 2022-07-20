@@ -55,7 +55,7 @@ public class HomeListAdapter extends ArrayAdapter<CollectionInfos> {
         // Menu is disabled because sample collection is read only
         if (infos.isSampleCollection()) {
             viewHolder.button.setEnabled(false);
-            viewHolder.button.setAlpha(0.2f);
+            viewHolder.button.setAlpha(0.4f);
         } else {
             viewHolder.button.setEnabled(true);
             viewHolder.button.setAlpha(1.0f);

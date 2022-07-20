@@ -115,4 +115,6 @@
     <string name="collection_loaded">Collection \'%1$s\' chargée</string>
     <string name="must_contains_alphabet">Ne peut contenir que des caractères alphabétiques et des tirets</string>
     <string name="help_description">Aide</string>
+    <string name="move_up">Monter</string>
+    <string name="move_down">Descendre</string>
 </resources>

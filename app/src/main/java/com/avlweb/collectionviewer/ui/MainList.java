@@ -65,8 +65,8 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         CollectionInfos infos = CollectionModel.getInstance().getInfos();
-        MenuItem bedMenuItem = menu.findItem(R.id.add_btn);
-        bedMenuItem.setVisible(!infos.isSampleCollection());
+        MenuItem addMenuItem = menu.findItem(R.id.add_btn);
+        addMenuItem.setVisible(!infos.isSampleCollection());
         return true;
     }
 
@@ -134,19 +134,20 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_home_list, menu);
+        inflater.inflate(R.menu.activity_mainlist_context_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case (R.id.menu_modify):
+            case (R.id.menu_modify): {
                 collectionIsModified = true;
                 Intent intent = new Intent(this, ItemModify.class);
                 intent.putExtra("position", position);
                 startActivityForResult(intent, ACTIVITY_ITEM_MODIFY);
                 return true;
-            case (R.id.menu_delete):
+            }
+            case (R.id.menu_delete): {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.warning);
                 alertDialogBuilder.setIcon(R.drawable.ic_warning);
@@ -158,6 +159,33 @@ public class MainList extends BaseActivity implements MainListAdapter.customButt
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
                 return true;
+            }
+            case (R.id.menu_move_up): {
+                collectionIsModified = true;
+                CollectionItem collectionItem = CollectionModel.getInstance().getItem(this.position);
+                if (collectionItem != null) {
+                    boolean moveOk = CollectionModel.getInstance().moveItemUp(this.position);
+                    // Update adapter if move in collection is OK
+                    if (moveOk) {
+                        adapter.remove(collectionItem);
+                        adapter.insert(collectionItem, this.position - 1);
+                    }
+                }
+                return true;
+            }
+            case (R.id.menu_move_down): {
+                collectionIsModified = true;
+                CollectionItem collectionItem = CollectionModel.getInstance().getItem(this.position);
+                if (collectionItem != null) {
+                    boolean moveOk = CollectionModel.getInstance().moveItemDown(this.position);
+                    // Update adapter if move in collection is OK
+                    if (moveOk) {
+                        adapter.remove(collectionItem);
+                        adapter.insert(collectionItem, this.position + 1);
+                    }
+                }
+                return true;
+            }
             default:
                 return super.onContextItemSelected(item);
         }

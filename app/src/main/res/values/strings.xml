@@ -115,4 +115,6 @@
     <string name="reduce_images_button">Reduce size of images</string>
     <string name="collection_loaded">Collection \'%1$s\' loaded</string>
     <string name="help_description">Help</string>
+    <string name="move_up">Move up</string>
+    <string name="move_down">Move down</string>
 </resources>

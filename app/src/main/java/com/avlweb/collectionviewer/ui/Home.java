@@ -275,7 +275,7 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_home_list, menu);
+        inflater.inflate(R.menu.activity_home_context_menu, menu);
     }
 
     @Override
