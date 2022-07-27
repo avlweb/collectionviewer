@@ -117,4 +117,5 @@
     <string name="help_description">Aide</string>
     <string name="move_up">Monter</string>
     <string name="move_down">Descendre</string>
+    <string name="add_property">Ajout d\'une propriété</string>
 </resources>

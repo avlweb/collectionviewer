@@ -135,7 +135,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="4dp"
                     android:background="@color/dark_blue"
-                    android:contentDescription="@string/open_folder"
+                    android:contentDescription="@string/add_property"
                     android:minWidth="48dp"
                     android:minHeight="48dp"
                     android:onClick="addProperty"

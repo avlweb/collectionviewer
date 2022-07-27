@@ -117,4 +117,5 @@
     <string name="help_description">Help</string>
     <string name="move_up">Move up</string>
     <string name="move_down">Move down</string>
+    <string name="add_property">Add property</string>
 </resources>

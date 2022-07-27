@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.GestureDetector;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -85,23 +84,13 @@ public class ItemDisplay extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_item_display, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("position", this.position);
-                setResult(Activity.RESULT_OK, resultIntent);
-                this.finish();
-                return true;
-            case (R.id.modify_btn):
-//                modifyItem();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("position", this.position);
+            setResult(Activity.RESULT_OK, resultIntent);
+            this.finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
