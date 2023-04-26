@@ -45,6 +45,7 @@ android {
     androidResources {
         noCompress 'xml'
     }
+    namespace 'com.avlweb.collectionviewer'
 }
 
 dependencies {
