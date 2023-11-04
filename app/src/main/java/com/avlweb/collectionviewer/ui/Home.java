@@ -30,7 +30,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
-import com.avlweb.collectionviewer.BuildConfig;
 import com.avlweb.collectionviewer.R;
 import com.avlweb.collectionviewer.adapter.HomeListAdapter;
 import com.avlweb.collectionviewer.model.CollectionInfos;
@@ -181,13 +180,13 @@ public class Home extends BaseActivity implements HomeListAdapter.customButtonLi
                 } catch (PackageManager.NameNotFoundException ignored) {
                 }
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.FRANCE);
-                String buildDate = simpleDateFormat.format(BuildConfig.buildTime);
+//                String buildDate = simpleDateFormat.format(BuildConfig.buildTime);
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.version));
                 builder.setIcon(R.drawable.ic_launcher);
-                builder.setMessage(String.format(Locale.getDefault(), getString(R.string.appli_version),
-                        context.getString(R.string.app_name), versionName, buildDate));
+                builder.setMessage(String.format(Locale.getDefault(), getString(R.string.appli_version), context.getString(R.string.app_name), versionName, "buildDate"));
+//                builder.setMessage(String.format(Locale.getDefault(), getString(R.string.appli_version), context.getString(R.string.app_name), versionName, buildDate));
                 builder.setPositiveButton(getString(R.string.ok), (dialog1, which) -> dialog1.cancel());
                 builder.create().show();
                 return true;
