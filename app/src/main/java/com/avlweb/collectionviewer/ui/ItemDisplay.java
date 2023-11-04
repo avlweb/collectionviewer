@@ -232,12 +232,15 @@ public class ItemDisplay extends BaseActivity {
     }
 
     private void displayImage() {
-        TextView textView = findViewById(R.id.textView2);
+        TextView textView2 = findViewById(R.id.textView2);
+        TextView textView4 = findViewById(R.id.textView4);
         if (currentItem.getNbImages() == 0) {
-            textView.setVisibility(View.GONE);
+            textView2.setVisibility(View.GONE);
+            textView4.setVisibility(View.VISIBLE);
         } else {
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(String.format(Locale.getDefault(), getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+            textView2.setVisibility(View.VISIBLE);
+            textView2.setText(String.format(Locale.getDefault(), getString(R.string.number_slash_number), imgIdx + 1, currentItem.getNbImages()));
+            textView4.setVisibility(View.GONE);
         }
 
         ImageView imageView = findViewById(R.id.imageView1);

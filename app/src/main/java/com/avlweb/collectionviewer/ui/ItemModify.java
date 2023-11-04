@@ -179,7 +179,6 @@ public class ItemModify extends BaseActivity {
                     if ((uriPath != null) && (uriPath.length() > 0) && (externalPath != null)) {
                         Log.d("SETTINGS", "default path = " + collectionPath.getAbsolutePath());
                         Log.d("SETTINGS", "uri path = " + uriPath);
-                        String[] tmp = uriPath.split("/");
                         String fileExt = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
                         String uuid = UUID.randomUUID().toString();
                         String imageName = uuid + "." + fileExt;
@@ -234,11 +233,19 @@ public class ItemModify extends BaseActivity {
             }
 
             int newHeight = myBitmap.getHeight();
-            if (myBitmap.getWidth() > metrics.widthPixels) {
+            int newWidth = myBitmap.getWidth();
+            // If image width is bigger than screen size
+            if (newWidth > metrics.widthPixels) {
+                newWidth = metrics.widthPixels;
                 newHeight = (int) myBitmap.getHeight() * metrics.widthPixels / myBitmap.getWidth();
             }
+            // If image height is bigger than screen size
+            if (newHeight > metrics.heightPixels) {
+                newHeight = metrics.heightPixels;
+                newWidth = (int) myBitmap.getWidth() * metrics.heightPixels / myBitmap.getHeight();
+            }
 
-            Bitmap tmpBitmap = Bitmap.createScaledBitmap(myBitmap, metrics.widthPixels, newHeight, true);
+            Bitmap tmpBitmap = Bitmap.createScaledBitmap(myBitmap, newWidth, newHeight, true);
             Bitmap finalBitmap;
             if (rotate != 0) {
                 finalBitmap = rotateBitmap(tmpBitmap, rotate);
@@ -266,12 +273,9 @@ public class ItemModify extends BaseActivity {
     }
 
     private Bitmap rotateBitmap(Bitmap original, float degrees) {
-        int x = original.getWidth();
-        int y = original.getHeight();
         Matrix matrix = new Matrix();
         matrix.preRotate(degrees);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
-        return rotatedBitmap;
+        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
     }
 
     private void saveItem() {
